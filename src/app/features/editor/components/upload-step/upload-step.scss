@@ -1,0 +1,75 @@
+@use '../../../../shared/styles/mixins' as *;
+
+.upload-viewport {
+  @include flex-center;
+  @include abs-fill;
+  padding: 4rem;
+  transition: var(--opi-transition);
+
+  &.active {
+    background: var(--opi-surface);
+    .upload-frame {
+      border-color: var(--opi-text);
+    }
+  }
+}
+
+.upload-frame {
+  @include flex-center(2.4rem, column);
+  @include industrial-panel;
+  width: 100%;
+  max-width: 60rem;
+  height: 40rem;
+  position: relative;
+  border-style: dashed;
+  padding: 2rem;
+}
+
+.fx-btn-primary {
+  @include interactive-scale;
+  margin-top: 2rem;
+  padding: 1.2rem 3.2rem;
+  border: 1px solid var(--opi-text);
+
+  span {
+    font-size: 1.2rem;
+    font-weight: 700;
+  }
+
+  &:hover {
+    background: var(--opi-text);
+    color: var(--opi-bg);
+  }
+}
+
+.corner {
+  position: absolute;
+  width: 1rem;
+  height: 1rem;
+  border: 1px solid var(--opi-text-muted);
+
+  &.tl {
+    top: -1px;
+    left: -1px;
+    border-right: 0;
+    border-bottom: 0;
+  }
+  &.tr {
+    top: -1px;
+    right: -1px;
+    border-left: 0;
+    border-bottom: 0;
+  }
+  &.bl {
+    bottom: -1px;
+    left: -1px;
+    border-right: 0;
+    border-top: 0;
+  }
+  &.br {
+    bottom: -1px;
+    right: -1px;
+    border-left: 0;
+    border-top: 0;
+  }
+}
