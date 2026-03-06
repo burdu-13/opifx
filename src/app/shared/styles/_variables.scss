@@ -1,0 +1,27 @@
+:root {
+  --opi-bg: #000000;
+  --opi-surface: #050505;
+  --opi-surface-raised: #0a0a0a;
+  --opi-text: #ffffff;
+  --opi-text-muted: #666666;
+  --opi-accent: #e5e5e5;
+  --opi-border: rgba(255, 255, 255, 0.05);
+  --opi-border-hover: rgba(255, 255, 255, 0.2);
+  --opi-glow: rgba(255, 255, 255, 0.02);
+  --opi-font-mono: 'IBM Plex Mono', monospace;
+  --opi-font-sans: 'Geist', sans-serif;
+  --opi-radius: 2px;
+  --opi-transition: 200ms cubic-bezier(0.2, 0, 0, 1);
+}
+
+[data-theme='light'] {
+  --opi-bg: #fafafa;
+  --opi-surface: #ffffff;
+  --opi-surface-raised: #f2f2f2;
+  --opi-text: #000000;
+  --opi-text-muted: #888888;
+  --opi-accent: #111111;
+  --opi-border: rgba(0, 0, 0, 0.08);
+  --opi-border-hover: rgba(0, 0, 0, 0.3);
+  --opi-glow: rgba(0, 0, 0, 0.01);
+}
