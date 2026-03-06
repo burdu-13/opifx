@@ -1,0 +1,7 @@
+<div class="fx-shell">
+  @switch (srv.step()) {
+    @case ('UPLOAD') {
+      <app-upload-step (imageSelected)="srv.setImage($event)" />
+    }
+  }
+</div>
