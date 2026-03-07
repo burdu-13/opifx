@@ -1,0 +1,80 @@
+@use '../../../../../shared/styles/mixins' as *;
+
+.edit-shell {
+  @include grid-layout(12, 0);
+  height: 100vh;
+  width: 100vw;
+  background-color: var(--opi-bg);
+  font-family: var(--opi-font-sans);
+}
+
+.viewport-area {
+  grid-column: span 9;
+  position: relative;
+  overflow: hidden;
+  @include flex-center;
+  background: var(--opi-surface);
+
+  .cloud-glow {
+    @include abs-fill;
+    background: radial-gradient(circle at 50% 0%, var(--opi-border) 0%, transparent 70%);
+    opacity: 0.5;
+    pointer-events: none;
+  }
+}
+
+.viewport-meta {
+  position: absolute;
+  bottom: 3.2rem;
+  left: 50%;
+  transform: translateX(-50%);
+  z-index: 10;
+  @include flex-center(1.6rem);
+  background: var(--opi-surface-raised);
+  border: 1px solid var(--opi-border-hover);
+  border-radius: 100px;
+  padding: 0.6rem 1.2rem;
+  box-shadow: 0 10px 30px rgba(0, 0, 0, 0.2);
+
+  &.text-mono {
+    font-family: var(--opi-font-sans) !important;
+    text-transform: none;
+    letter-spacing: normal;
+    color: var(--opi-text);
+    font-size: 1.2rem;
+    font-weight: 500;
+  }
+
+  .controls-mini {
+    background: var(--opi-bg);
+    border: 1px solid var(--opi-border);
+    border-radius: 100px;
+    display: flex;
+    overflow: hidden;
+
+    button {
+      background: none;
+      border: none;
+      color: var(--opi-text);
+      padding: 0.6rem 1.4rem;
+      font-size: 1.4rem;
+      @include interactive-scale;
+
+      &:not(:last-child) {
+        border-right: 1px solid var(--opi-border);
+      }
+
+      &:hover {
+        background: var(--opi-border);
+        color: var(--opi-accent);
+      }
+    }
+  }
+}
+
+.sidebar-area {
+  grid-column: span 3;
+  border-left: 1px solid var(--opi-border);
+  background: var(--opi-surface);
+  z-index: 20;
+}

@@ -1,0 +1,122 @@
+@use '../../../../../../shared/styles/mixins' as *;
+
+.sidebar {
+  @include flex-between(0);
+  flex-direction: column;
+  height: 100vh;
+  background: var(--opi-surface);
+  width: 100%;
+}
+
+.sidebar-content {
+  width: 100%;
+  padding: 3.2rem 2.4rem;
+  overflow-y: auto;
+
+  &::-webkit-scrollbar {
+    width: 0.4rem;
+  }
+  &::-webkit-scrollbar-thumb {
+    background: var(--opi-border-hover);
+    border-radius: 10px;
+  }
+}
+
+.sidebar-header {
+  margin-bottom: 4rem;
+
+  h2.text-mono {
+    font-family: var(--opi-font-sans);
+    font-size: 1.6rem;
+    font-weight: 600;
+    letter-spacing: -0.01em;
+    text-transform: none;
+    color: var(--opi-text);
+  }
+}
+
+.group {
+  margin-bottom: 3.2rem;
+}
+
+.group-label.text-mono {
+  font-family: var(--opi-font-sans);
+  text-transform: uppercase;
+  font-weight: 600;
+  font-size: 1rem;
+  letter-spacing: 0.08em;
+  color: var(--opi-text-muted);
+  margin-bottom: 2rem;
+}
+
+.preset-grid {
+  @include grid-layout(2, 0.8rem);
+}
+
+.preset-card {
+  @include interactive-scale;
+  @include flex-center(0.4rem, column);
+  align-items: flex-start;
+  padding: 1.2rem;
+  background: var(--opi-surface-raised);
+  border: 1px solid var(--opi-border);
+  border-radius: var(--opi-radius);
+  text-align: left;
+
+  .preset-name {
+    font-size: 1.1rem;
+    font-weight: 600;
+    color: var(--opi-text);
+  }
+
+  .preset-desc {
+    font-size: 0.85rem;
+    color: var(--opi-text-muted);
+    line-height: 1.3;
+    display: -webkit-box;
+    -webkit-line-clamp: 2;
+    -webkit-box-orient: vertical;
+    overflow: hidden;
+  }
+
+  &:hover {
+    border-color: var(--opi-border-hover);
+    background: var(--opi-bg);
+  }
+
+  &.active {
+    background: var(--opi-bg);
+    border-color: var(--opi-text);
+    box-shadow: 0 4px 12px var(--opi-glow);
+
+    .preset-name {
+      color: var(--opi-accent);
+    }
+  }
+}
+
+.btn-proceed {
+  @include interactive-scale;
+  width: calc(100% - 4.8rem);
+  margin: 2.4rem;
+  padding: 1.4rem;
+
+  background: var(--opi-text);
+  color: var(--opi-bg);
+  border-radius: var(--opi-radius);
+  border: none;
+
+  font-weight: 600;
+  font-size: 1.3rem;
+  transition: var(--opi-transition);
+
+  &.text-mono {
+    font-family: var(--opi-font-sans) !important;
+    text-transform: none;
+  }
+
+  &:hover {
+    filter: brightness(0.9);
+    box-shadow: 0 4px 20px rgba(0, 0, 0, 0.15);
+  }
+}

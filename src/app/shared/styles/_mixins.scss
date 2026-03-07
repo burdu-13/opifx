@@ -31,7 +31,7 @@
   }
 }
 
-@mixin typography-mono($size: 12px, $weight: 500) {
+@mixin typography-mono($size: 1.2rem, $weight: 500) {
   font-family: var(--opi-font-mono);
   font-size: $size;
   font-weight: $weight;

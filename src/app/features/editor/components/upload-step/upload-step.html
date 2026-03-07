@@ -6,17 +6,12 @@
   (dragleave)="onDragLeave()"
 >
   <div class="upload-frame">
-    <div class="corner tl"></div>
-    <div class="corner tr"></div>
-    <div class="corner bl"></div>
-    <div class="corner br"></div>
-
     <div class="content">
-      <h1 class="text-mono">FX / INGEST_SRC</h1>
-      <p class="text-mono muted">Drop image or click to browse</p>
+      <h1>Upload image</h1>
+      <p class="muted">Drag and drop your image here, or click to browse</p>
 
       <label class="fx-btn-primary">
-        <span class="text-mono">IMPORT_FILE</span>
+        <span>Select file</span>
         <input type="file" (change)="onFileSelected($event)" accept="image/*" hidden />
       </label>
     </div>

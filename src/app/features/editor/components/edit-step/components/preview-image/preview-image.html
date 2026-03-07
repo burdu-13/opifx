@@ -1,0 +1,9 @@
+<div
+  class="canvas-wrapper"
+  (mousedown)="onMouseDown($event)"
+  (mousemove)="onMouseMove($event)"
+  (mouseup)="onMouseUp()"
+  (mouseleave)="onMouseUp()"
+>
+  <canvas #mainCanvas [style.transform]="transformStyle()"></canvas>
+</div>

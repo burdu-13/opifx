@@ -4,41 +4,42 @@ export interface FilterState {
   brightness: number;
   contrast: number;
   saturation: number;
+  sepia: number;
+  hueRotate: number;
+  blur: number;
+  grayscale: number;
   grain: number;
   vignette: number;
   chromaticAberration: number;
   sharpness: number;
-  isGrayscale: boolean;
 }
 
-export const INITIAL_FILTERS: FilterState = {
-  brightness: 100,
-  contrast: 120,
-  saturation: 0,
-  grain: 25,
-  vignette: 40,
-  chromaticAberration: 3,
-  sharpness: 10,
-  isGrayscale: true,
-};
+export interface Preset {
+  id: string;
+  name: string;
+  description: string;
+  state: Partial<FilterState>;
+}
 
-export const OPI_PRESETS = {
-  GRAINY_90S: {
-    brightness: 95,
-    contrast: 140,
-    saturation: 10,
-    grain: 45,
-    vignette: 50,
-    chromaticAberration: 5,
-    isGrayscale: false,
-  },
-  OBSIDIAN: {
-    brightness: 80,
-    contrast: 160,
-    saturation: 0,
-    grain: 20,
-    vignette: 70,
-    chromaticAberration: 2,
-    isGrayscale: true,
-  },
+export const NEUTRAL_FILTERS: FilterState = {
+  brightness: 100,
+  contrast: 100,
+  saturation: 100,
+  sepia: 0,
+  hueRotate: 0,
+  blur: 0,
+  grayscale: 0,
+  grain: 0,
+  vignette: 0,
+  chromaticAberration: 0,
+  sharpness: 0,
 };
+export interface FilterControlConfig {
+  key: keyof FilterState;
+  label: string;
+  min: number;
+  max: number;
+  step: number;
+  unit: string;
+  group: 'Standard' | 'Aesthetic';
+}

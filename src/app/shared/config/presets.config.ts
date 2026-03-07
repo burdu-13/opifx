@@ -1,0 +1,182 @@
+import { FilterState } from '../interfaces/editor.interface';
+
+export interface Preset {
+  id: string;
+  name: string;
+  description: string;
+  state: Partial<FilterState>;
+}
+
+export const PRESETS: Preset[] = [
+  {
+    id: 'opium-v2',
+    name: 'OPIUM_V2',
+    description: 'Deep obsidian blacks and monochromatic grain. The signature look.',
+    state: {
+      brightness: 75,
+      contrast: 210,
+      saturation: 0,
+      grain: 38,
+      vignette: 65,
+      grayscale: 100,
+    },
+  },
+  {
+    id: 'vamp-night',
+    name: 'VAMP_NIGHT',
+    description: 'High contrast with deep red-tinted shadows and sharp highlights.',
+    state: {
+      brightness: 85,
+      contrast: 180,
+      saturation: 110,
+      sepia: 15,
+      grain: 25,
+      vignette: 50,
+      hueRotate: 350,
+    },
+  },
+
+  {
+    id: 'take-care-v2',
+    name: 'TAKE_CARE',
+    description: 'Moody cinematic blues. Shadows are cooled while keeping skin tones natural.',
+    state: {
+      brightness: 90,
+      contrast: 115,
+      saturation: 85,
+      hueRotate: 5,
+      sepia: 10,
+      grain: 20,
+      vignette: 40,
+      blur: 0.4,
+    },
+  },
+  {
+    id: 'ovo-summer-v2',
+    name: 'OVO_SUMMER',
+    description: 'Warm Toronto sunset. Golden hour glow with soft DSLR-style bloom.',
+    state: { brightness: 115, contrast: 105, saturation: 125, sepia: 12, blur: 0.3, vignette: 15 },
+  },
+
+  {
+    id: 'glo-2012',
+    name: 'GLO_2012',
+    description: 'The 2012 drill aesthetic: over-saturated, high exposure, and raw CCD noise.',
+    state: {
+      brightness: 135,
+      contrast: 115,
+      saturation: 170,
+      grain: 25,
+      sharpness: 15,
+      chromaticAberration: 4,
+    },
+  },
+  {
+    id: 'chiraq-flash',
+    name: 'CHIRAQ_FLASH',
+    description: 'Heavy camera flash look with blown-out highlights and dark edges.',
+    state: {
+      brightness: 145,
+      contrast: 140,
+      saturation: 110,
+      grain: 15,
+      vignette: 55,
+      sharpness: 20,
+    },
+  },
+
+  {
+    id: 'digicam-99',
+    name: 'DIGI_99',
+    description: 'CCD sensor artifacts. Low resolution feel with light bloom.',
+    state: {
+      brightness: 110,
+      contrast: 105,
+      saturation: 115,
+      blur: 0.6,
+      grain: 18,
+      chromaticAberration: 6,
+    },
+  },
+  {
+    id: 'y2k-cyber',
+    name: 'CYBER_Y2K',
+    description: 'Blue-tinted digital futuristic look. Cool shadows and high vibrance.',
+    state: {
+      brightness: 120,
+      contrast: 110,
+      saturation: 140,
+      hueRotate: 10,
+      sepia: 5,
+      blur: 0.2,
+      grain: 12,
+    },
+  },
+
+  {
+    id: 'cactus-jack-v2',
+    name: 'CACTUS_FX',
+    description: 'Industrial film stock. Heavy grain, warm tints, and aggressive texture.',
+    state: { grain: 55, sepia: 22, saturation: 135, contrast: 130, brightness: 105, vignette: 35 },
+  },
+  {
+    id: 'rodeo-desert',
+    name: 'RODEO_FILM',
+    description: 'Faded desert tones with dusty texture and warm highlights.',
+    state: {
+      brightness: 108,
+      contrast: 90,
+      saturation: 110,
+      sepia: 25,
+      grain: 40,
+      blur: 0.5,
+      vignette: 20,
+    },
+  },
+
+  {
+    id: 'dslr-2014',
+    name: 'DSLR_2014',
+    description: 'Crisp 2014 color science. High detail, clean whites, and vibrant colors.',
+    state: {
+      brightness: 118,
+      contrast: 125,
+      saturation: 130,
+      sharpness: 25,
+      grain: 10,
+      vignette: 10,
+    },
+  },
+  {
+    id: 'summer-16',
+    name: 'SUMMER_16',
+    description: 'Golden, saturated memories. The peak 2016 Instagram aesthetic.',
+    state: { brightness: 125, contrast: 110, saturation: 150, sepia: 10, grain: 15, vignette: 15 },
+  },
+
+  {
+    id: 'night-vision',
+    name: 'NVG_MODE',
+    description: 'Security camera aesthetic. Grayscale with a heavy green tint.',
+    state: { brightness: 120, contrast: 150, grayscale: 100, sepia: 100, hueRotate: 80, grain: 70 },
+  },
+  {
+    id: 'luxury-gloss',
+    name: 'RICH_FOREVER',
+    description: 'High-end rap video look. Clean, glossy, and highly defined.',
+    state: {
+      brightness: 110,
+      contrast: 130,
+      saturation: 115,
+      sharpness: 30,
+      vignette: 20,
+      grain: 8,
+    },
+  },
+  {
+    id: 'tour-bus-v2',
+    name: 'TOUR_BUS',
+    description: 'Handheld camcorder vibe. Moody, grainy, and slightly blurry.',
+    state: { brightness: 95, contrast: 140, saturation: 80, grain: 50, blur: 0.8, vignette: 45 },
+  },
+];

@@ -1,0 +1,60 @@
+@use '../../styles/mixins' as *;
+
+.slider-field {
+  width: 100%;
+  margin-bottom: 3.2rem;
+}
+
+.slider-info {
+  @include flex-between;
+  margin-bottom: 1.2rem;
+
+  .label {
+    font-size: 1.1rem;
+    color: var(--opi-text-muted);
+    letter-spacing: 0.05rem;
+  }
+
+  .value {
+    font-size: 1.1rem;
+    color: var(--opi-text);
+    font-weight: 700;
+  }
+}
+
+.input-wrapper {
+  position: relative;
+  height: 2.4rem;
+  @include flex-center;
+}
+
+.range-input {
+  appearance: none;
+  width: 100%;
+  height: 0.1rem;
+  background: var(--opi-border-hover);
+  outline: none;
+  cursor: crosshair;
+
+  &::-webkit-slider-thumb {
+    appearance: none;
+    width: 0.4rem;
+    height: 1.6rem;
+    background: var(--opi-text);
+    border-radius: var(--opi-radius);
+    transition: var(--opi-transition);
+
+    &:hover {
+      background: var(--opi-accent);
+      transform: scaleY(1.2);
+    }
+  }
+
+  &::-moz-range-thumb {
+    width: 0.4rem;
+    height: 1.6rem;
+    background: var(--opi-text);
+    border: none;
+    border-radius: var(--opi-radius);
+  }
+}

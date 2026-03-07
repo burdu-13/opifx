@@ -9,10 +9,10 @@ html {
 html,
 body {
   height: 100%;
-  background-color: var(--fx-bg);
-  color: var(--fx-text);
-  font-family: var(--fx-font-sans);
-  font-size: 16px;
+  background-color: var(--opi-bg);
+  color: var(--opi-text);
+  font-family: var(--opi-font-sans);
+  font-size: 1.4rem;
   line-height: 1.5;
 }
 
@@ -21,16 +21,14 @@ body {
 }
 
 ::-webkit-scrollbar-track {
-  background: var(--fx-bg);
+  background: var(--opi-bg);
 }
 
 ::-webkit-scrollbar-thumb {
-  background: var(--fx-border-hover);
-  border-radius: var(--fx-radius);
+  background: var(--opi-border-hover);
+  border-radius: var(--opi-radius);
 }
 
-img,
-canvas {
-  display: block;
-  max-width: 100%;
+.text-mono {
+  @include typography-mono(1.2rem);
 }

@@ -1,0 +1,18 @@
+<div class="slider-field">
+  <div class="slider-info">
+    <span class="label text-mono">{{ label() }}</span>
+    <span class="value text-mono">{{ value() }}{{ unit() }}</span>
+  </div>
+
+  <div class="input-wrapper">
+    <input
+      type="range"
+      [min]="min()"
+      [max]="max()"
+      [step]="stepSize()"
+      [value]="value()"
+      (input)="onInput($event)"
+      class="range-input"
+    />
+  </div>
+</div>
