@@ -24,6 +24,7 @@
     class="sidebar-area"
     [filters]="filters()"
     (change)="filterChange.emit($event)"
+    (presetSelected)="presetSelected.emit($event)"
     (proceed)="proceed.emit()"
   />
 </div>

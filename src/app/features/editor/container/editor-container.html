@@ -8,6 +8,7 @@
         [image]="srv.sourceImage()"
         [filters]="srv.filters()"
         (filterChange)="srv.updateFilter($event)"
+        (presetSelected)="onPresetApplied($event)"
         (proceed)="srv.setStep('EXPORT')"
       />
     }
