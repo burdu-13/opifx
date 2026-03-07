@@ -3,5 +3,13 @@
     @case ('UPLOAD') {
       <app-upload-step (imageSelected)="srv.setImage($event)" />
     }
+    @case ('EDIT') {
+      <app-edit-step
+        [image]="srv.sourceImage()"
+        [filters]="srv.filters()"
+        (filterChange)="srv.updateFilter($event)"
+        (proceed)="srv.setStep('EXPORT')"
+      />
+    }
   }
 </div>

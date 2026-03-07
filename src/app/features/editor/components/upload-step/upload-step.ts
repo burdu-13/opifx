@@ -1,10 +1,11 @@
-import { Component, output, signal } from '@angular/core';
+import { ChangeDetectionStrategy, Component, output, signal } from '@angular/core';
 
 @Component({
   selector: 'app-upload-step',
   imports: [],
   templateUrl: './upload-step.html',
   styleUrl: './upload-step.scss',
+  changeDetection: ChangeDetectionStrategy.OnPush,
 })
 export class UploadStep {
   public readonly imageSelected = output<string>();

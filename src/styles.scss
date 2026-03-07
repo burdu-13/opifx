@@ -3,34 +3,39 @@
 @use './app/shared/styles/reset' as *;
 
 html {
+  /* This calibrates 1rem = 10px */
   font-size: 62.5%;
 }
 
 html,
 body {
   height: 100%;
-  background-color: var(--fx-bg);
-  color: var(--fx-text);
-  font-family: var(--fx-font-sans);
-  font-size: 16px;
+  /* FIX: Changed --fx- to --opi- to match your _variables.scss */
+  background-color: var(--opi-bg);
+  color: var(--opi-text);
+  font-family: var(--opi-font-sans);
+
+  /* FIX: Removed 'font-size: 16px' as it kills your 62.5% scaling. 
+     Use rems here to set the base size (e.g., 1.4rem = 14px) */
+  font-size: 1.4rem;
   line-height: 1.5;
 }
 
+/* FIX: Updated scrollbar variables to match --opi- naming */
 ::-webkit-scrollbar {
   width: 4px;
 }
 
 ::-webkit-scrollbar-track {
-  background: var(--fx-bg);
+  background: var(--opi-bg);
 }
 
 ::-webkit-scrollbar-thumb {
-  background: var(--fx-border-hover);
-  border-radius: var(--fx-radius);
+  background: var(--opi-border-hover);
+  border-radius: var(--opi-radius);
 }
 
-img,
-canvas {
-  display: block;
-  max-width: 100%;
+/* Helper class for your Mono font */
+.text-mono {
+  @include typography-mono(1.2rem); /* Using rem here too */
 }
