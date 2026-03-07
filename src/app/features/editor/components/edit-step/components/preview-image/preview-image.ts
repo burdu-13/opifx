@@ -9,7 +9,7 @@ import {
   viewChild,
 } from '@angular/core';
 import { FilterState } from '../../../../../../shared/interfaces/editor.interface';
-import { FilterEngine } from '../../../../utils/filter-engine.utils';
+import { CanvasRendererUtil } from '../../../../utils/canvas-renderer.utils';
 
 @Component({
   selector: 'app-preview-image',
@@ -38,21 +38,16 @@ export class PreviewImage {
   );
 
   constructor() {
-    // FIX: Guarantee a render as soon as the image successfully loads into memory
-    this.imageElement.onload = () => {
-      this.render();
-    };
+    this.imageElement.onload = () => this.executeRender();
 
     effect(() => {
       const source = this.src();
-      if (source) {
-        this.imageElement.src = source;
-      }
+      if (source) this.imageElement.src = source;
     });
 
     effect(() => {
-      this.filters(); // Track filter changes
-      this.render();
+      this.filters();
+      this.executeRender();
     });
   }
 
@@ -75,31 +70,7 @@ export class PreviewImage {
     this.isDragging = false;
   }
 
-  private render(): void {
-    const canvasEl = this.canvas()?.nativeElement;
-    if (!canvasEl || !this.imageElement.complete) return;
-
-    const ctx = canvasEl.getContext('2d', { willReadFrequently: true });
-    if (!ctx) return;
-
-    canvasEl.width = this.imageElement.width;
-    canvasEl.height = this.imageElement.height;
-
-    const f = this.filters();
-
-    ctx.filter = `brightness(${f.brightness}%) contrast(${f.contrast}%) saturate(${f.saturation}%)`;
-    ctx.drawImage(this.imageElement, 0, 0);
-
-    if (f.grain > 0) {
-      FilterEngine.applyGrain(ctx, canvasEl.width, canvasEl.height, f.grain);
-    }
-    if (f.chromaticAberration > 0) {
-      FilterEngine.applyChromaticAberration(
-        ctx,
-        canvasEl.width,
-        canvasEl.height,
-        f.chromaticAberration,
-      );
-    }
+  private executeRender(): void {
+    CanvasRendererUtil.render(this.canvas()?.nativeElement, this.imageElement, this.filters());
   }
 }

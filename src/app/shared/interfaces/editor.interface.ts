@@ -42,3 +42,12 @@ export const OPI_PRESETS = {
     isGrayscale: true,
   },
 };
+export interface FilterControlConfig {
+  key: keyof FilterState;
+  label: string;
+  min: number;
+  max: number;
+  step: number;
+  unit: string;
+  group: 'Standard' | 'Aesthetic';
+}

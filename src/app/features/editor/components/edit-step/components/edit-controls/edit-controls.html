@@ -7,33 +7,32 @@
     <div class="parameter-groups">
       <div class="group">
         <p class="group-label text-mono">Standard</p>
-        <app-lib-slider
-          label="Brightness"
-          [value]="filters().brightness"
-          (valueChange)="update('brightness', $event)"
-        ></app-lib-slider>
-        <app-lib-slider
-          label="Contrast"
-          [value]="filters().contrast"
-          (valueChange)="update('contrast', $event)"
-        ></app-lib-slider>
+        @for (ctrl of standardGroup; track ctrl.key) {
+          <app-lib-slider
+            [label]="ctrl.label"
+            [value]="$any(filters())[ctrl.key]"
+            [min]="ctrl.min"
+            [max]="ctrl.max"
+            [stepSize]="ctrl.step"
+            [unit]="ctrl.unit"
+            (valueChange)="update(ctrl.key, $event)"
+          />
+        }
       </div>
 
       <div class="group">
         <p class="group-label text-mono">Aesthetic</p>
-        <app-lib-slider
-          label="Grain"
-          [value]="filters().grain"
-          [max]="100"
-          (valueChange)="update('grain', $event)"
-        ></app-lib-slider>
-        <app-lib-slider
-          label="Chroma Shift"
-          [value]="filters().chromaticAberration"
-          [max]="20"
-          unit="px"
-          (valueChange)="update('chromaticAberration', $event)"
-        ></app-lib-slider>
+        @for (ctrl of aestheticGroup; track ctrl.key) {
+          <app-lib-slider
+            [label]="ctrl.label"
+            [value]="$any(filters())[ctrl.key]"
+            [min]="ctrl.min"
+            [max]="ctrl.max"
+            [stepSize]="ctrl.step"
+            [unit]="ctrl.unit"
+            (valueChange)="update(ctrl.key, $event)"
+          />
+        }
       </div>
     </div>
   </div>
