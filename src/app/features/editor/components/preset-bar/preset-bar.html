@@ -1,1 +1,38 @@
-<p>preset-bar works!</p>
+<div class="preset-container" [class.expanded]="isExpanded()">
+  <header class="preset-header">
+    <span class="title">Atmosphere</span>
+    <button class="btn-expand" (click)="toggleExpand()">
+      {{ isExpanded() ? 'Return to Adjustments' : 'Browse Presets' }}
+    </button>
+  </header>
+
+  <div class="preset-track">
+    @for (preset of presets(); track preset.id) {
+      <button
+        class="preset-pill"
+        [class.active]="activePresetId() === preset.id"
+        (click)="handlePresetClick(preset.id)"
+      >
+        {{ preset.name }}
+      </button>
+    }
+  </div>
+
+  @if (isExpanded() && activePresetDetails()) {
+    <div class="specifications-cloud">
+      <div class="spec-header">
+        <h3>{{ activePresetDetails()?.name }}</h3>
+        <p>{{ activePresetDetails()?.description }}</p>
+      </div>
+
+      <div class="spec-grid">
+        @for (spec of formatSpecs(activePresetDetails()?.state); track spec.label) {
+          <div class="spec-item">
+            <span class="spec-label">{{ spec.label }}</span>
+            <span class="spec-val">{{ spec.val }}</span>
+          </div>
+        }
+      </div>
+    </div>
+  }
+</div>

@@ -7,10 +7,10 @@
     <div class="parameter-groups">
       <div class="group">
         <p class="group-label">Standard</p>
-        @for (ctrl of standardGroup; track ctrl.key) {
+        @for (ctrl of standardControls(); track ctrl.key) {
           <app-lib-slider
             [label]="ctrl.label"
-            [value]="$any(filters())[ctrl.key]"
+            [value]="ctrl.currentValue"
             [min]="ctrl.min"
             [max]="ctrl.max"
             [stepSize]="ctrl.step"
@@ -22,10 +22,10 @@
 
       <div class="group">
         <p class="group-label">Aesthetics</p>
-        @for (ctrl of aestheticGroup; track ctrl.key) {
+        @for (ctrl of aestheticControls(); track ctrl.key) {
           <app-lib-slider
             [label]="ctrl.label"
-            [value]="$any(filters())[ctrl.key]"
+            [value]="ctrl.currentValue"
             [min]="ctrl.min"
             [max]="ctrl.max"
             [stepSize]="ctrl.step"
@@ -37,5 +37,7 @@
     </div>
   </div>
 
-  <button class="btn-proceed" (click)="proceed.emit()">Export result</button>
+  <div class="sidebar-footer">
+    <button class="btn-proceed" (click)="proceed.emit()">Export Sequence</button>
+  </div>
 </aside>

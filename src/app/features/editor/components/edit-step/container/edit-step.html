@@ -2,6 +2,13 @@
   <section class="viewport-area">
     <div class="cloud-glow"></div>
 
+    <app-preset-bar
+      [presets]="presets"
+      [activePresetId]="activePresetId()"
+      (presetSelected)="handlePresetSelection($event)"
+      (expandedChange)="isPresetGalleryOpen.set($event)"
+    />
+
     <app-preview-image
       [src]="image()"
       [filters]="filters()"
@@ -10,8 +17,8 @@
       (pan)="handlePan($event)"
     />
 
-    <div class="viewport-meta text-mono">
-      <span>Z_LVL: {{ (zoom() * 100).toFixed(0) }}%</span>
+    <div class="viewport-meta">
+      <span>{{ (zoom() * 100).toFixed(0) }}%</span>
       <div class="controls-mini">
         <button (click)="updateZoom(0.1)">+</button>
         <button (click)="updateZoom(-0.1)">-</button>
@@ -20,10 +27,12 @@
     </div>
   </section>
 
-  <app-edit-controls
-    class="sidebar-area"
-    [filters]="filters()"
-    (change)="filterChange.emit($event)"
-    (proceed)="proceed.emit()"
-  />
+  @if (!isPresetGalleryOpen()) {
+    <app-edit-controls
+      class="sidebar-area"
+      [filters]="filters()"
+      (change)="handleManualChange($event)"
+      (proceed)="proceed.emit()"
+    />
+  }
 </div>

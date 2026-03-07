@@ -11,9 +11,16 @@
 .viewport-area {
   grid-column: span 9;
   position: relative;
+  display: flex;
+  flex-direction: column;
+  background: var(--opi-surface);
+}
+
+.canvas-stage {
+  flex: 1;
+  position: relative;
   overflow: hidden;
   @include flex-center;
-  background: var(--opi-surface);
 
   .cloud-glow {
     @include abs-fill;
@@ -36,10 +43,7 @@
   padding: 0.6rem 1.2rem;
   box-shadow: 0 10px 30px rgba(0, 0, 0, 0.2);
 
-  &.text-mono {
-    font-family: var(--opi-font-sans) !important;
-    text-transform: none;
-    letter-spacing: normal;
+  .zoom-indicator {
     color: var(--opi-text);
     font-size: 1.2rem;
     font-weight: 500;
