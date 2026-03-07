@@ -1,60 +1,63 @@
 @use '../../../../shared/styles/mixins' as *;
 
-.edit-layout {
+.edit-shell {
   @include grid-layout(12, 0);
   height: 100vh;
   width: 100vw;
-}
-
-.viewport {
-  grid-column: span 9;
-  @include flex-center;
-  background-color: var(--opi-surface);
-  padding: 4rem;
-  overflow: hidden;
-}
-
-.canvas-holder {
-  @include industrial-panel;
-  max-width: 100%;
-  max-height: 100%;
-  box-shadow: 0 0 5rem rgba(0, 0, 0, 0.5);
-}
-
-.sidebar {
-  grid-column: span 3;
-  @include flex-between(0);
-  flex-direction: column;
-  border-left: 1px solid var(--opi-border);
   background-color: var(--opi-bg);
 }
 
-.sidebar-content {
-  width: 100%;
-  padding: 2.4rem;
-}
+.viewport-area {
+  grid-column: span 9;
+  position: relative;
+  overflow: hidden; // Critical: No overflowing
+  @include flex-center;
+  background: var(--opi-surface);
 
-.sidebar-header {
-  margin-bottom: 4rem;
-  h2 {
-    font-size: 1.4rem;
-    letter-spacing: 0.1rem;
+  // The "Modern Cloudy" Opium Look
+  .cloud-glow {
+    @include abs-fill;
+    background:
+      radial-gradient(circle at 50% 50%, rgba(255, 255, 255, 0.03) 0%, transparent 70%),
+      radial-gradient(circle at 100% 0%, rgba(255, 255, 255, 0.02) 0%, transparent 50%);
+    filter: blur(80px);
+    pointer-events: none;
   }
 }
 
-.group-label {
-  margin-bottom: 2rem;
+.viewport-meta {
+  position: absolute;
+  bottom: 2.4rem;
+  left: 2.4rem;
+  z-index: 10;
+  @include flex-center(2rem);
   color: var(--opi-text-muted);
-  font-size: 1rem;
+  font-size: 1.1rem;
+
+  .controls-mini {
+    background: rgba(0, 0, 0, 0.5);
+    backdrop-filter: blur(10px);
+    border: 1px solid var(--opi-border);
+    border-radius: var(--opi-radius);
+    display: flex;
+
+    button {
+      background: none;
+      border: none;
+      color: var(--opi-text);
+      padding: 0.8rem 1.2rem;
+      cursor: pointer;
+      &:hover {
+        background: var(--opi-border);
+      }
+    }
+  }
 }
 
-.btn-proceed {
-  @include interactive-scale;
-  width: 100%;
-  padding: 2.4rem;
-  background: var(--opi-text);
-  color: var(--opi-bg);
-  font-weight: 700;
-  border: none;
-  font-size: 1.2rem;
+// Sidebars & UI Borders
+.sidebar-area {
+  grid-column: span 3;
+  border-left: 1px solid var(--opi-border);
+  background: rgba(5, 5, 5, 0.8);
+  backdrop-filter: blur(20px);
 }

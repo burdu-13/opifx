@@ -1,0 +1,57 @@
+@use '../../../../../../shared/styles/mixins' as *;
+
+.sidebar {
+  @include flex-between(0);
+  flex-direction: column;
+  height: 100vh;
+  border-left: 1px solid var(--opi-border);
+  background: rgba(5, 5, 5, 0.8);
+  backdrop-filter: blur(2rem);
+  width: 100%;
+}
+
+.sidebar-content {
+  width: 100%;
+  padding: 2.4rem;
+  overflow-y: auto;
+
+  &::-webkit-scrollbar {
+    width: 0.4rem;
+  }
+
+  &::-webkit-scrollbar-track {
+    background: transparent;
+  }
+
+  &::-webkit-scrollbar-thumb {
+    background: var(--opi-border-hover);
+    border-radius: var(--opi-radius);
+  }
+}
+
+.sidebar-header {
+  margin-bottom: 4rem;
+  h2 {
+    font-size: 1.4rem;
+    letter-spacing: 0.1rem;
+    color: var(--opi-text);
+  }
+}
+
+.group-label {
+  margin-bottom: 2rem;
+  color: var(--opi-text-muted);
+  font-size: 1rem;
+}
+
+.btn-proceed {
+  @include interactive-scale;
+  width: 100%;
+  padding: 2.4rem;
+  background: var(--opi-text);
+  color: var(--opi-bg);
+  font-weight: 700;
+  border: none;
+  font-size: 1.2rem;
+  margin-top: auto;
+}

@@ -1,0 +1,42 @@
+<aside class="sidebar">
+  <div class="sidebar-content">
+    <header class="sidebar-header">
+      <h2 class="text-mono">FX / PARAMETERS</h2>
+    </header>
+
+    <div class="parameter-groups">
+      <div class="group">
+        <p class="group-label text-mono">Standard</p>
+        <app-lib-slider
+          label="Brightness"
+          [value]="filters().brightness"
+          (valueChange)="update('brightness', $event)"
+        ></app-lib-slider>
+        <app-lib-slider
+          label="Contrast"
+          [value]="filters().contrast"
+          (valueChange)="update('contrast', $event)"
+        ></app-lib-slider>
+      </div>
+
+      <div class="group">
+        <p class="group-label text-mono">Aesthetic</p>
+        <app-lib-slider
+          label="Grain"
+          [value]="filters().grain"
+          [max]="100"
+          (valueChange)="update('grain', $event)"
+        ></app-lib-slider>
+        <app-lib-slider
+          label="Chroma Shift"
+          [value]="filters().chromaticAberration"
+          [max]="20"
+          unit="px"
+          (valueChange)="update('chromaticAberration', $event)"
+        ></app-lib-slider>
+      </div>
+    </div>
+  </div>
+
+  <button class="btn-proceed text-mono" (click)="proceed.emit()">EXPORT_SEQUENCE</button>
+</aside>
