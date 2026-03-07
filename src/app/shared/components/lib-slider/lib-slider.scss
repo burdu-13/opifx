@@ -11,13 +11,13 @@
 
   .label {
     font-size: 1.1rem;
-    color: var(--opi-text-muted); /* */
+    color: var(--opi-text-muted);
     letter-spacing: 0.05rem;
   }
 
   .value {
     font-size: 1.1rem;
-    color: var(--opi-text); /* */
+    color: var(--opi-text);
     font-weight: 700;
   }
 }
@@ -31,8 +31,8 @@
 .range-input {
   appearance: none;
   width: 100%;
-  height: 0.1rem; // 1px line
-  background: var(--opi-border-hover); /* */
+  height: 0.1rem;
+  background: var(--opi-border-hover);
   outline: none;
   cursor: crosshair;
 
@@ -40,12 +40,12 @@
     appearance: none;
     width: 0.4rem;
     height: 1.6rem;
-    background: var(--opi-text); /* */
+    background: var(--opi-text);
     border-radius: var(--opi-radius);
     transition: var(--opi-transition);
 
     &:hover {
-      background: var(--opi-accent); /* */
+      background: var(--opi-accent);
       transform: scaleY(1.2);
     }
   }
@@ -53,7 +53,7 @@
   &::-moz-range-thumb {
     width: 0.4rem;
     height: 1.6rem;
-    background: var(--opi-text); /* */
+    background: var(--opi-text);
     border: none;
     border-radius: var(--opi-radius);
   }

@@ -5,59 +5,76 @@
   height: 100vh;
   width: 100vw;
   background-color: var(--opi-bg);
+  font-family: var(--opi-font-sans);
 }
 
 .viewport-area {
   grid-column: span 9;
   position: relative;
-  overflow: hidden; // Critical: No overflowing
+  overflow: hidden;
   @include flex-center;
   background: var(--opi-surface);
 
-  // The "Modern Cloudy" Opium Look
   .cloud-glow {
     @include abs-fill;
-    background:
-      radial-gradient(circle at 50% 50%, rgba(255, 255, 255, 0.03) 0%, transparent 70%),
-      radial-gradient(circle at 100% 0%, rgba(255, 255, 255, 0.02) 0%, transparent 50%);
-    filter: blur(80px);
+    background: radial-gradient(circle at 50% 0%, var(--opi-border) 0%, transparent 70%);
+    opacity: 0.5;
     pointer-events: none;
   }
 }
 
 .viewport-meta {
   position: absolute;
-  bottom: 2.4rem;
-  left: 2.4rem;
+  bottom: 3.2rem;
+  left: 50%;
+  transform: translateX(-50%);
   z-index: 10;
-  @include flex-center(2rem);
-  color: var(--opi-text-muted);
-  font-size: 1.1rem;
+  @include flex-center(1.6rem);
+  background: var(--opi-surface-raised);
+  border: 1px solid var(--opi-border-hover);
+  border-radius: 100px;
+  padding: 0.6rem 1.2rem;
+  box-shadow: 0 10px 30px rgba(0, 0, 0, 0.2);
+
+  &.text-mono {
+    font-family: var(--opi-font-sans) !important;
+    text-transform: none;
+    letter-spacing: normal;
+    color: var(--opi-text);
+    font-size: 1.2rem;
+    font-weight: 500;
+  }
 
   .controls-mini {
-    background: rgba(0, 0, 0, 0.5);
-    backdrop-filter: blur(10px);
+    background: var(--opi-bg);
     border: 1px solid var(--opi-border);
-    border-radius: var(--opi-radius);
+    border-radius: 100px;
     display: flex;
+    overflow: hidden;
 
     button {
       background: none;
       border: none;
       color: var(--opi-text);
-      padding: 0.8rem 1.2rem;
-      cursor: pointer;
+      padding: 0.6rem 1.4rem;
+      font-size: 1.4rem;
+      @include interactive-scale;
+
+      &:not(:last-child) {
+        border-right: 1px solid var(--opi-border);
+      }
+
       &:hover {
         background: var(--opi-border);
+        color: var(--opi-accent);
       }
     }
   }
 }
 
-// Sidebars & UI Borders
 .sidebar-area {
   grid-column: span 3;
   border-left: 1px solid var(--opi-border);
-  background: rgba(5, 5, 5, 0.8);
-  backdrop-filter: blur(20px);
+  background: var(--opi-surface);
+  z-index: 20;
 }
