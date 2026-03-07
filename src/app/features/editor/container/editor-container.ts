@@ -1,7 +1,7 @@
 import { ChangeDetectionStrategy, Component, inject } from '@angular/core';
 import { Editor } from '../../../core/services/editor';
 import { UploadStep } from '../components/upload-step/upload-step';
-import { EditStep } from '../components/edit-step/edit-step';
+import { EditStep } from '../components/edit-step/container/edit-step';
 import { PRESETS } from '../../../shared/config/presets.config';
 
 @Component({

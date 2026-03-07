@@ -5,9 +5,9 @@ import {
   output,
   signal,
 } from '@angular/core';
-import { FilterState } from '../../../../shared/interfaces/editor.interface';
-import { PreviewImage } from './components/preview-image/preview-image';
-import { EditControls } from './components/edit-controls/edit-controls';
+import { FilterState } from '../../../../../shared/interfaces/editor.interface';
+import { PreviewImage } from '../components/preview-image/preview-image';
+import { EditControls } from '../components/edit-controls/edit-controls';
 
 @Component({
   selector: 'app-edit-step',
