@@ -1,5 +1,5 @@
 import { ChangeDetectionStrategy, Component, input, output, signal } from '@angular/core';
-import { FilterState } from '../../../../../shared/interfaces/editor.interface';
+import { FilterState, NEUTRAL_FILTERS } from '../../../../../shared/interfaces/editor.interface';
 import { PreviewImage } from '../components/preview-image/preview-image';
 import { EditControls } from '../components/edit-controls/edit-controls';
 import { PRESETS } from '../../../../../shared/config/presets.config';
@@ -26,14 +26,16 @@ export class EditStep {
   public readonly zoom = signal<number>(1);
   public readonly position = signal<{ x: number; y: number }>({ x: 0, y: 0 });
 
-  public handlePresetSelection(id: string): void {
+  public handlePresetSelection(id: string | null): void {
     this.activePresetId.set(id);
-    const selectedPreset = this.presets.find((p) => p.id === id);
-    if (selectedPreset) {
-      this.filterChange.emit({
-        ...this.filters(),
-        ...selectedPreset.state,
-      } as FilterState);
+
+    if (id) {
+      const selectedPreset = this.presets.find((p) => p.id === id);
+      if (selectedPreset && selectedPreset.state) {
+        this.filterChange.emit({ ...this.filters(), ...selectedPreset.state } as FilterState);
+      }
+    } else {
+      this.filterChange.emit({ ...NEUTRAL_FILTERS });
     }
   }
 

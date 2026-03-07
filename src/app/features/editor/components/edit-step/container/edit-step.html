@@ -1,5 +1,5 @@
 <div class="edit-shell">
-  <section class="viewport-area">
+  <section class="viewport-area" [class.full-width]="isPresetGalleryOpen()">
     <div class="cloud-glow"></div>
 
     <app-preset-bar
@@ -17,8 +17,8 @@
       (pan)="handlePan($event)"
     />
 
-    <div class="viewport-meta">
-      <span>{{ (zoom() * 100).toFixed(0) }}%</span>
+    <div class="viewport-meta text-mono">
+      <span>Z_LVL: {{ (zoom() * 100).toFixed(0) }}%</span>
       <div class="controls-mini">
         <button (click)="updateZoom(0.1)">+</button>
         <button (click)="updateZoom(-0.1)">-</button>

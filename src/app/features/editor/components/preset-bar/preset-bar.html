@@ -1,9 +1,12 @@
 <div class="preset-container" [class.expanded]="isExpanded()">
   <header class="preset-header">
     <span class="title">Atmosphere</span>
-    <button class="btn-expand" (click)="toggleExpand()">
-      {{ isExpanded() ? 'Return to Adjustments' : 'Browse Presets' }}
-    </button>
+
+    @if (activePresetId()) {
+      <button class="btn-expand" (click)="toggleExpand()">
+        {{ isExpanded() ? 'Return to Adjustments' : 'View Specifications' }}
+      </button>
+    }
   </header>
 
   <div class="preset-track">
@@ -26,7 +29,7 @@
       </div>
 
       <div class="spec-grid">
-        @for (spec of formatSpecs(activePresetDetails()?.state); track spec.label) {
+        @for (spec of formattedSpecs(); track spec.label) {
           <div class="spec-item">
             <span class="spec-label">{{ spec.label }}</span>
             <span class="spec-val">{{ spec.val }}</span>
