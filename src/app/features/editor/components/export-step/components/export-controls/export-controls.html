@@ -1,0 +1,31 @@
+<aside class="export-sidebar">
+  <div class="sidebar-content">
+    <header class="sidebar-header">
+      <h2>Export Specifications</h2>
+    </header>
+
+    <div class="format-selection">
+      <p class="group-label">File Format</p>
+      <div class="format-list">
+        @for (format of formats; track format.value) {
+          <button
+            class="format-pill"
+            [class.active]="selectedFormat() === format.value"
+            (click)="formatChange.emit(format.value)"
+          >
+            {{ format.label }}
+          </button>
+        }
+      </div>
+    </div>
+  </div>
+
+  <div class="sidebar-footer">
+    <button class="btn-secondary" (click)="back.emit()" [disabled]="isProcessing()">
+      Return to Edit
+    </button>
+    <button class="btn-primary" (click)="download.emit()" [disabled]="isProcessing()">
+      {{ isProcessing() ? 'Processing...' : 'Download Render' }}
+    </button>
+  </div>
+</aside>
