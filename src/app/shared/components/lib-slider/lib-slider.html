@@ -1,7 +1,10 @@
 <div class="slider-field">
   <div class="slider-info">
-    <span class="label text-mono">{{ label() }}</span>
-    <span class="value text-mono">{{ value() }}{{ unit() }}</span>
+    <span class="label">{{ label() }}</span>
+    <div class="value-container">
+      <span class="value">{{ value() }}</span>
+      <span class="unit">{{ unit() }}</span>
+    </div>
   </div>
 
   <div class="input-wrapper">
@@ -14,5 +17,8 @@
       (input)="onInput($event)"
       class="range-input"
     />
+    <div class="track-visual">
+      <div class="track-fill" [style.width.%]="((value() - min()) / (max() - min())) * 100"></div>
+    </div>
   </div>
 </div>

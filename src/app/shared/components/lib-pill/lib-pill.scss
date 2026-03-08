@@ -1,13 +1,10 @@
 @use '../../styles/mixins' as *;
 
 .pill {
-  @include pill-base;
-  background: rgba(255, 255, 255, 0.02);
+  @include pill-base(0.8rem, 2rem);
+  @include typography-sans(1.2rem, 300, var(--opi-text-muted));
+  background: var(--opi-glow);
   border: 1px solid var(--opi-border);
-  color: var(--opi-text-muted);
-  font-family: var(--opi-font-sans);
-  font-size: 1.2rem;
-  font-weight: 300;
 
   &:hover {
     border-color: var(--opi-border-hover);

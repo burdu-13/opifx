@@ -1,60 +1,102 @@
 @use '../../styles/mixins' as *;
 
 .slider-field {
+  @include flex-column(1.2rem);
   width: 100%;
   margin-bottom: 3.2rem;
 }
 
 .slider-info {
   @include flex-between;
-  margin-bottom: 1.2rem;
+  align-items: flex-end;
 
   .label {
-    font-size: 1.1rem;
-    color: var(--opi-text-muted);
-    letter-spacing: 0.05rem;
+    @include text-uppercase-label(0.75rem, 0.5);
   }
 
-  .value {
-    font-size: 1.1rem;
-    color: var(--opi-text);
-    font-weight: 700;
+  .value-container {
+    @include flex-center(0.2rem);
+
+    .value {
+      @include typography-mono(1.2rem, 700);
+      color: var(--opi-text);
+      line-height: 1;
+    }
+
+    .unit {
+      @include typography-mono(0.8rem, 400);
+      color: var(--opi-text-muted);
+      opacity: 0.6;
+    }
   }
 }
 
 .input-wrapper {
   position: relative;
-  height: 2.4rem;
+  height: 3.2rem;
   @include flex-center;
+  cursor: ew-resize;
+
+  &:hover .range-input::-webkit-slider-thumb {
+    background: var(--opi-accent);
+    transform: scaleY(1.4);
+  }
+
+  .track-visual {
+    @include abs-fill;
+    height: 2px;
+    top: 50%;
+    transform: translateY(-50%);
+    background: var(--opi-border-hover);
+    pointer-events: none;
+    border-radius: var(--opi-radius);
+
+    .track-fill {
+      height: 100%;
+      background: var(--opi-text);
+      border-radius: var(--opi-radius);
+      opacity: 0.8;
+    }
+  }
 }
 
 .range-input {
   appearance: none;
-  width: 100%;
-  height: 0.1rem;
-  background: var(--opi-border-hover);
+  @include abs-fill;
+  background: transparent;
   outline: none;
-  cursor: crosshair;
+  cursor: ew-resize;
+  z-index: 2;
+  margin: 0;
 
   &::-webkit-slider-thumb {
     appearance: none;
-    width: 0.4rem;
-    height: 1.6rem;
+    width: 0.6rem;
+    height: 2rem;
     background: var(--opi-text);
-    border-radius: var(--opi-radius);
+    border-radius: 1px;
     transition: var(--opi-transition);
+    border: 2px solid var(--opi-bg);
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.5);
 
-    &:hover {
-      background: var(--opi-accent);
-      transform: scaleY(1.2);
+    &:active {
+      cursor: grabbing;
+      transform: scaleY(1.6) scaleX(1.1);
     }
   }
 
   &::-moz-range-thumb {
-    width: 0.4rem;
-    height: 1.6rem;
+    width: 0.6rem;
+    height: 2rem;
     background: var(--opi-text);
-    border: none;
-    border-radius: var(--opi-radius);
+    border: 2px solid var(--opi-bg);
+    border-radius: 1px;
+    transition: var(--opi-transition);
+    cursor: ew-resize;
+
+    &:active {
+      cursor: grabbing;
+      transform: scaleY(1.6);
+    }
   }
 }

@@ -1,10 +1,11 @@
-import { Component, input, output } from '@angular/core';
+import { ChangeDetectionStrategy, Component, input, output } from '@angular/core';
 
 @Component({
   selector: 'app-lib-slider',
   imports: [],
   templateUrl: './lib-slider.html',
   styleUrl: './lib-slider.scss',
+  changeDetection: ChangeDetectionStrategy.OnPush,
 })
 export class LibSlider {
   public readonly label = input.required<string>();

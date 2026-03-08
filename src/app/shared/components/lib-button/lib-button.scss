@@ -1,16 +1,11 @@
 @use '../../styles/mixins' as *;
 
 button {
-  @include interactive-scale;
+  @include pill-base(1.6rem, 3.2rem);
   @include flex-center;
+  @include typography-sans(1.2rem, 500);
   width: 100%;
-  padding: 1.6rem 3.2rem;
-  border-radius: 4rem;
-  font-family: var(--opi-font-sans);
-  font-size: 1.2rem;
-  font-weight: 500;
   letter-spacing: 0.05em;
-  transition: var(--opi-transition);
 
   &:disabled {
     opacity: 0.4;
@@ -21,6 +16,7 @@ button {
     background: var(--opi-text);
     color: var(--opi-bg);
     border: 1px solid var(--opi-text);
+
     &:hover:not(:disabled) {
       box-shadow: 0 0 3rem var(--opi-glow);
     }
@@ -30,8 +26,28 @@ button {
     background: transparent;
     color: var(--opi-text);
     border: 1px solid var(--opi-border-hover);
+
     &:hover:not(:disabled) {
       background: rgba(255, 255, 255, 0.05);
     }
+  }
+}
+
+.loader {
+  width: 1.8rem;
+  height: 1.8rem;
+  border: 2px solid currentColor;
+  border-bottom-color: transparent;
+  border-radius: 50%;
+  display: inline-block;
+  animation: rotation 1s linear infinite;
+}
+
+@keyframes rotation {
+  0% {
+    transform: rotate(0deg);
+  }
+  100% {
+    transform: rotate(360deg);
   }
 }

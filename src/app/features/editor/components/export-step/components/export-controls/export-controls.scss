@@ -2,46 +2,41 @@
 
 .export-sidebar {
   @include flex-between(0, column);
+  @include glass-panel(0.6, 3rem);
   height: 100vh;
   width: 100%;
-  @include glass-panel(0.45, 3rem);
-  border-left: 1px solid rgba(255, 255, 255, 0.04);
+  border-left: 1px solid var(--opi-border);
 }
 
 .sidebar-content {
+  @include flex-column(4rem);
   width: 100%;
-  padding: 4rem 3.2rem;
+  padding: 3.2rem 2.4rem;
   flex: 1;
 }
 
 .sidebar-header {
-  margin-bottom: 4rem;
-
   h2 {
-    font-family: var(--opi-font-sans);
-    font-size: 2.4rem;
-    font-weight: 300;
-    letter-spacing: -0.02em;
+    @include typography-mono(1.6rem, 300);
     color: var(--opi-text);
+    margin: 0;
   }
 }
 
 .group-label {
-  @include text-uppercase-label(1rem, 0.4);
+  @include text-uppercase-label(0.9rem, 0.4);
   margin-bottom: 1.6rem;
 }
 
 .format-list {
-  display: flex;
-  flex-direction: column;
-  gap: 1.2rem;
+  @include flex-column(0.8rem);
+  align-items: stretch;
 }
 
 .sidebar-footer {
+  @include flex-column(1.2rem);
   width: 100%;
-  padding: 3.2rem;
-  border-top: 1px solid rgba(255, 255, 255, 0.04);
-  display: flex;
-  flex-direction: column;
-  gap: 1.6rem;
+  padding: 2.4rem;
+  border-top: 1px solid var(--opi-border);
+  background: linear-gradient(to top, rgba(0, 0, 0, 0.3), transparent);
 }
