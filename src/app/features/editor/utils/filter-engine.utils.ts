@@ -11,9 +11,9 @@ export class FilterEngine {
 
     for (let i = 0; i < data.length; i += 4) {
       const noise = (Math.random() - 0.5) * factor;
-      data[i] += noise; // Red
-      data[i + 1] += noise; // Green
-      data[i + 2] += noise; // Blue
+      data[i] += noise;
+      data[i + 1] += noise;
+      data[i + 2] += noise;
     }
     ctx.putImageData(imageData, 0, 0);
   }

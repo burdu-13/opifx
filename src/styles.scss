@@ -12,8 +12,9 @@ body {
   background-color: var(--opi-bg);
   color: var(--opi-text);
   font-family: var(--opi-font-sans);
-  font-size: 1.4rem;
   line-height: 1.5;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
 }
 
 ::-webkit-scrollbar {

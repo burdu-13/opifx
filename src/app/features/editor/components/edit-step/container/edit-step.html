@@ -1,6 +1,13 @@
 <div class="edit-shell">
-  <section class="viewport-area">
+  <section class="viewport-area" [class.full-width]="isPresetGalleryOpen()">
     <div class="cloud-glow"></div>
+
+    <app-preset-bar
+      [presets]="presets"
+      [activePresetId]="activePresetId()"
+      (presetSelected)="handlePresetSelection($event)"
+      (expandedChange)="isPresetGalleryOpen.set($event)"
+    />
 
     <app-preview-image
       [src]="image()"
@@ -20,11 +27,12 @@
     </div>
   </section>
 
-  <app-edit-controls
-    class="sidebar-area"
-    [filters]="filters()"
-    (change)="filterChange.emit($event)"
-    (presetSelected)="presetSelected.emit($event)"
-    (proceed)="proceed.emit()"
-  />
+  @if (!isPresetGalleryOpen()) {
+    <app-edit-controls
+      class="sidebar-area"
+      [filters]="filters()"
+      (change)="handleManualChange($event)"
+      (proceed)="proceed.emit()"
+    />
+  }
 </div>

@@ -1,32 +1,16 @@
 <aside class="sidebar">
   <div class="sidebar-content">
     <header class="sidebar-header">
-      <h2 class="text-mono">Editor</h2>
+      <h2>Adjustments</h2>
     </header>
-
-    <div class="group">
-      <p class="group-label text-mono">Presets</p>
-      <div class="preset-grid">
-        @for (preset of presets(); track preset.id) {
-          <button
-            class="preset-card"
-            [class.active]="activePresetId() === preset.id"
-            (click)="selectPreset(preset)"
-          >
-            <span class="preset-name">{{ preset.name }}</span>
-            <span class="preset-desc">{{ preset.description }}</span>
-          </button>
-        }
-      </div>
-    </div>
 
     <div class="parameter-groups">
       <div class="group">
-        <p class="group-label text-mono">Adjustments</p>
-        @for (ctrl of standardGroup; track ctrl.key) {
+        <p class="group-label">Standard</p>
+        @for (ctrl of standardControls(); track ctrl.key) {
           <app-lib-slider
             [label]="ctrl.label"
-            [value]="$any(filters())[ctrl.key]"
+            [value]="ctrl.currentValue"
             [min]="ctrl.min"
             [max]="ctrl.max"
             [stepSize]="ctrl.step"
@@ -37,11 +21,11 @@
       </div>
 
       <div class="group">
-        <p class="group-label text-mono">Aesthetics</p>
-        @for (ctrl of aestheticGroup; track ctrl.key) {
+        <p class="group-label">Aesthetics</p>
+        @for (ctrl of aestheticControls(); track ctrl.key) {
           <app-lib-slider
             [label]="ctrl.label"
-            [value]="$any(filters())[ctrl.key]"
+            [value]="ctrl.currentValue"
             [min]="ctrl.min"
             [max]="ctrl.max"
             [stepSize]="ctrl.step"
@@ -53,5 +37,7 @@
     </div>
   </div>
 
-  <button class="btn-proceed text-mono" (click)="proceed.emit()">Export result</button>
+  <div class="sidebar-footer">
+    <button class="btn-proceed" (click)="proceed.emit()">Export Sequence</button>
+  </div>
 </aside>
