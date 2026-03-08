@@ -1,13 +1,10 @@
 @use '../../../../../../shared/styles/mixins' as *;
 
 .export-sidebar {
-  @include flex-between(0);
-  flex-direction: column;
+  @include flex-between(0, column);
   height: 100vh;
   width: 100%;
-  background: rgba(5, 5, 5, 0.45);
-  backdrop-filter: blur(3rem);
-  -webkit-backdrop-filter: blur(3rem);
+  @include glass-panel(0.45, 3rem);
   border-left: 1px solid rgba(255, 255, 255, 0.04);
 }
 
@@ -30,13 +27,8 @@
 }
 
 .group-label {
-  font-family: var(--opi-font-sans);
-  font-weight: 400;
-  font-size: 1rem;
-  letter-spacing: 0.1em;
-  color: rgba(255, 255, 255, 0.4);
+  @include text-uppercase-label(1rem, 0.4);
   margin-bottom: 1.6rem;
-  text-transform: uppercase;
 }
 
 .format-list {

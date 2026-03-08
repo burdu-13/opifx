@@ -13,9 +13,7 @@
 
   &.expanded {
     height: 100%;
-    background: rgba(5, 5, 5, 0.4);
-    backdrop-filter: blur(4rem);
-    -webkit-backdrop-filter: blur(4rem);
+    @include glass-panel(0.4, 4rem);
   }
 }
 
@@ -56,12 +54,9 @@
 }
 
 .preset-pill {
-  @include interactive-scale;
-  white-space: nowrap;
-  padding: 0.8rem 2rem;
+  @include pill-base;
   background: rgba(255, 255, 255, 0.02);
   border: 1px solid rgba(255, 255, 255, 0.08);
-  border-radius: 4rem;
   color: rgba(255, 255, 255, 0.7);
   font-family: var(--opi-font-sans);
   font-size: 1.2rem;
@@ -123,12 +118,7 @@
   gap: 0.8rem;
 
   .spec-label {
-    font-family: var(--opi-font-sans);
-    font-size: 1rem;
-    font-weight: 400;
-    text-transform: uppercase;
-    letter-spacing: 0.1em;
-    color: rgba(255, 255, 255, 0.4);
+    @include text-uppercase-label(1rem, 0.4);
   }
 
   .spec-val {

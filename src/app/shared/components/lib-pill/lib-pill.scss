@@ -1,17 +1,13 @@
 @use '../../styles/mixins' as *;
 
 .pill {
-  @include interactive-scale;
-  white-space: nowrap;
-  padding: 0.8rem 2rem;
+  @include pill-base;
   background: rgba(255, 255, 255, 0.02);
   border: 1px solid var(--opi-border);
-  border-radius: 4rem;
   color: var(--opi-text-muted);
   font-family: var(--opi-font-sans);
   font-size: 1.2rem;
   font-weight: 300;
-  transition: var(--opi-transition);
 
   &:hover {
     border-color: var(--opi-border-hover);
