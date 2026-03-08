@@ -12,5 +12,12 @@
         (proceed)="srv.setStep('EXPORT')"
       />
     }
+    @case ('EXPORT') {
+      <app-export-step
+        [image]="srv.sourceImage()"
+        [filters]="srv.filters()"
+        (goBack)="srv.setStep('EDIT')"
+      />
+    }
   }
 </div>

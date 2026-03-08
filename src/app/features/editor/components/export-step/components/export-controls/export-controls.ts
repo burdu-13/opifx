@@ -1,9 +1,11 @@
 import { ChangeDetectionStrategy, Component, input, output } from '@angular/core';
 import { ExportFormat } from '../../interfaces/export.interface';
+import { LibButton } from "../../../../../../shared/components/lib-button/lib-button";
+import { LibPill } from "../../../../../../shared/components/lib-pill/lib-pill";
 
 @Component({
   selector: 'app-export-controls',
-  imports: [],
+  imports: [LibButton, LibPill],
   templateUrl: './export-controls.html',
   styleUrl: './export-controls.scss',
   changeDetection: ChangeDetectionStrategy.OnPush,

@@ -1,0 +1,29 @@
+@use '../../../../../shared/styles/mixins' as *;
+
+.export-shell {
+  @include grid-layout(12, 0);
+  height: 100vh;
+  width: 100vw;
+  background-color: var(--opi-bg);
+}
+
+.preview-area {
+  grid-column: span 9;
+  position: relative;
+  overflow: hidden;
+  @include flex-center;
+  background: var(--opi-surface);
+
+  .cloud-glow {
+    @include abs-fill;
+    background:
+      radial-gradient(circle at 50% 50%, rgba(255, 255, 255, 0.03) 0%, transparent 70%),
+      radial-gradient(circle at 100% 0%, rgba(255, 255, 255, 0.02) 0%, transparent 50%);
+    filter: blur(80px);
+    pointer-events: none;
+  }
+}
+
+.sidebar-area {
+  grid-column: span 3;
+}

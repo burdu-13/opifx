@@ -19,6 +19,7 @@
 
 .sidebar-header {
   margin-bottom: 4rem;
+
   h2 {
     font-family: var(--opi-font-sans);
     font-size: 2.4rem;
@@ -44,33 +45,6 @@
   gap: 1.2rem;
 }
 
-.format-pill {
-  @include interactive-scale;
-  width: 100%;
-  text-align: left;
-  padding: 1.6rem 2rem;
-  background: rgba(255, 255, 255, 0.02);
-  border: 1px solid rgba(255, 255, 255, 0.08);
-  border-radius: 1.2rem;
-  color: rgba(255, 255, 255, 0.7);
-  font-family: var(--opi-font-sans);
-  font-size: 1.3rem;
-  font-weight: 300;
-  transition: all 0.3s ease;
-
-  &:hover {
-    border-color: rgba(255, 255, 255, 0.2);
-    color: var(--opi-text);
-  }
-
-  &.active {
-    background: var(--opi-text);
-    color: var(--opi-bg);
-    border-color: var(--opi-text);
-    font-weight: 500;
-  }
-}
-
 .sidebar-footer {
   width: 100%;
   padding: 3.2rem;
@@ -78,42 +52,4 @@
   display: flex;
   flex-direction: column;
   gap: 1.6rem;
-}
-
-.btn-primary,
-.btn-secondary {
-  @include interactive-scale;
-  width: 100%;
-  padding: 1.6rem;
-  border-radius: 4rem;
-  font-family: var(--opi-font-sans);
-  font-size: 1.2rem;
-  font-weight: 400;
-  letter-spacing: 0.05em;
-  transition: all 0.3s ease;
-
-  &:disabled {
-    opacity: 0.5;
-    pointer-events: none;
-  }
-}
-
-.btn-primary {
-  background: var(--opi-text);
-  color: var(--opi-bg);
-  border: none;
-
-  &:hover {
-    box-shadow: 0 0 3rem rgba(255, 255, 255, 0.2);
-  }
-}
-
-.btn-secondary {
-  background: transparent;
-  color: var(--opi-text);
-  border: 1px solid rgba(255, 255, 255, 0.2);
-
-  &:hover {
-    background: rgba(255, 255, 255, 0.05);
-  }
 }

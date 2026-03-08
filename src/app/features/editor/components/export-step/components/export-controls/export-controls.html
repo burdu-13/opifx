@@ -8,24 +8,24 @@
       <p class="group-label">File Format</p>
       <div class="format-list">
         @for (format of formats; track format.value) {
-          <button
-            class="format-pill"
-            [class.active]="selectedFormat() === format.value"
-            (click)="formatChange.emit(format.value)"
+          <app-lib-pill
+            [active]="selectedFormat() === format.value"
+            (selected)="formatChange.emit(format.value)"
           >
             {{ format.label }}
-          </button>
+          </app-lib-pill>
         }
       </div>
     </div>
   </div>
 
   <div class="sidebar-footer">
-    <button class="btn-secondary" (click)="back.emit()" [disabled]="isProcessing()">
+    <app-lib-button variant="secondary" (clicked)="back.emit()" [disabled]="isProcessing()">
       Return to Edit
-    </button>
-    <button class="btn-primary" (click)="download.emit()" [disabled]="isProcessing()">
-      {{ isProcessing() ? 'Processing...' : 'Download Render' }}
-    </button>
+    </app-lib-button>
+
+    <app-lib-button [loading]="isProcessing()" (clicked)="download.emit()">
+      Download Render
+    </app-lib-button>
   </div>
 </aside>

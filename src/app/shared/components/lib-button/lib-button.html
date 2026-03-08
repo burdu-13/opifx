@@ -1,0 +1,12 @@
+<button
+  [type]="type()"
+  [disabled]="disabled() || loading()"
+  (click)="clicked.emit($event)"
+  [class]="variant()"
+>
+  @if (loading()) {
+    <span class="loader"></span>
+  } @else {
+    <ng-content />
+  }
+</button>
