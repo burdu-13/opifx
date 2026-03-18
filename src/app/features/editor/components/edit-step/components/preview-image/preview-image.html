@@ -5,5 +5,9 @@
   (mouseup)="onMouseUp()"
   (mouseleave)="onMouseUp()"
 >
-  <canvas #mainCanvas [style.transform]="transformStyle()"></canvas>
+  <canvas
+    #mainCanvas
+    [style.transform]="transformStyle()"
+    [style.filter]="cssFilterPreview()"
+  ></canvas>
 </div>

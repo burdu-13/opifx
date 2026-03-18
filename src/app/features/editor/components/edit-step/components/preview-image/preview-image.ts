@@ -33,21 +33,39 @@ export class PreviewImage {
   private startX = 0;
   private startY = 0;
 
+  private renderFrameId: number | null = null;
+
   public readonly transformStyle = computed(
     () => `translate(${this.position().x}px, ${this.position().y}px) scale(${this.zoom()})`,
   );
 
   constructor() {
-    this.imageElement.onload = () => this.executeRender();
+    // Trigger render when the image finishes loading
+    this.imageElement.onload = () => this.scheduleRender();
 
+    // Update image source when input changes
     effect(() => {
       const source = this.src();
-      if (source) this.imageElement.src = source;
+      if (source) {
+        this.imageElement.src = source;
+      }
     });
 
+    // Re-render when filters change
     effect(() => {
       this.filters();
+      this.scheduleRender();
+    });
+  }
+
+  private scheduleRender(): void {
+    if (this.renderFrameId) {
+      cancelAnimationFrame(this.renderFrameId);
+    }
+
+    this.renderFrameId = requestAnimationFrame(() => {
       this.executeRender();
+      this.renderFrameId = null;
     });
   }
 
@@ -66,11 +84,25 @@ export class PreviewImage {
     this.pan.emit({ x: dx, y: dy });
   }
 
+  public readonly cssFilterPreview = computed(() => {
+    const f = this.filters();
+    return `
+    brightness(${f.brightness}%) 
+    contrast(${f.contrast}%) 
+    saturate(${f.saturation}%) 
+    blur(${f.blur}px)
+  `;
+  });
+
   public onMouseUp(): void {
     this.isDragging = false;
   }
 
   private executeRender(): void {
-    CanvasRendererUtil.render(this.canvas()?.nativeElement, this.imageElement, this.filters());
+    const canvasEl = this.canvas()?.nativeElement;
+    if (!canvasEl || !this.imageElement.complete) return;
+
+    // Ensure CanvasRendererUtil handles the internal drawing logic
+    CanvasRendererUtil.render(canvasEl, this.imageElement, this.filters());
   }
 }

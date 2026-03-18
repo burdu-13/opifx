@@ -1,21 +1,50 @@
 export class FilterEngine {
+  private static noiseCache: HTMLCanvasElement | null = null;
+
+  private static getNoiseTexture(): HTMLCanvasElement {
+    if (this.noiseCache) return this.noiseCache;
+
+    const canvas = document.createElement('canvas');
+    canvas.width = canvas.height = 256;
+    const ctx = canvas.getContext('2d')!;
+    const imageData = ctx.createImageData(256, 256);
+    const data = imageData.data;
+
+    for (let i = 0; i < data.length; i += 4) {
+      const val = Math.random() * 255;
+      data[i] = val;
+      data[i + 1] = val;
+      data[i + 2] = val;
+      data[i + 3] = 255;
+    }
+
+    ctx.putImageData(imageData, 0, 0);
+    this.noiseCache = canvas;
+    return canvas;
+  }
+
   public static applyGrain(
     ctx: CanvasRenderingContext2D,
     w: number,
     h: number,
     intensity: number,
   ): void {
-    const imageData = ctx.getImageData(0, 0, w, h);
-    const data = imageData.data;
-    const factor = intensity * 2.55;
+    if (intensity <= 0) return;
 
-    for (let i = 0; i < data.length; i += 4) {
-      const noise = (Math.random() - 0.5) * factor;
-      data[i] += noise;
-      data[i + 1] += noise;
-      data[i + 2] += noise;
-    }
-    ctx.putImageData(imageData, 0, 0);
+    const texture = this.getNoiseTexture();
+    const pattern = ctx.createPattern(texture, 'repeat');
+
+    if (!pattern) return;
+
+    ctx.save();
+
+    ctx.globalCompositeOperation = 'overlay';
+    ctx.globalAlpha = intensity / 100;
+
+    ctx.fillStyle = pattern;
+    ctx.fillRect(0, 0, w, h);
+
+    ctx.restore();
   }
 
   public static applyChromaticAberration(
