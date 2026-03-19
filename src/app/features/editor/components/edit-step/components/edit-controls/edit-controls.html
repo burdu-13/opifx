@@ -1,12 +1,16 @@
 <aside class="sidebar">
   <div class="sidebar-content">
     <header class="sidebar-header">
-      <h2>Adjustments</h2>
+      <div class="brand-eyebrow">Adjustments</div>
+      <div class="header-top">
+        <h2>Fine-tune your image</h2>
+        <button class="btn-text-reset" (click)="resetAll()" title="Reset All Filters">Reset</button>
+      </div>
     </header>
 
     <div class="parameter-groups">
       <div class="group">
-        <p class="group-label">Standard</p>
+        <p class="group-label">Standard Grading</p>
         @for (ctrl of standardControls(); track ctrl.key) {
           <app-lib-slider
             [label]="ctrl.label"
@@ -14,14 +18,14 @@
             [min]="ctrl.min"
             [max]="ctrl.max"
             [stepSize]="ctrl.step"
-            [unit]="ctrl.unit"
+            [unit]="ctrl.unit!"
             (valueChange)="update(ctrl.key, $event)"
           />
         }
       </div>
 
       <div class="group">
-        <p class="group-label">Aesthetics</p>
+        <p class="group-label">Atmospheric Effects</p>
         @for (ctrl of aestheticControls(); track ctrl.key) {
           <app-lib-slider
             [label]="ctrl.label"
@@ -29,15 +33,11 @@
             [min]="ctrl.min"
             [max]="ctrl.max"
             [stepSize]="ctrl.step"
-            [unit]="ctrl.unit"
+            [unit]="ctrl.unit!"
             (valueChange)="update(ctrl.key, $event)"
           />
         }
       </div>
     </div>
-  </div>
-
-  <div class="sidebar-footer">
-    <button class="btn-proceed" (click)="proceed.emit()">Export Sequence</button>
   </div>
 </aside>

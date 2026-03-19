@@ -1,23 +1,20 @@
 import { ChangeDetectionStrategy, Component, inject } from '@angular/core';
+import { Router, RouterOutlet, RouterLink } from '@angular/router';
 import { Editor } from '../../../core/services/editor';
-import { UploadStep } from '../components/upload-step/upload-step';
-import { EditStep } from '../components/edit-step/container/edit-step';
-import { PRESETS } from '../../../shared/config/presets.config';
 
 @Component({
   selector: 'app-editor-container',
-  imports: [UploadStep, EditStep],
+  imports: [RouterOutlet],
   templateUrl: './editor-container.html',
   styleUrl: './editor-container.scss',
   changeDetection: ChangeDetectionStrategy.OnPush,
 })
 export class EditorContainer {
   public readonly srv = inject(Editor);
+  private readonly router = inject(Router);
 
-  public onPresetApplied(presetId: string): void {
-    const preset = PRESETS.find((p) => p.id === presetId);
-    if (preset) {
-      this.srv.applyPreset(preset);
-    }
+  public goHome(): void {
+    this.srv.reset();
+    this.router.navigate(['/']);
   }
 }

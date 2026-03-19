@@ -1,19 +1,55 @@
-<section
-  class="upload-viewport"
-  [class.active]="isDragging()"
-  (drop)="onDrop($event)"
-  (dragover)="onDragOver($event)"
+<div 
+  class="home-layout" 
+  [class.is-dragging]="isDragging()"
+  (drop)="onDrop($event)" 
+  (dragover)="onDragOver($event)" 
   (dragleave)="onDragLeave()"
 >
-  <div class="upload-frame">
-    <div class="content">
-      <h1>Upload image</h1>
-      <p class="muted">Drag and drop your image here, or click to browse</p>
 
-      <label class="fx-btn-primary">
-        <span>Select file</span>
-        <input type="file" (change)="onFileSelected($event)" accept="image/*" hidden />
-      </label>
+  <main class="home-hero">
+    <div class="hero-content">
+      <span class="eyebrow">Creative Studio</span>
+      <h1 class="headline">Professional imaging &amp; color grading.</h1>
+      <p class="subtitle">A calm, non-destructive environment to refine, grade, and output your images with absolute precision.</p>
+
+      <div class="features-list">
+        <div class="feature-item">
+          <img src="images/svgs/check-icon.svg" width="20" height="20" alt="Check" />
+          <span>Real-time processing</span>
+        </div>
+        <div class="feature-item">
+          <img src="images/svgs/check-icon.svg" width="20" height="20" alt="Check" />
+          <span>Non-destructive workflows</span>
+        </div>
+        <div class="feature-item">
+          <img src="images/svgs/check-icon.svg" width="20" height="20" alt="Check" />
+          <span>Intelligent presets</span>
+        </div>
+      </div>
     </div>
-  </div>
-</section>
+
+    <div class="hero-visual">
+      <div class="upload-frame">
+        <div class="content">
+          <div class="drag-icon">
+            <img src="images/svgs/upload-icon.svg" width="36" height="36" alt="Upload" />
+          </div>
+          <p class="primary-text">Drag & drop your image</p>
+          <p class="muted">or click to browse your files.</p>
+
+          <app-lib-button class="mt-4" (clicked)="fileInput.click()">
+            Upload Image
+          </app-lib-button>
+          <input #fileInput type="file" (change)="onFileSelected($event)" accept="image/*" hidden />
+        </div>
+      </div>
+    </div>
+  </main>
+
+  <footer class="home-footer">
+    <div class="footer-content">
+      <span class="muted">© 2026 Opifx Studio</span>
+      <span class="muted version">Secure Processing</span>
+    </div>
+  </footer>
+</div>

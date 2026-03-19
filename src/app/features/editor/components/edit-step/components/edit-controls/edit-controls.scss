@@ -1,14 +1,16 @@
 @use '../../../../../../shared/styles/mixins' as *;
 
-.sidebar {
-  @include flex-between(0);
-  flex-direction: column;
-  height: 100vh;
+:host {
+  display: block;
+  height: 100%;
   width: 100%;
-  background: rgba(5, 5, 5, 0.45);
-  backdrop-filter: blur(3rem);
-  -webkit-backdrop-filter: blur(3rem);
-  border-left: 1px solid rgba(255, 255, 255, 0.04);
+  overflow: hidden;
+}
+
+.sidebar {
+  @include flex-column;
+  height: 100%;
+  width: 100%;
 }
 
 .sidebar-content {
@@ -17,66 +19,92 @@
   overflow-y: auto;
   flex: 1;
 
+  @media (max-width: 1024px) {
+    padding: 2.4rem 1.6rem;
+  }
+
   &::-webkit-scrollbar {
-    width: 0.2rem;
+    width: 4px;
+  }
+  &::-webkit-scrollbar-track {
+    background: transparent;
   }
   &::-webkit-scrollbar-thumb {
-    background: rgba(255, 255, 255, 0.1);
-    border-radius: 1rem;
+    background: var(--opi-border-hover);
+    border-radius: 4px;
   }
 }
 
 .sidebar-header {
-  margin-bottom: 3.2rem;
+  margin-bottom: 4rem;
 
-  h2 {
-    font-family: var(--opi-font-sans);
-    font-size: 1.4rem;
-    font-weight: 300;
-    letter-spacing: 0.05em;
-    color: var(--opi-text);
+  .brand-eyebrow {
+    @include typography-sans(1.2rem, 500, var(--opi-text-muted), 0.05em);
+    text-transform: uppercase;
+    margin-bottom: 0.8rem;
+  }
+
+  .header-top {
+    @include flex-between(0);
+
+    h2 {
+      @include typography-sans(2.4rem, 300, var(--opi-text), -0.01em);
+      margin: 0;
+    }
+
+    .btn-text-reset {
+      background: transparent;
+      border: none;
+      @include typography-sans(1.2rem, 500, var(--opi-text-muted));
+      cursor: pointer;
+      transition: color var(--opi-transition);
+
+      &:hover {
+        color: var(--opi-text);
+      }
+    }
   }
 }
 
+.parameter-groups {
+  @include flex-column(4.8rem);
+}
+
 .group {
-  margin-bottom: 3.2rem;
+  margin-bottom: 4rem;
+  padding-bottom: 2rem;
+  border-bottom: 1px solid rgba(255, 255, 255, 0.05);
+
+  &:last-child {
+    border-bottom: none;
+    margin-bottom: 0;
+  }
 }
 
 .group-label {
-  font-family: var(--opi-font-sans);
-  font-weight: 400;
-  font-size: 0.9rem;
-  letter-spacing: 0.1em;
-  color: rgba(255, 255, 255, 0.4);
+  @include text-uppercase-label(0.9rem, 0.4);
   margin-bottom: 2.4rem;
-  text-transform: uppercase;
 }
 
 .sidebar-footer {
   width: 100%;
   padding: 2.4rem;
   border-top: 1px solid rgba(255, 255, 255, 0.04);
-  background: linear-gradient(to top, rgba(0, 0, 0, 0.3) 0%, transparent 100%);
+  background: var(--opi-surface);
 }
 
 .btn-proceed {
   @include interactive-scale;
   width: 100%;
   padding: 1.2rem;
-  background: rgba(255, 255, 255, 0.08);
-  backdrop-filter: blur(1rem);
-  border: 1px solid rgba(255, 255, 255, 0.1);
-  border-radius: 2rem;
-  color: var(--opi-text);
-  font-family: var(--opi-font-sans);
-  font-weight: 400;
-  font-size: 1.1rem;
-  letter-spacing: 0.05em;
+  background: var(--opi-surface);
+  border: 1px solid var(--opi-border);
+  border-radius: var(--opi-radius);
+  @include typography-sans(1.1rem, 500, var(--opi-text), 0.05em);
   transition: all 0.3s ease;
 
   &:hover {
-    background: var(--opi-text);
-    color: var(--opi-bg);
-    box-shadow: 0 0 2rem rgba(255, 255, 255, 0.1);
+    background: var(--opi-surface-raised);
+    border-color: var(--opi-border-hover);
   }
 }

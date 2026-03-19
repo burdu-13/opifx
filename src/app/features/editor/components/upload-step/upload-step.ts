@@ -1,14 +1,19 @@
-import { ChangeDetectionStrategy, Component, output, signal } from '@angular/core';
+import { ChangeDetectionStrategy, Component, signal, inject } from '@angular/core';
+import { Router } from '@angular/router';
+import { LibButton } from '../../../../shared/components/lib-button/lib-button';
+import { Editor } from '../../../../core/services/editor';
 
 @Component({
   selector: 'app-upload-step',
-  imports: [],
+  imports: [LibButton],
   templateUrl: './upload-step.html',
   styleUrl: './upload-step.scss',
   changeDetection: ChangeDetectionStrategy.OnPush,
 })
 export class UploadStep {
-  public readonly imageSelected = output<string>();
+  private readonly srv = inject(Editor);
+  private readonly router = inject(Router);
+
   public readonly isDragging = signal<boolean>(false);
 
   public onFileSelected(event: Event): void {
@@ -42,7 +47,8 @@ export class UploadStep {
     const reader = new FileReader();
     reader.onload = (e) => {
       const base64 = e.target?.result as string;
-      this.imageSelected.emit(base64);
+      this.srv.setImage(base64);
+      this.router.navigate(['/edit']);
     };
     reader.readAsDataURL(file);
   }

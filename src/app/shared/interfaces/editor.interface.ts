@@ -12,6 +12,11 @@ export interface FilterState {
   vignette: number;
   chromaticAberration: number;
   sharpness: number;
+  bloom: number;
+  halation: number;
+  toneCurve: number;
+  pixelation: number;
+  vhsOverlay: number;
 }
 
 export interface Preset {
@@ -33,6 +38,11 @@ export const NEUTRAL_FILTERS: FilterState = {
   vignette: 0,
   chromaticAberration: 0,
   sharpness: 0,
+  bloom: 0,
+  halation: 0,
+  toneCurve: 0,
+  pixelation: 0,
+  vhsOverlay: 0,
 };
 export interface FilterControlConfig {
   key: keyof FilterState;

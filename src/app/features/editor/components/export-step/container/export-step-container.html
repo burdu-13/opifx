@@ -1,0 +1,20 @@
+<div class="export-shell">
+  <section class="preview-area">
+    <app-export-preview [src]="image()" [filters]="filters()" />
+  </section>
+
+  <app-export-controls
+    class="sidebar-area"
+    [formats]="formats"
+    [selectedFormat]="format()"
+    [quality]="quality()"
+    [scale]="scale()"
+    [estimatedSize]="estimatedSize()"
+    [isProcessing]="isProcessing()"
+    (formatChange)="format.set($event)"
+    (qualityChange)="quality.set($event)"
+    (scaleChange)="scale.set($event)"
+    (download)="handleDownload()"
+    (back)="goBack()"
+  />
+</div>

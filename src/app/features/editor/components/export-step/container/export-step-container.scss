@@ -1,0 +1,49 @@
+@use '../../../../../shared/styles/mixins' as *;
+
+:host {
+  display: block;
+  height: 100%;
+  width: 100%;
+}
+
+.export-shell {
+  height: 100%;
+  width: 100%;
+  @include grid-layout(12, 0);
+  overflow: hidden;
+  background: var(--opi-bg);
+}
+
+.preview-area {
+  grid-column: span 9;
+  position: relative;
+  @include flex-center;
+  background: var(--opi-bg);
+  overflow: hidden;
+  padding: 4rem;
+}
+
+.sidebar-area {
+  grid-column: span 3;
+  border-left: 1px solid var(--opi-border);
+  background: var(--opi-surface);
+  z-index: 10;
+  height: 100%;
+  overflow: hidden;
+}
+
+@media (max-width: 1024px) {
+  .export-shell {
+    @include flex-column;
+  }
+  .preview-area {
+    height: 45dvh;
+    flex: none;
+  }
+  .sidebar-area {
+    height: auto;
+    flex: 1;
+    border-left: none;
+    border-top: 1px solid var(--opi-border);
+  }
+}

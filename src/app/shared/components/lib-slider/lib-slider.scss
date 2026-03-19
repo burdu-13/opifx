@@ -1,24 +1,32 @@
 @use '../../styles/mixins' as *;
 
 .slider-field {
+  @include flex-column(0.8rem);
   width: 100%;
-  margin-bottom: 3.2rem;
+  margin-bottom: 2.4rem;
 }
 
 .slider-info {
   @include flex-between;
-  margin-bottom: 1.2rem;
+  align-items: flex-end;
 
   .label {
-    font-size: 1.1rem;
-    color: var(--opi-text-muted);
-    letter-spacing: 0.05rem;
+    @include text-uppercase-label(0.8rem, 0.6);
   }
 
-  .value {
-    font-size: 1.1rem;
-    color: var(--opi-text);
-    font-weight: 700;
+  .value-container {
+    @include flex-center(0.2rem);
+
+    .value {
+      @include typography-mono(1.2rem, 500);
+      color: var(--opi-text);
+      line-height: 1;
+    }
+
+    .unit {
+      @include typography-mono(0.9rem, 400);
+      color: var(--opi-text-muted);
+    }
   }
 }
 
@@ -26,35 +34,66 @@
   position: relative;
   height: 2.4rem;
   @include flex-center;
+  cursor: ew-resize;
+
+  &:hover .range-input::-webkit-slider-thumb {
+    background: var(--opi-text);
+    transform: scale(1.2);
+  }
+
+  .track-visual {
+    @include abs-fill;
+    height: 1px;
+    top: 50%;
+    transform: translateY(-50%);
+    background: var(--opi-border);
+    pointer-events: none;
+
+    .track-fill {
+      height: 100%;
+      background: var(--opi-text);
+    }
+  }
 }
 
 .range-input {
   appearance: none;
-  width: 100%;
-  height: 0.1rem;
-  background: var(--opi-border-hover);
+  @include abs-fill;
+  background: transparent;
   outline: none;
-  cursor: crosshair;
+  cursor: ew-resize;
+  z-index: 2;
+  margin: 0;
 
   &::-webkit-slider-thumb {
     appearance: none;
-    width: 0.4rem;
+    width: 0.8rem;
     height: 1.6rem;
     background: var(--opi-text);
-    border-radius: var(--opi-radius);
-    transition: var(--opi-transition);
+    border-radius: 1px;
+    transition: transform 150ms ease;
+    border: none;
+    box-shadow: none;
 
-    &:hover {
-      background: var(--opi-accent);
-      transform: scaleY(1.2);
+    &:active {
+      cursor: grabbing;
+      transform: scale(1.2);
     }
   }
 
   &::-moz-range-thumb {
-    width: 0.4rem;
+    width: 0.8rem;
     height: 1.6rem;
     background: var(--opi-text);
+    border-radius: 1px;
+    transition: transform 150ms ease;
     border: none;
-    border-radius: var(--opi-radius);
+    box-shadow: none;
+    cursor: ew-resize;
+
+    &:active {
+      cursor: grabbing;
+      transform: scale(1.2);
+    }
   }
 }

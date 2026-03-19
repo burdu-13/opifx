@@ -1,0 +1,91 @@
+@use '../../../../../../shared/styles/mixins' as *;
+
+:host {
+  display: block;
+  height: 100%;
+  width: 100%;
+  overflow: hidden;
+}
+
+.export-sidebar {
+  @include flex-column;
+  height: 100%;
+  width: 100%;
+}
+
+.sidebar-content {
+  @include flex-column(4rem);
+  width: 100%;
+  padding: 3.2rem 2.4rem;
+  flex: 1;
+  overflow-y: auto;
+
+  @media (max-width: 1024px) {
+    padding: 2.4rem 1.6rem;
+    @include flex-column(3.2rem);
+  }
+}
+
+.sidebar-header {
+  .brand-eyebrow {
+    @include typography-sans(1.2rem, 500, var(--opi-text-muted), 0.05em);
+    text-transform: uppercase;
+    margin-bottom: 0.8rem;
+  }
+
+  h2 {
+    @include typography-sans(2.4rem, 300, var(--opi-text), -0.01em);
+    margin: 0;
+  }
+}
+
+.group-label {
+  @include text-uppercase-label(1.1rem, 0.5);
+  margin-bottom: 1.6rem;
+}
+
+.format-list {
+  @include flex-column(0.8rem);
+  align-items: stretch;
+}
+
+.setting-group {
+  margin-top: 3.2rem;
+}
+
+.mt-4 {
+  margin-top: 3.2rem;
+}
+
+.summary-card {
+  padding: 2.4rem;
+  background: var(--opi-surface-raised);
+  border: 1px solid var(--opi-border);
+  border-radius: var(--opi-radius);
+  text-align: center;
+  transition: all var(--opi-transition);
+
+  .group-label {
+    margin-bottom: 0.8rem;
+  }
+
+  .size-text {
+    @include typography-sans(2.8rem, 300, var(--opi-text), -0.02em);
+    margin: 0;
+  }
+}
+
+.sidebar-footer {
+  @include flex-column(1.2rem);
+  width: 100%;
+  padding: 2.4rem;
+  border-top: 1px solid var(--opi-border);
+  background: var(--opi-surface);
+  flex-shrink: 0;
+  box-sizing: border-box;
+  
+  .btn-full {
+    display: block;
+    width: 100%;
+  }
+}
