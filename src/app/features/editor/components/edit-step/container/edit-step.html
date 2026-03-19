@@ -1,38 +1,62 @@
 <div class="edit-shell">
-  <section class="viewport-area" [class.full-width]="isPresetGalleryOpen()">
-    <div class="cloud-glow"></div>
-
-    <app-preset-bar
-      [presets]="presets"
-      [activePresetId]="activePresetId()"
-      (presetSelected)="handlePresetSelection($event)"
-      (expandedChange)="isPresetGalleryOpen.set($event)"
-    />
-
-    <app-preview-image
-      [src]="image()"
-      [filters]="filters()"
-      [zoom]="zoom()"
-      [position]="position()"
-      (pan)="handlePan($event)"
-    />
-
-    <div class="viewport-meta text-mono">
-      <span>Z_LVL: {{ (zoom() * 100).toFixed(0) }}%</span>
-      <div class="controls-mini">
-        <button (click)="updateZoom(0.1)">+</button>
-        <button (click)="updateZoom(-0.1)">-</button>
-        <button (click)="resetView()">RST</button>
+  <header class="editor-toolbar">
+    <div class="toolbar-left">
+      <div class="zoom-controls">
+        <button class="icon-btn" (click)="updateZoom(-0.1)" title="Zoom Out">−</button>
+        <span class="zoom-level">{{ (zoom() * 100).toFixed(0) }}%</span>
+        <button class="icon-btn" (click)="updateZoom(0.1)" title="Zoom In">+</button>
+        <button class="icon-btn" (click)="resetView()" title="Fit to Screen">
+        <img src="images/svgs/fit-screen-icon.svg" width="14" height="14" alt="Fit to Screen" />
+        </button>
       </div>
     </div>
-  </section>
+    
+    <div class="toolbar-right">
+      <button class="btn-text" 
+              (mousedown)="showBefore.set(true)"
+              (mouseup)="showBefore.set(false)"
+              (mouseleave)="showBefore.set(false)"
+              (touchstart)="showBefore.set(true)"
+              (touchend)="showBefore.set(false)"
+              title="Hold to see original">
+        Hold to Compare
+      </button>
+      <div class="toolbar-divider"></div>
+      <app-lib-button (clicked)="proceedToExport()">Export Image</app-lib-button>
+    </div>
+  </header>
 
-  @if (!isPresetGalleryOpen()) {
-    <app-edit-controls
-      class="sidebar-area"
-      [filters]="filters()"
-      (change)="handleManualChange($event)"
-      (proceed)="proceed.emit()"
-    />
-  }
+  <div class="editor-workspace">
+    <section class="viewport-area" [class.full-width]="isPresetGalleryOpen()">
+      <div class="cloud-glow"></div>
+
+      <app-preset-bar
+        [presets]="presets"
+        [activePresetId]="activePresetId()"
+        [presetSpecs]="activeSpecs()"
+        [presetDetails]="activePresetDetails()"
+        (presetSelected)="handlePresetSelection($event)"
+        (expandedChange)="isPresetGalleryOpen.set($event)"
+      />
+
+      <app-preview-image
+        [src]="image()"
+        [filters]="activeFilters()"
+        [zoom]="zoom()"
+        [position]="position()"
+        (pan)="handlePan($event)"
+        (zoomDelta)="updateZoom($event)"
+      />
+    </section>
+
+    @if (!isPresetGalleryOpen()) {
+      <app-edit-controls
+        class="sidebar-area"
+        [standardControls]="standardControls()"
+        [aestheticControls]="aestheticControls()"
+        (change)="handleManualChange($event)"
+        (reset)="handleReset()"
+      />
+    }
+  </div>
 </div>

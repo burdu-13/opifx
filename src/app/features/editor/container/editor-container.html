@@ -1,23 +1,9 @@
 <div class="fx-shell">
-  @switch (srv.step()) {
-    @case ('UPLOAD') {
-      <app-upload-step (imageSelected)="srv.setImage($event)" />
-    }
+  <header class="global-navbar">
+    <div class="brand" (click)="goHome()" role="button" tabindex="0">OPIFX</div>
+  </header>
 
-    @case ('EDIT') {
-      <app-edit-step
-        [image]="srv.sourceImage()"
-        [filters]="srv.filters()"
-        (filterChange)="srv.updateFilter($event)"
-        (proceed)="srv.setStep('EXPORT')"
-      />
-    }
-    @case ('EXPORT') {
-      <app-export-step
-        [image]="srv.sourceImage()"
-        [filters]="srv.filters()"
-        (goBack)="srv.setStep('EDIT')"
-      />
-    }
-  }
+  <main class="router-content">
+    <router-outlet></router-outlet>
+  </main>
 </div>

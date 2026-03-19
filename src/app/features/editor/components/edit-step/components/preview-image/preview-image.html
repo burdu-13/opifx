@@ -4,9 +4,11 @@
   (mousemove)="onMouseMove($event)"
   (mouseup)="onMouseUp()"
   (mouseleave)="onMouseUp()"
+  (wheel)="onWheel($event)"
 >
   <canvas
     #mainCanvas
+    [class.is-panning]="isDragging()"
     [style.transform]="transformStyle()"
   ></canvas>
 </div>

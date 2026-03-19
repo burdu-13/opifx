@@ -1,40 +1,48 @@
 @use '../../../../../shared/styles/mixins' as *;
 
+:host {
+  display: block;
+  height: 100%;
+  width: 100%;
+}
+
 .export-shell {
-  @include fullscreen-shell;
+  height: 100%;
+  width: 100%;
   @include grid-layout(12, 0);
   overflow: hidden;
+  background: var(--opi-bg);
 }
 
 .preview-area {
   grid-column: span 9;
   position: relative;
   @include flex-center;
-  background: var(--opi-surface);
+  background: var(--opi-bg);
   overflow: hidden;
-
-  .cloud-glow {
-    @include abs-fill;
-    @include cloud-glow-effect;
-  }
+  padding: 4rem;
 }
 
 .sidebar-area {
   grid-column: span 3;
   border-left: 1px solid var(--opi-border);
-  background: rgba(5, 5, 5, 0.8);
-  backdrop-filter: blur(20px);
+  background: var(--opi-surface);
   z-index: 10;
+  height: 100%;
+  overflow: hidden;
 }
 
-@media (max-width: 768px) {
+@media (max-width: 1024px) {
+  .export-shell {
+    @include flex-column;
+  }
   .preview-area {
-    grid-column: span 12;
-    height: 50vh;
+    height: 45dvh;
+    flex: none;
   }
   .sidebar-area {
-    grid-column: span 12;
-    height: 50vh;
+    height: auto;
+    flex: 1;
     border-left: none;
     border-top: 1px solid var(--opi-border);
   }

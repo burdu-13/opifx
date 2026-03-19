@@ -64,7 +64,7 @@
 }
 
 @mixin fullscreen-shell {
-  height: 100vh;
+  height: 100dvh;
   width: 100vw;
   background-color: var(--opi-bg);
 }
@@ -102,6 +102,6 @@
   @include interactive-scale;
   white-space: nowrap;
   padding: $py $px;
-  border-radius: 4rem;
+  border-radius: var(--opi-radius);
   transition: var(--opi-transition);
 }

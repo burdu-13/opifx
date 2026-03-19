@@ -1,123 +1,213 @@
 @use '../../../../shared/styles/mixins' as *;
 
-.upload-viewport {
-  @include flex-center(8rem, column);
-  @include abs-fill;
-  padding: 4rem;
-  background-color: var(--opi-bg);
-  transition: all var(--opi-transition);
-  font-family: var(--opi-font-sans);
+:host {
+  display: block;
+  height: 100%;
+  width: 100%;
+}
 
-  &.active {
+.home-layout {
+  height: 100%;
+  width: 100%;
+  @include flex-column;
+  background-color: var(--opi-bg);
+  overflow-y: auto;
+  overflow-x: hidden;
+  transition: all var(--opi-transition);
+
+  &.is-dragging {
+    background: var(--opi-surface);
     .upload-frame {
+      border-color: var(--opi-text);
       background: var(--opi-surface-raised);
-      border-color: var(--opi-accent);
       transform: scale(1.02);
-      box-shadow: 0 20px 40px var(--opi-glow);
+      box-shadow: 0 10px 30px rgba(0, 0, 0, 0.2);
     }
   }
 }
 
-.hero-header {
-  text-align: center;
-  margin-bottom: 2rem;
+.home-nav {
+  @include flex-between(0);
+  padding: 3.2rem 6.4rem;
+  width: 100%;
 
-  .logo {
-    font-size: 8rem;
-    font-weight: 200;
-    letter-spacing: -0.05em;
+  .brand {
+    font-size: 2rem;
+    font-weight: 500;
+    letter-spacing: -0.02em;
     color: var(--opi-text);
-    margin-bottom: 1.2rem;
-    line-height: 1;
+  }
+
+  .nav-right {
+    display: flex;
+    align-items: center;
+    gap: 1.2rem;
+
+    .status-indicator {
+      width: 0.8rem;
+      height: 0.8rem;
+      border-radius: 50%;
+      background: #10b981;
+    }
+
+    .status-text {
+      font-size: 1.3rem;
+      font-weight: 500;
+      color: var(--opi-text-muted);
+    }
+  }
+
+  @media (max-width: 1024px) {
+    padding: 2.4rem 3.2rem;
+  }
+}
+
+.home-hero {
+  flex: 1;
+  display: grid;
+  grid-template-columns: 1fr 1.2fr;
+  gap: 8rem;
+  align-items: center;
+  padding: 6.4rem;
+  max-width: 120rem;
+  margin: 0 auto;
+  width: 100%;
+
+  @media (max-width: 1024px) {
+    grid-template-columns: 1fr;
+    gap: 4.8rem;
+    padding: 2.4rem 3.2rem;
+    align-items: flex-start;
+  }
+}
+
+.hero-content {
+  @include flex-column;
+
+  .eyebrow {
+    @include typography-sans(1.3rem, 500, var(--opi-text), 0.05em);
+    text-transform: uppercase;
+    margin-bottom: 2rem;
+    padding: 0.6rem 1.6rem;
+    background: var(--opi-surface-raised);
+    border-radius: 4rem;
+    display: inline-flex;
+    align-self: flex-start;
+    border: 1px solid var(--opi-border);
+  }
+
+  .headline {
+    @include typography-sans(4.8rem, 400, var(--opi-text), -0.02em);
+    line-height: 1.2;
+    margin: 0 0 2rem 0;
+
+    @media (max-width: 1024px) {
+      font-size: 3.6rem;
+    }
   }
 
   .subtitle {
-    @include typography-mono(1.3rem);
-    color: var(--opi-text-muted);
-    text-transform: uppercase;
-    letter-spacing: 0.15em;
+    @include typography-sans(1.8rem, 400, var(--opi-text-muted));
+    line-height: 1.6;
+    margin: 0 0 4.8rem 0;
+    max-width: 48rem;
+  }
+}
+
+.features-list {
+  @include flex-column(2rem);
+
+  .feature-item {
+    display: flex;
+    align-items: center;
+    gap: 1.6rem;
+    color: var(--opi-text);
+
+    svg {
+      color: var(--opi-text);
+    }
+
+    span {
+      font-size: 1.5rem;
+      font-weight: 500;
+    }
+  }
+}
+
+.hero-visual {
+  width: 100%;
+  display: flex;
+  justify-content: flex-end;
+
+  @media (max-width: 1024px) {
+    justify-content: flex-start;
   }
 }
 
 .upload-frame {
   @include flex-center(2.4rem, column);
-  @include industrial-panel;
   width: 100%;
-  max-width: 64rem;
-  height: 42rem;
+  aspect-ratio: 1;
+  max-width: 52rem;
   position: relative;
-  border: 2px dashed var(--opi-border);
-  background: var(--opi-surface-raised);
+  border: 2px dashed var(--opi-border-hover);
+  border-radius: 2.4rem;
+  background: var(--opi-surface);
   padding: 4rem;
   text-align: center;
-  transition: all 0.4s cubic-bezier(0.2, 0, 0, 1);
+  transition: all 0.3s ease;
 
   &:hover {
-    border-color: var(--opi-border-hover);
-    box-shadow: 0 20px 40px var(--opi-glow);
+    border-color: var(--opi-text-muted);
+    background: var(--opi-surface-raised);
+    transform: translateY(-2px);
+    box-shadow: 0 12px 32px rgba(0, 0, 0, 0.05);
   }
 
   .content {
     @include flex-center(1.6rem, column);
 
     .drag-icon {
-      @include typography-mono(2rem);
-      color: var(--opi-text-muted);
-      margin-bottom: 1.6rem;
+      color: var(--opi-text);
+      margin-bottom: 0.8rem;
+      padding: 1.6rem;
+      background: var(--opi-bg);
+      border-radius: 50%;
+      border: 1px solid var(--opi-border);
     }
 
     .primary-text {
-      font-size: 2rem;
-      font-weight: 300;
-      color: var(--opi-text);
-      letter-spacing: 0.02em;
+      @include typography-sans(2.2rem, 500, var(--opi-text), -0.01em);
     }
 
     p.muted {
-      @include typography-mono(1.1rem);
-      color: var(--opi-text-muted);
-      opacity: 0.6;
+      @include typography-sans(1.4rem, 400, var(--opi-text-muted));
+      margin: 0;
     }
     
     .mt-4 {
-      margin-top: 3.2rem;
+      margin-top: 2.4rem;
     }
   }
 }
 
-.corner {
-  position: absolute;
-  width: 2.4rem;
-  height: 2.4rem;
-  border: 1px solid var(--opi-border);
-  transition: border-color var(--opi-transition);
 
-  &.tl { top: 0; left: 0; border-right: none; border-bottom: none; }
-  &.tr { top: 0; right: 0; border-left: none; border-bottom: none; }
-  &.bl { bottom: 0; left: 0; border-right: none; border-top: none; }
-  &.br { bottom: 0; right: 0; border-left: none; border-top: none; }
-}
+.home-footer {
+  width: 100%;
+  padding: 3.2rem 6.4rem;
+  margin-top: auto;
 
-.fx-btn-primary {
-  @include interactive-scale;
-  display: inline-flex;
-  align-items: center;
-  justify-content: center;
-  padding: 1.6rem 3.2rem;
-  background: transparent;
-  color: var(--opi-text);
-  border: 1px solid var(--opi-border);
-  cursor: pointer;
-  transition: all var(--opi-transition);
+  .footer-content {
+    @include flex-between(0);
+    border-top: 1px solid var(--opi-border);
+    padding-top: 3.2rem;
 
-  span {
-    @include typography-mono(1.2rem);
-    text-transform: uppercase;
-    letter-spacing: 0.1em;
+    .muted {
+      @include typography-sans(1.3rem, 400, var(--opi-text-muted));
+    }
   }
 
-  &:hover {
-    background: var(--opi-text);
-    color: var(--opi-bg);
+  @media (max-width: 1024px) {
+    padding: 2.4rem 3.2rem;
   }
 }

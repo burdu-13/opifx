@@ -1,5 +1,5 @@
-import { ChangeDetectionStrategy, Component, computed, input, output, signal } from '@angular/core';
-import { FilterState, Preset } from '../../../../shared/interfaces/editor.interface';
+import { ChangeDetectionStrategy, Component, input, output, signal } from '@angular/core';
+import { Preset } from '../../../../shared/interfaces/editor.interface';
 
 @Component({
   selector: 'app-preset-bar',
@@ -11,47 +11,17 @@ import { FilterState, Preset } from '../../../../shared/interfaces/editor.interf
 export class PresetBar {
   public readonly presets = input.required<Preset[]>();
   public readonly activePresetId = input<string | null>(null);
+  public readonly presetDetails = input<Preset | null>(null);
 
-  public readonly presetSelected = output<string | null>();
+  public readonly presetSpecs = input.required<{ label: string; val: string | number }[]>();
+
+  public readonly presetSelected = output<string>();
   public readonly expandedChange = output<boolean>();
 
   public readonly isExpanded = signal<boolean>(false);
 
-  public readonly activePresetDetails = computed(() => {
-    const id = this.activePresetId();
-    return this.presets().find((p) => p.id === id) || null;
-  });
-
-  public readonly formattedSpecs = computed(() => {
-    const details = this.activePresetDetails();
-    if (!details || !details.state) return [];
-
-    const dictionary: Partial<Record<keyof FilterState, string>> = {
-      brightness: 'Luminance',
-      contrast: 'Contrast',
-      saturation: 'Color Density',
-      grain: 'Film Emulsion',
-      chromaticAberration: 'Lens Chroma',
-    };
-
-    return Object.entries(details.state).map(([key, val]) => {
-      const filterKey = key as keyof FilterState;
-      return {
-        label: dictionary[filterKey] || key,
-        val: val as string | number,
-      };
-    });
-  });
-
   public handlePresetClick(id: string): void {
-    if (this.activePresetId() === id) {
-      this.presetSelected.emit(null);
-      if (this.isExpanded()) {
-        this.toggleExpand();
-      }
-    } else {
-      this.presetSelected.emit(id);
-    }
+    this.presetSelected.emit(id);
   }
 
   public toggleExpand(): void {

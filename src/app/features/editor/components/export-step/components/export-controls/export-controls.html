@@ -1,13 +1,13 @@
 <aside class="export-sidebar">
   <div class="sidebar-content">
     <header class="sidebar-header">
-      <h2>Export Specifications</h2>
+      <h2>Output Specifications</h2>
     </header>
 
     <div class="format-selection">
       <p class="group-label">File Format</p>
       <div class="format-list">
-        @for (format of formats; track format.value) {
+        @for (format of formats(); track format.value) {
           <app-lib-pill
             [active]="selectedFormat() === format.value"
             (selected)="formatChange.emit(format.value)"
@@ -17,15 +17,48 @@
         }
       </div>
     </div>
+
+    @if (selectedFormat() !== 'image/png') {
+      <div class="setting-group mt-4">
+        <p class="group-label">Compression Quality</p>
+        <app-lib-slider
+          [label]="'Quality'"
+          [value]="quality()"
+          [min]="0.1"
+          [max]="1"
+          [stepSize]="0.1"
+          [unit]="''"
+          (valueChange)="qualityChange.emit($event)"
+        />
+      </div>
+    }
+
+    <div class="setting-group mt-4">
+      <p class="group-label">Resolution Scale</p>
+      <app-lib-slider
+        [label]="'Scale'"
+        [value]="scale()"
+        [min]="0.25"
+        [max]="1.0"
+        [stepSize]="0.25"
+        [unit]="'x'"
+        (valueChange)="scaleChange.emit($event)"
+      />
+    </div>
+
+    <div class="summary-card mt-4">
+      <p class="group-label">Estimated Output Size</p>
+      <h3 class="size-text">{{ estimatedSize() }}</h3>
+    </div>
   </div>
 
   <div class="sidebar-footer">
-    <app-lib-button variant="secondary" (clicked)="back.emit()" [disabled]="isProcessing()">
+    <app-lib-button class="btn-full" variant="secondary" (clicked)="back.emit()" [disabled]="isProcessing()">
       Return to Edit
     </app-lib-button>
 
-    <app-lib-button [loading]="isProcessing()" (clicked)="download.emit()">
-      Download Render
+    <app-lib-button class="btn-full" [loading]="isProcessing()" (clicked)="download.emit()">
+      Download Image
     </app-lib-button>
   </div>
 </aside>

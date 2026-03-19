@@ -25,7 +25,12 @@ export class ExportPreview {
 
   constructor() {
     this.imageElement.onload = () => {
-      CanvasRendererUtil.render(this.canvas()?.nativeElement, this.imageElement, this.filters(), 1200);
+      CanvasRendererUtil.render(
+        this.canvas()?.nativeElement,
+        this.imageElement,
+        this.filters(),
+        1200,
+      );
     };
 
     effect(() => {

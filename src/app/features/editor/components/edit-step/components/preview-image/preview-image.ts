@@ -6,6 +6,7 @@ import {
   ElementRef,
   input,
   output,
+  signal,
   viewChild,
 } from '@angular/core';
 import { FilterState } from '../../../../../../shared/interfaces/editor.interface';
@@ -25,11 +26,12 @@ export class PreviewImage {
   public readonly position = input.required<{ x: number; y: number }>();
 
   public readonly pan = output<{ x: number; y: number }>();
+  public readonly zoomDelta = output<number>();
 
   private readonly canvas = viewChild<ElementRef<HTMLCanvasElement>>('mainCanvas');
   private readonly imageElement = new Image();
 
-  private isDragging = false;
+  public readonly isDragging = signal(false);
   private startX = 0;
   private startY = 0;
 
@@ -66,13 +68,13 @@ export class PreviewImage {
   }
 
   public onMouseDown(e: MouseEvent): void {
-    this.isDragging = true;
+    this.isDragging.set(true);
     this.startX = e.clientX;
     this.startY = e.clientY;
   }
 
   public onMouseMove(e: MouseEvent): void {
-    if (!this.isDragging) return;
+    if (!this.isDragging()) return;
     const dx = e.clientX - this.startX;
     const dy = e.clientY - this.startY;
     this.startX = e.clientX;
@@ -81,7 +83,13 @@ export class PreviewImage {
   }
 
   public onMouseUp(): void {
-    this.isDragging = false;
+    this.isDragging.set(false);
+  }
+
+  public onWheel(e: WheelEvent): void {
+    e.preventDefault();
+    const delta = e.deltaY < 0 ? 0.05 : -0.05;
+    this.zoomDelta.emit(delta);
   }
 
   private executeRender(): void {
