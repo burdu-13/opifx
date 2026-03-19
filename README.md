@@ -1,59 +1,58 @@
-# Opifx
+<p align="center">
+  <img src="https://angular.dev/assets/images/press-kit/angular_wordmark_gradient.png" width="300" alt="Angular Logo">
+</p>
 
-This project was generated using [Angular CLI](https://github.com/angular/angular-cli) version 21.0.3.
+# opifx
 
-## Development server
+A simple, fast web application for atmospheric image processing. It lets you apply detailed visual effects, color grades, and stylistic filters right in your browser.
 
-To start a local development server, run:
+## Overview
 
-```bash
-ng serve
-```
+**What it does:** opifx is an image editor focused on mood and atmosphere. You upload a photo, tweak its look using built-in presets and filters, and save the result. 
 
-Once the server is running, open your browser and navigate to `http://localhost:4200/`. The application will automatically reload whenever you modify any of the source files.
+**Who it's for:** Anyone looking for a quick way to give their images a distinct, moody, or industrial-cloudy aesthetic without needing heavy desktop software. 
 
-## Code scaffolding
+**The main idea:** Keep image processing entirely on the client side. No servers touching your photos, no waiting for massive file uploads. Just instant, atmospheric results.
 
-Angular CLI includes powerful code scaffolding tools. To generate a new component, run:
+## Features
 
-```bash
-ng generate component component-name
-```
+- **Upload & preview:** Drop an image in and immediately see your changes.
+- **Atmospheric presets:** Quickly apply curated looks to change the entire mood of a photo.
+- **Custom filters:** Fine-tune brightness, contrast, blur, and other visual adjustments.
+- **Real-time editing:** Everything updates on the screen instantly as you move the sliders.
+- **Export:** Save your edited image to your device with one click.
 
-For a complete list of available schematics (such as `components`, `directives`, or `pipes`), run:
+## Architecture & Engineering
 
-```bash
-ng generate --help
-```
+opifx is built to be clean, fast, and maintainable. We use modern Angular 21 features to keep the codebase strict and predictable.
 
-## Building
+**Smart & Dumb Components**  
+We enforce a strict separation of concerns. Our UI is built with "dumb" components that only display data and emit events. All the heavy lifting, state management, and business logic live in "smart" container components and dedicated services.
 
-To build the project run:
+**Strict Signals**  
+We use Angular Signals as our primary reactivity model. This gives us a highly predictable state flow, eliminating complex reactive chains, unnecessary RxJS subscriptions, and side effects. 
 
-```bash
-ng build
-```
+**The Processing Engine**  
+The actual image processing works through a combination of HTML Canvas and CSS filters. This allows us to apply complex visual adjustments instantly in the browser without server round-trips.
 
-This will compile your project and store the build artifacts in the `dist/` directory. By default, the production build optimizes your application for performance and speed.
+## Tech Stack
 
-## Running unit tests
+- **Angular 21:** The core framework driving the application.
+- **Signals:** For fast, predictable state management.
+- **HTML Canvas & CSS Filters:** The engines doing the actual image processing and visual rendering.
 
-To execute unit tests with the [Vitest](https://vitest.dev/) test runner, use the following command:
+## Project Structure
 
-```bash
-ng test
-```
+Here is a quick overview of how the code is organized:
 
-## Running end-to-end tests
+- `src/app/core/` - Global services, state management, and base setups.
+- `src/app/features/editor/` - The main editing workspace. This handles the upload, the active editing view, and the export logic.
+- `src/app/shared/` - Reusable UI components (like buttons, sliders, and navigation elements), plus configuration files like our filter presets.
 
-For end-to-end (e2e) testing, run:
+## Usage
 
-```bash
-ng e2e
-```
+Using opifx is built to be a straightforward three-step process:
 
-Angular CLI does not come with an end-to-end testing framework by default. You can choose one that suits your needs.
-
-## Additional Resources
-
-For more information on using the Angular CLI, including detailed command references, visit the [Angular CLI Overview and Command Reference](https://angular.dev/tools/cli) page.
+1. **Upload:** Drag and drop an image file onto the start screen, or click to browse your files.
+2. **Edit:** Select a preset to get a baseline look. Then, use the manual controls to adjust specific filters until the image feels right.
+3. **Export:** Click the download button. The canvas will capture your exact preview and save it to your device as a standard image file.
