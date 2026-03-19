@@ -1,4 +1,4 @@
-import { ChangeDetectionStrategy, Component, input, output } from '@angular/core';
+import { ChangeDetectionStrategy, Component, computed, input, output } from '@angular/core';
 
 @Component({
   selector: 'app-lib-slider',
@@ -16,6 +16,14 @@ export class LibSlider {
   public readonly stepSize = input<number>(1);
 
   public readonly valueChange = output<number>();
+
+  public readonly trackWidth = computed(() => {
+    const val = this.value();
+    const mn = this.min();
+    const mx = this.max();
+    const percentage = ((val - mn) / (mx - mn)) * 100;
+    return Math.min(100, Math.max(0, percentage));
+  });
 
   public onInput(e: Event): void {
     const val = (e.target as HTMLInputElement).value;

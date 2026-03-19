@@ -57,4 +57,18 @@
   border-left: 1px solid var(--opi-border);
   background: rgba(5, 5, 5, 0.8);
   backdrop-filter: blur(20px);
+  z-index: 10;
+}
+
+@media (max-width: 768px) {
+  .viewport-area {
+    grid-column: span 12;
+    height: 50vh;
+  }
+  .sidebar-area {
+    grid-column: span 12;
+    height: 50vh;
+    border-left: none;
+    border-top: 1px solid var(--opi-border);
+  }
 }

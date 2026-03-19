@@ -32,7 +32,7 @@ export class EditStep {
     if (id) {
       const selectedPreset = this.presets.find((p) => p.id === id);
       if (selectedPreset && selectedPreset.state) {
-        this.filterChange.emit({ ...this.filters(), ...selectedPreset.state } as FilterState);
+        this.filterChange.emit({ ...NEUTRAL_FILTERS, ...selectedPreset.state } as FilterState);
       }
     } else {
       this.filterChange.emit({ ...NEUTRAL_FILTERS });

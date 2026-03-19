@@ -1,9 +1,9 @@
 import { FilterControlConfig } from '../../../shared/interfaces/editor.interface';
 
 export const FILTER_CONTROLS: readonly FilterControlConfig[] = [
-  { key: 'brightness', label: 'Exposure', min: 0, max: 200, step: 1, unit: '%', group: 'Standard' },
-  { key: 'contrast', label: 'Contrast', min: 0, max: 200, step: 1, unit: '%', group: 'Standard' },
-  { key: 'saturation', label: 'Vibrance', min: 0, max: 200, step: 1, unit: '%', group: 'Standard' },
+  { key: 'brightness', label: 'Exposure', min: 0, max: 300, step: 1, unit: '%', group: 'Standard' },
+  { key: 'contrast', label: 'Contrast', min: 0, max: 300, step: 1, unit: '%', group: 'Standard' },
+  { key: 'saturation', label: 'Vibrance', min: 0, max: 300, step: 1, unit: '%', group: 'Standard' },
   {
     key: 'hueRotate',
     label: 'Color Shift',
@@ -24,4 +24,9 @@ export const FILTER_CONTROLS: readonly FilterControlConfig[] = [
     unit: 'px',
     group: 'Aesthetic',
   },
+  { key: 'bloom', label: 'Bloom', min: 0, max: 100, step: 1, unit: '%', group: 'Aesthetic' },
+  { key: 'halation', label: 'Halation', min: 0, max: 100, step: 1, unit: '%', group: 'Aesthetic' },
+  { key: 'toneCurve', label: 'S-Curve', min: 0, max: 100, step: 1, unit: '%', group: 'Aesthetic' },
+  { key: 'pixelation', label: 'Pixelate', min: 0, max: 50, step: 1, unit: 'px', group: 'Aesthetic' },
+  { key: 'vhsOverlay', label: 'VHS / OSD', min: 0, max: 100, step: 1, unit: '%', group: 'Aesthetic' },
 ];

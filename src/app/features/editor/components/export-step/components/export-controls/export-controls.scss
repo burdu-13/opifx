@@ -2,10 +2,8 @@
 
 .export-sidebar {
   @include flex-between(0, column);
-  @include glass-panel(0.6, 3rem);
-  height: 100vh;
+  height: 100%;
   width: 100%;
-  border-left: 1px solid var(--opi-border);
 }
 
 .sidebar-content {
@@ -38,5 +36,5 @@
   width: 100%;
   padding: 2.4rem;
   border-top: 1px solid var(--opi-border);
-  background: linear-gradient(to top, rgba(0, 0, 0, 0.3), transparent);
+  background: var(--opi-surface);
 }

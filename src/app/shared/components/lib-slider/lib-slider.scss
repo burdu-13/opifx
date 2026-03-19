@@ -1,9 +1,9 @@
 @use '../../styles/mixins' as *;
 
 .slider-field {
-  @include flex-column(1.2rem);
+  @include flex-column(0.8rem);
   width: 100%;
-  margin-bottom: 3.2rem;
+  margin-bottom: 2.4rem;
 }
 
 .slider-info {
@@ -11,51 +11,47 @@
   align-items: flex-end;
 
   .label {
-    @include text-uppercase-label(0.75rem, 0.5);
+    @include text-uppercase-label(0.8rem, 0.6);
   }
 
   .value-container {
     @include flex-center(0.2rem);
 
     .value {
-      @include typography-mono(1.2rem, 700);
+      @include typography-mono(1.2rem, 500);
       color: var(--opi-text);
       line-height: 1;
     }
 
     .unit {
-      @include typography-mono(0.8rem, 400);
+      @include typography-mono(0.9rem, 400);
       color: var(--opi-text-muted);
-      opacity: 0.6;
     }
   }
 }
 
 .input-wrapper {
   position: relative;
-  height: 3.2rem;
+  height: 2.4rem;
   @include flex-center;
   cursor: ew-resize;
 
   &:hover .range-input::-webkit-slider-thumb {
-    background: var(--opi-accent);
-    transform: scaleY(1.4);
+    background: var(--opi-text);
+    transform: scale(1.2);
   }
 
   .track-visual {
     @include abs-fill;
-    height: 2px;
+    height: 1px;
     top: 50%;
     transform: translateY(-50%);
-    background: var(--opi-border-hover);
+    background: var(--opi-border);
     pointer-events: none;
-    border-radius: var(--opi-radius);
 
     .track-fill {
       height: 100%;
       background: var(--opi-text);
-      border-radius: var(--opi-radius);
-      opacity: 0.8;
     }
   }
 }
@@ -71,32 +67,33 @@
 
   &::-webkit-slider-thumb {
     appearance: none;
-    width: 0.6rem;
-    height: 2rem;
+    width: 0.8rem;
+    height: 1.6rem;
     background: var(--opi-text);
     border-radius: 1px;
-    transition: var(--opi-transition);
-    border: 2px solid var(--opi-bg);
-    box-shadow: 0 0 10px rgba(0, 0, 0, 0.5);
+    transition: transform 150ms ease;
+    border: none;
+    box-shadow: none;
 
     &:active {
       cursor: grabbing;
-      transform: scaleY(1.6) scaleX(1.1);
+      transform: scale(1.2);
     }
   }
 
   &::-moz-range-thumb {
-    width: 0.6rem;
-    height: 2rem;
+    width: 0.8rem;
+    height: 1.6rem;
     background: var(--opi-text);
-    border: 2px solid var(--opi-bg);
     border-radius: 1px;
-    transition: var(--opi-transition);
+    transition: transform 150ms ease;
+    border: none;
+    box-shadow: none;
     cursor: ew-resize;
 
     &:active {
       cursor: grabbing;
-      transform: scaleY(1.6);
+      transform: scale(1.2);
     }
   }
 }

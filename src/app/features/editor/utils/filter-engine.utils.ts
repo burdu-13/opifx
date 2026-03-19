@@ -88,4 +88,78 @@ export class FilterEngine {
     ctx.fillStyle = gradient;
     ctx.fillRect(0, 0, w, h);
   }
+
+  public static applyBloomAndHalation(
+    ctx: CanvasRenderingContext2D,
+    w: number,
+    h: number,
+    canvas: HTMLCanvasElement,
+    bloom: number,
+    halation: number
+  ): void {
+    ctx.save();
+    if (bloom > 0) {
+      ctx.globalCompositeOperation = 'screen';
+      ctx.filter = 'blur(12px)';
+      ctx.globalAlpha = bloom / 100;
+      ctx.drawImage(canvas, 0, 0, w, h);
+    }
+  
+    if (halation > 0) {
+      ctx.globalCompositeOperation = 'screen';
+      ctx.filter = 'blur(10px) sepia(100%) hue-rotate(-50deg) saturate(300%)';
+      ctx.globalAlpha = halation / 100;
+      ctx.drawImage(canvas, 0, 0, w, h);
+    }
+    ctx.restore();
+  }
+  
+  public static applyToneCurve(
+    ctx: CanvasRenderingContext2D,
+    w: number,
+    h: number,
+    intensity: number
+  ): void {
+    if (intensity <= 0) return;
+    const imgData = ctx.getImageData(0, 0, w, h);
+    const data = imgData.data;
+    const factor = intensity / 100; 
+  
+    for (let i = 0; i < data.length; i += 4) {
+      for (let c = 0; c < 3; c++) {
+        let val = data[i + c] / 255;
+        const sVal = val * val * (3 - 2 * val); 
+        data[i + c] = (val + (sVal - val) * factor) * 255;
+      }
+    }
+    ctx.putImageData(imgData, 0, 0);
+  }
+
+  public static applyPixelation(ctx: CanvasRenderingContext2D, w: number, h: number, size: number): void {
+    if (size <= 1) return;
+    const smW = Math.max(1, Math.floor(w / size));
+    const smH = Math.max(1, Math.floor(h / size));
+    
+    const off = document.createElement('canvas');
+    off.width = smW;
+    off.height = smH;
+    const offCtx = off.getContext('2d', { willReadFrequently: true })!;
+    offCtx.drawImage(ctx.canvas, 0, 0, smW, smH);
+    
+    ctx.imageSmoothingEnabled = false;
+    ctx.drawImage(off, 0, 0, smW, smH, 0, 0, w, h);
+    ctx.imageSmoothingEnabled = true;
+  }
+
+  public static applyVHS(ctx: CanvasRenderingContext2D, w: number, h: number, intensity: number): void {
+    if (intensity <= 0) return;
+    
+    ctx.save();
+    ctx.fillStyle = `rgba(0, 0, 0, ${0.03 + (intensity / 100) * 0.1})`;
+    const scanlineHeight = Math.max(1, Math.floor(h / 500));
+    for (let y = 0; y < h; y += scanlineHeight * 2) {
+      ctx.fillRect(0, y, w, scanlineHeight);
+    }
+    ctx.restore();
+  }
 }

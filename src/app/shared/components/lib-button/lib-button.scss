@@ -1,7 +1,7 @@
 @use '../../styles/mixins' as *;
 
 button {
-  @include pill-base(1.6rem, 3.2rem);
+  @include pill-base(1.4rem, 2.4rem);
   @include flex-center;
   @include typography-sans(1.2rem, 500);
   width: 100%;
@@ -16,19 +16,22 @@ button {
     background: var(--opi-text);
     color: var(--opi-bg);
     border: 1px solid var(--opi-text);
+    transition: all var(--opi-transition);
 
     &:hover:not(:disabled) {
-      box-shadow: 0 0 3rem var(--opi-glow);
+      background: transparent;
+      color: var(--opi-text);
     }
   }
 
   &.secondary {
     background: transparent;
     color: var(--opi-text);
-    border: 1px solid var(--opi-border-hover);
+    border: 1px solid var(--opi-border);
 
     &:hover:not(:disabled) {
-      background: rgba(255, 255, 255, 0.05);
+      border-color: var(--opi-border-hover);
+      background: var(--opi-surface-raised);
     }
   }
 }

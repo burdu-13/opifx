@@ -1,14 +1,15 @@
 @use '../../styles/mixins' as *;
 
 .pill {
-  @include pill-base(0.8rem, 2rem);
-  @include typography-sans(1.2rem, 300, var(--opi-text-muted));
-  background: var(--opi-glow);
+  @include pill-base(0.6rem, 1.6rem);
+  @include typography-sans(1.1rem, 400, var(--opi-text-muted));
+  background: transparent;
   border: 1px solid var(--opi-border);
 
   &:hover {
     border-color: var(--opi-border-hover);
     color: var(--opi-text);
+    background: var(--opi-surface-raised);
   }
 
   &.active {

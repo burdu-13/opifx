@@ -21,14 +21,15 @@
 }
 
 @mixin industrial-panel {
-  background-color: var(--opi-surface-raised);
+  background-color: var(--opi-surface);
   border: 1px solid var(--opi-border);
   border-radius: var(--opi-radius);
   transition: var(--opi-transition);
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
 
   &:hover {
     border-color: var(--opi-border-hover);
-    box-shadow: 0 0 20px var(--opi-glow);
+    background-color: var(--opi-surface-raised);
   }
 }
 

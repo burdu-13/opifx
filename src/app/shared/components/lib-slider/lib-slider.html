@@ -18,7 +18,7 @@
       class="range-input"
     />
     <div class="track-visual">
-      <div class="track-fill" [style.width.%]="((value() - min()) / (max() - min())) * 100"></div>
+      <div class="track-fill" [style.width.%]="trackWidth()"></div>
     </div>
   </div>
 </div>

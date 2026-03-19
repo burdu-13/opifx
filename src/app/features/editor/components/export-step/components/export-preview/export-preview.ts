@@ -25,7 +25,7 @@ export class ExportPreview {
 
   constructor() {
     this.imageElement.onload = () => {
-      CanvasRendererUtil.render(this.canvas()?.nativeElement, this.imageElement, this.filters());
+      CanvasRendererUtil.render(this.canvas()?.nativeElement, this.imageElement, this.filters(), 1200);
     };
 
     effect(() => {
@@ -34,8 +34,8 @@ export class ExportPreview {
     });
 
     effect(() => {
-      this.filters();
-      CanvasRendererUtil.render(this.canvas()?.nativeElement, this.imageElement, this.filters());
+      const f = this.filters();
+      CanvasRendererUtil.render(this.canvas()?.nativeElement, this.imageElement, f, 1200);
     });
   }
 }

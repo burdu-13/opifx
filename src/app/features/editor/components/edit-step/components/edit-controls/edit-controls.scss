@@ -2,10 +2,8 @@
 
 .sidebar {
   @include flex-between(0, column);
-  height: 100vh;
+  height: 100%;
   width: 100%;
-  @include glass-panel(0.45, 3rem);
-  border-left: 1px solid rgba(255, 255, 255, 0.04);
 }
 
 .sidebar-content {
@@ -48,27 +46,25 @@
   width: 100%;
   padding: 2.4rem;
   border-top: 1px solid rgba(255, 255, 255, 0.04);
-  background: linear-gradient(to top, rgba(0, 0, 0, 0.3) 0%, transparent 100%);
+  background: var(--opi-surface);
 }
 
 .btn-proceed {
   @include interactive-scale;
   width: 100%;
   padding: 1.2rem;
-  background: rgba(255, 255, 255, 0.08);
-  backdrop-filter: blur(1rem);
-  border: 1px solid rgba(255, 255, 255, 0.1);
-  border-radius: 2rem;
+  background: var(--opi-surface);
+  border: 1px solid var(--opi-border);
+  border-radius: var(--opi-radius);
   color: var(--opi-text);
   font-family: var(--opi-font-sans);
-  font-weight: 400;
+  font-weight: 500;
   font-size: 1.1rem;
   letter-spacing: 0.05em;
   transition: all 0.3s ease;
 
   &:hover {
-    background: var(--opi-text);
-    color: var(--opi-bg);
-    box-shadow: 0 0 2rem rgba(255, 255, 255, 0.1);
+    background: var(--opi-surface-raised);
+    border-color: var(--opi-border-hover);
   }
 }
