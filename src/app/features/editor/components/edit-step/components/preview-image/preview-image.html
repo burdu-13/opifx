@@ -1,14 +1,22 @@
 <div
   class="canvas-wrapper"
+  #wrapperRef
   (mousedown)="onMouseDown($event)"
   (mousemove)="onMouseMove($event)"
   (mouseup)="onMouseUp()"
   (mouseleave)="onMouseUp()"
   (wheel)="onWheel($event)"
 >
-  <canvas
-    #mainCanvas
-    [class.is-panning]="isDragging()"
+  <div
+    class="canvas-container"
+    [style.width]="containerStyle().width"
+    [style.height]="containerStyle().height"
     [style.transform]="transformStyle()"
-  ></canvas>
+  >
+    <canvas
+      #mainCanvas
+      [class.is-panning]="isDragging()"
+    ></canvas>
+    <ng-content></ng-content>
+  </div>
 </div>

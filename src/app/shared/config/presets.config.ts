@@ -1,13 +1,6 @@
-import { FilterState } from '../interfaces/editor.interface';
+import { FilterState, Preset } from '../interfaces/editor.interface';
 
-export interface Preset {
-  id: string;
-  name: string;
-  description: string;
-  state: Partial<FilterState>;
-}
-
-export const PRESETS: Preset[] = [
+export const PRESETS: readonly Preset[] = [
   {
     id: 'opium-v2',
     name: 'OPIUM_V2',
@@ -42,7 +35,6 @@ export const PRESETS: Preset[] = [
       toneCurve: 50,
     },
   },
-
   {
     id: 'take-care-v2',
     name: 'TAKE_CARE',
@@ -64,7 +56,6 @@ export const PRESETS: Preset[] = [
     description: 'Warm Toronto sunset. Golden hour glow with soft DSLR-style bloom.',
     state: { brightness: 115, contrast: 105, saturation: 125, sepia: 12, blur: 0.3, vignette: 15 },
   },
-
   {
     id: 'glo-2012',
     name: 'GLO_2012',
@@ -100,7 +91,6 @@ export const PRESETS: Preset[] = [
       hueRotate: 345,
     },
   },
-
   {
     id: 'digicam-99',
     name: 'DIGI_99',
@@ -130,7 +120,6 @@ export const PRESETS: Preset[] = [
       grain: 12,
     },
   },
-
   {
     id: 'cactus-jack-v2',
     name: 'CACTUS_FX',
@@ -151,7 +140,6 @@ export const PRESETS: Preset[] = [
       vignette: 20,
     },
   },
-
   {
     id: 'dslr-2014',
     name: 'DSLR_2014',
@@ -171,7 +159,6 @@ export const PRESETS: Preset[] = [
     description: 'Golden, saturated memories. The peak 2016 Instagram aesthetic.',
     state: { brightness: 125, contrast: 110, saturation: 150, sepia: 10, grain: 15, vignette: 15 },
   },
-
   {
     id: 'night-vision',
     name: 'NVG_MODE',

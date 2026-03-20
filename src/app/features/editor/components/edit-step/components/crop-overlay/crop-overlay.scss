@@ -1,0 +1,129 @@
+@use '../../../../../../shared/styles/mixins' as *;
+
+:host {
+  display: block;
+  position: absolute;
+  inset: 0;
+  z-index: 15;
+  pointer-events: auto;
+  border-radius: var(--opi-radius);
+  overflow: hidden;
+}
+
+.crop-overlay {
+  position: relative;
+  width: 100%;
+  height: 100%;
+  touch-action: none;
+  user-select: none;
+}
+
+.crop-mask {
+  @include abs-fill;
+  background: rgba(0, 0, 0, 0.6);
+  pointer-events: none;
+}
+
+.crop-box {
+  position: absolute;
+  border: 2px solid rgba(255, 255, 255, 0.9);
+  cursor: move;
+  z-index: 2;
+  box-shadow: 0 0 0 1px rgba(0, 0, 0, 0.4);
+  border-radius: 1px;
+
+  &:hover {
+    border-color: #fff;
+  }
+}
+
+.thirds-grid {
+  @include abs-fill;
+  pointer-events: none;
+}
+
+.thirds-line {
+  position: absolute;
+  background: rgba(255, 255, 255, 0.18);
+
+  &.horizontal {
+    left: 0;
+    right: 0;
+    height: 1px;
+  }
+
+  &.vertical {
+    top: 0;
+    bottom: 0;
+    width: 1px;
+  }
+}
+
+.crop-handle {
+  position: absolute;
+  width: 24px;
+  height: 24px;
+  z-index: 3;
+  touch-action: none;
+
+  &::after {
+    content: '';
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    width: 10px;
+    height: 10px;
+    border-radius: 2px;
+    background: #fff;
+    border: 1px solid rgba(0, 0, 0, 0.3);
+    box-shadow: 0 1px 4px rgba(0, 0, 0, 0.4);
+    transition: transform 0.15s ease;
+  }
+
+  &:hover::after {
+    transform: translate(-50%, -50%) scale(1.3);
+  }
+
+  &.handle-nw {
+    top: 0;
+    left: 0;
+    transform: translate(-50%, -50%);
+  }
+  &.handle-ne {
+    top: 0;
+    right: 0;
+    transform: translate(50%, -50%);
+  }
+  &.handle-se {
+    bottom: 0;
+    right: 0;
+    transform: translate(50%, 50%);
+  }
+  &.handle-sw {
+    bottom: 0;
+    left: 0;
+    transform: translate(-50%, 50%);
+  }
+
+  &.handle-n {
+    top: 0;
+    left: 50%;
+    transform: translate(-50%, -50%);
+  }
+  &.handle-s {
+    bottom: 0;
+    left: 50%;
+    transform: translate(-50%, 50%);
+  }
+  &.handle-e {
+    top: 50%;
+    right: 0;
+    transform: translate(50%, -50%);
+  }
+  &.handle-w {
+    top: 50%;
+    left: 0;
+    transform: translate(-50%, -50%);
+  }
+}
