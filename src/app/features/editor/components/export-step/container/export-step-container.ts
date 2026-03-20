@@ -2,10 +2,11 @@ import { ChangeDetectionStrategy, Component, effect, signal, inject, OnInit } fr
 import { Router } from '@angular/router';
 import { ExportFormat } from '../interfaces/export.interface';
 import { CanvasRendererUtil } from '../../../utils/canvas-renderer.utils';
-import { FilterState } from '../../../../../shared/interfaces/editor.interface';
+import { CropRect, FilterState } from '../../../../../shared/interfaces/editor.interface';
 import { ExportPreview } from '../components/export-preview/export-preview';
 import { ExportControls } from '../components/export-controls/export-controls';
 import { Editor } from '../../../../../core/services/editor';
+import { CropService } from '../../../../../core/services/crop.service';
 
 @Component({
   selector: 'app-export-step',
@@ -16,10 +17,12 @@ import { Editor } from '../../../../../core/services/editor';
 })
 export class ExportStepContainer implements OnInit {
   private readonly srv = inject(Editor);
+  private readonly cropSrv = inject(CropService);
   private readonly router = inject(Router);
 
   public readonly image = this.srv.sourceImage;
   public readonly filters = this.srv.filters;
+  public readonly cropRect = this.cropSrv.cropRect;
 
   public readonly format = signal<ExportFormat>('image/png');
 
@@ -41,9 +44,10 @@ export class ExportStepContainer implements OnInit {
       const q = this.quality();
       const s = this.scale();
       const flt = this.filters();
+      const crop = this.cropRect();
 
       if (src) {
-        this.estimateSize(src, flt, f, q, s);
+        this.estimateSize(src, flt, f, q, s, crop);
       }
     });
   }
@@ -64,12 +68,13 @@ export class ExportStepContainer implements OnInit {
     format: ExportFormat,
     quality: number,
     scale: number,
+    crop?: CropRect | null,
   ): void {
     const img = new Image();
     img.crossOrigin = 'anonymous';
     img.onload = () => {
       const offscreenCanvas = document.createElement('canvas');
-      CanvasRendererUtil.render(offscreenCanvas, img, filters);
+      CanvasRendererUtil.render(offscreenCanvas, img, filters, undefined, crop);
 
       let finalCanvas = offscreenCanvas;
       if (scale !== 1) {
@@ -110,7 +115,7 @@ export class ExportStepContainer implements OnInit {
     img.onload = () => {
       const offscreenCanvas = document.createElement('canvas');
 
-      CanvasRendererUtil.render(offscreenCanvas, img, this.filters());
+      CanvasRendererUtil.render(offscreenCanvas, img, this.filters(), undefined, this.cropRect());
 
       let finalCanvas = offscreenCanvas;
       if (this.scale() !== 1) {

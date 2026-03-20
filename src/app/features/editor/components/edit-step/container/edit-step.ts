@@ -7,24 +7,32 @@ import {
   OnInit,
 } from '@angular/core';
 import { Router } from '@angular/router';
-import { FilterState, NEUTRAL_FILTERS } from '../../../../../shared/interfaces/editor.interface';
+import {
+  CropRect,
+  FilterState,
+  NEUTRAL_FILTERS,
+  ASPECT_RATIO_OPTIONS,
+} from '../../../../../shared/interfaces/editor.interface';
 import { PreviewImage } from '../components/preview-image/preview-image';
 import { EditControls } from '../components/edit-controls/edit-controls';
+import { CropOverlay } from '../components/crop-overlay/crop-overlay';
 import { PRESETS } from '../../../../../shared/config/presets.config';
 import { LibButton } from '../../../../../shared/components/lib-button/lib-button';
 import { PresetBar } from '../../preset-bar/preset-bar';
 import { Editor } from '../../../../../core/services/editor';
+import { CropService } from '../../../../../core/services/crop.service';
 import { FILTER_CONTROLS } from '../../../config/filter.config';
 
 @Component({
   selector: 'app-edit-step',
-  imports: [PreviewImage, EditControls, PresetBar, LibButton],
+  imports: [PreviewImage, EditControls, PresetBar, LibButton, CropOverlay],
   templateUrl: './edit-step.html',
   styleUrl: './edit-step.scss',
   changeDetection: ChangeDetectionStrategy.OnPush,
 })
 export class EditStep implements OnInit {
   public readonly srv = inject(Editor);
+  public readonly cropSrv = inject(CropService);
   private readonly router = inject(Router);
 
   public readonly image = this.srv.sourceImage;
@@ -84,6 +92,25 @@ export class EditStep implements OnInit {
     })),
   );
 
+  public readonly isCropActive = this.cropSrv.isCropActive;
+  public readonly cropRect = this.cropSrv.cropRect;
+  public readonly aspectRatio = this.cropSrv.aspectRatio;
+  public readonly aspectRatioOptions = ASPECT_RATIO_OPTIONS;
+
+  public readonly sourceWidth = signal<number>(0);
+  public readonly sourceHeight = signal<number>(0);
+
+  public readonly imageAspect = computed(() => {
+    const w = this.sourceWidth();
+    const h = this.sourceHeight();
+    return h > 0 ? w / h : 1;
+  });
+
+  public readonly appliedCropRect = computed(() => {
+    if (this.isCropActive()) return null;
+    return this.cropRect();
+  });
+
   public ngOnInit() {
     if (!this.image()) {
       this.router.navigate(['/']);
@@ -133,5 +160,55 @@ export class EditStep implements OnInit {
 
   public proceedToExport(): void {
     this.router.navigate(['/export']);
+  }
+
+  public handleToggleCrop(): void {
+    if (this.cropSrv.isCropActive()) {
+      this.cropSrv.deactivateCropMode();
+    } else {
+      this.cropSrv.activateCropMode();
+    }
+  }
+
+  public handleCropChange(rect: CropRect): void {
+    this.cropSrv.setCropRect(rect);
+  }
+
+  public handleAspectRatioChange(ratio: number | null): void {
+    this.cropSrv.setAspectRatio(ratio);
+    if (ratio !== null) {
+      this.cropSrv.constrainToAspectRatio(ratio, this.imageAspect());
+    }
+  }
+
+  public handleCropApply(): void {
+    this.cropSrv.applyCrop();
+  }
+
+  public handleCropReset(): void {
+    this.cropSrv.resetCrop();
+  }
+
+  public handleCustomResolution(res: { width: number; height: number }): void {
+    const sw = this.sourceWidth();
+    const sh = this.sourceHeight();
+    if (sw <= 0 || sh <= 0) return;
+
+    const normalizedW = Math.min(res.width / sw, 1);
+    const normalizedH = Math.min(res.height / sh, 1);
+
+    const x = Math.max(0, (1 - normalizedW) / 2);
+    const y = Math.max(0, (1 - normalizedH) / 2);
+
+    this.cropSrv.setCropRect({ x, y, width: normalizedW, height: normalizedH });
+
+    this.cropSrv.setAspectRatio(res.width / res.height);
+  }
+
+  public handleCanvasDimensions(dims: { width: number; height: number }): void {
+    if (!this.appliedCropRect()) {
+      this.sourceWidth.set(dims.width);
+      this.sourceHeight.set(dims.height);
+    }
   }
 }

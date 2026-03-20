@@ -1,4 +1,4 @@
-import { FilterState } from '../../../shared/interfaces/editor.interface';
+import { CropRect, FilterState } from '../../../shared/interfaces/editor.interface';
 import { FilterEngine } from './filter-engine.utils';
 
 export class CanvasRendererUtil {
@@ -7,6 +7,7 @@ export class CanvasRendererUtil {
     image: HTMLImageElement,
     filters: FilterState,
     maxResolution?: number,
+    cropRect?: CropRect | null,
   ): void {
     if (!canvas || !image.complete) return;
 
@@ -74,6 +75,20 @@ export class CanvasRendererUtil {
     }
     if (filters.vhsOverlay > 0) {
       FilterEngine.applyVHS(ctx, targetWidth, targetHeight, filters.vhsOverlay);
+    }
+
+    if (cropRect) {
+      const cx = Math.max(0, Math.round(cropRect.x * targetWidth));
+      const cy = Math.max(0, Math.round(cropRect.y * targetHeight));
+      const cw = Math.min(Math.round(cropRect.width * targetWidth), targetWidth - cx);
+      const ch = Math.min(Math.round(cropRect.height * targetHeight), targetHeight - cy);
+
+      if (cw > 0 && ch > 0) {
+        const croppedData = ctx.getImageData(cx, cy, cw, ch);
+        canvas.width = cw;
+        canvas.height = ch;
+        ctx.putImageData(croppedData, 0, 0);
+      }
     }
   }
 }

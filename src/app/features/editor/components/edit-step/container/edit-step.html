@@ -44,9 +44,20 @@
         [filters]="activeFilters()"
         [zoom]="zoom()"
         [position]="position()"
+        [appliedCropRect]="appliedCropRect()"
         (pan)="handlePan($event)"
         (zoomDelta)="updateZoom($event)"
-      />
+        (canvasDimensions)="handleCanvasDimensions($event)"
+      >
+        @if (isCropActive() && cropRect()) {
+          <app-crop-overlay
+            [cropRect]="cropRect()!"
+            [aspectRatio]="aspectRatio()"
+            [imageAspect]="imageAspect()"
+            (cropChange)="handleCropChange($event)"
+          />
+        }
+      </app-preview-image>
     </section>
 
     @if (!isPresetGalleryOpen()) {
@@ -54,8 +65,19 @@
         class="sidebar-area"
         [standardControls]="standardControls()"
         [aestheticControls]="aestheticControls()"
+        [isCropActive]="isCropActive()"
+        [aspectRatio]="aspectRatio()"
+        [cropRect]="cropRect()"
+        [aspectRatioOptions]="aspectRatioOptions"
+        [sourceWidth]="sourceWidth()"
+        [sourceHeight]="sourceHeight()"
         (change)="handleManualChange($event)"
         (reset)="handleReset()"
+        (toggleCrop)="handleToggleCrop()"
+        (aspectRatioChange)="handleAspectRatioChange($event)"
+        (cropApply)="handleCropApply()"
+        (cropReset)="handleCropReset()"
+        (customResolution)="handleCustomResolution($event)"
       />
     }
   </div>

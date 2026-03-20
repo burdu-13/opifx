@@ -53,3 +53,23 @@ export interface FilterControlConfig {
   unit: string;
   group: 'Standard' | 'Aesthetic';
 }
+
+export interface CropRect {
+  x: number;
+  y: number;
+  width: number;
+  height: number;
+}
+
+export interface AspectRatioOption {
+  label: string;
+  value: number | null;
+}
+
+export const ASPECT_RATIO_OPTIONS: readonly AspectRatioOption[] = [
+  { label: 'Free', value: null },
+  { label: '1:1', value: 1 },
+  { label: '4:3', value: 4 / 3 },
+  { label: '16:9', value: 16 / 9 },
+  { label: '9:16', value: 9 / 16 },
+];

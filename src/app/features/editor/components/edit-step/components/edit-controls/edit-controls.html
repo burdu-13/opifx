@@ -8,6 +8,20 @@
       </div>
     </header>
 
+    <app-crop-controls
+      [isCropActive]="isCropActive()"
+      [aspectRatio]="aspectRatio()"
+      [cropRect]="cropRect()"
+      [aspectRatioOptions]="aspectRatioOptions()"
+      [sourceWidth]="sourceWidth()"
+      [sourceHeight]="sourceHeight()"
+      (toggleCrop)="toggleCrop.emit()"
+      (aspectRatioChange)="aspectRatioChange.emit($event)"
+      (cropApply)="cropApply.emit()"
+      (cropReset)="cropReset.emit()"
+      (customResolution)="customResolution.emit($event)"
+    />
+
     <div class="parameter-groups">
       <div class="group">
         <p class="group-label">Standard Grading</p>
