@@ -40,29 +40,16 @@ export class CanvasRendererUtil {
     `.trim();
 
     ctx.drawImage(image, 0, 0, targetWidth, targetHeight);
-
     ctx.filter = 'none';
 
     if (filters.bloom > 0 || filters.halation > 0) {
-      FilterEngine.applyBloomAndHalation(
-        ctx,
-        targetWidth,
-        targetHeight,
-        canvas,
-        filters.bloom ?? 0,
-        filters.halation ?? 0,
-      );
+      FilterEngine.applyBloomAndHalation(ctx, targetWidth, targetHeight, canvas, filters.bloom ?? 0, filters.halation ?? 0);
     }
     if (filters.grain > 0) {
       FilterEngine.applyGrain(ctx, targetWidth, targetHeight, filters.grain);
     }
     if (filters.chromaticAberration > 0) {
-      FilterEngine.applyChromaticAberration(
-        ctx,
-        targetWidth,
-        targetHeight,
-        filters.chromaticAberration,
-      );
+      FilterEngine.applyChromaticAberration(ctx, targetWidth, targetHeight, filters.chromaticAberration);
     }
     if (filters.toneCurve > 0) {
       FilterEngine.applyToneCurve(ctx, targetWidth, targetHeight, filters.toneCurve);

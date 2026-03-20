@@ -1,5 +1,5 @@
 import { ChangeDetectionStrategy, Component, input, output } from '@angular/core';
-import { AspectRatioOption, CropRect, FilterState } from '../../../../../../shared/interfaces/editor.interface';
+import { ActiveFilterControl, AspectRatioOption, CropRect, FilterState } from '../../../../../../shared/interfaces/editor.interface';
 import { LibSlider } from '../../../../../../shared/components/lib-slider/lib-slider';
 import { CropControls } from '../crop-controls/crop-controls';
 
@@ -11,30 +11,8 @@ import { CropControls } from '../crop-controls/crop-controls';
   changeDetection: ChangeDetectionStrategy.OnPush,
 })
 export class EditControls {
-  public readonly standardControls =
-    input.required<
-      {
-        key: keyof FilterState;
-        label: string;
-        min: number;
-        max: number;
-        step: number;
-        currentValue: number;
-        unit?: string;
-      }[]
-    >();
-  public readonly aestheticControls =
-    input.required<
-      {
-        key: keyof FilterState;
-        label: string;
-        min: number;
-        max: number;
-        step: number;
-        currentValue: number;
-        unit?: string;
-      }[]
-    >();
+  public readonly standardControls = input.required<ActiveFilterControl[]>();
+  public readonly aestheticControls = input.required<ActiveFilterControl[]>();
 
   public readonly isCropActive = input.required<boolean>();
   public readonly aspectRatio = input.required<number | null>();

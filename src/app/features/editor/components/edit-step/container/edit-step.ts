@@ -8,10 +8,14 @@ import {
 } from '@angular/core';
 import { Router } from '@angular/router';
 import {
+  ActiveFilterControl,
   CropRect,
+  FilterControlConfig,
   FilterState,
   NEUTRAL_FILTERS,
   ASPECT_RATIO_OPTIONS,
+  PresetSpec,
+  Preset,
 } from '../../../../../shared/interfaces/editor.interface';
 import { PreviewImage } from '../components/preview-image/preview-image';
 import { EditControls } from '../components/edit-controls/edit-controls';
@@ -46,20 +50,22 @@ export class EditStep implements OnInit {
   public readonly zoom = signal<number>(1);
   public readonly position = signal<{ x: number; y: number }>({ x: 0, y: 0 });
 
+  public readonly zoomLabel = computed(() => `${Math.round(this.zoom() * 100)}%`);
+
   public readonly showBefore = signal<boolean>(false);
   public readonly activeFilters = computed(() =>
     this.showBefore() ? NEUTRAL_FILTERS : this.filters(),
   );
 
-  public readonly activePresetDetails = computed(() => {
+  public readonly activePresetDetails = computed<Preset | null>(() => {
     const id = this.activePresetId();
     if (!id) return null;
-    return this.presets.find((p) => p.id === id) || null;
+    return this.presets.find((p) => p.id === id) ?? null;
   });
 
-  public readonly activeSpecs = computed(() => {
+  public readonly activeSpecs = computed<PresetSpec[]>(() => {
     const details = this.activePresetDetails();
-    if (!details || !details.state) return [];
+    if (!details?.state) return [];
 
     const dictionary: Partial<Record<keyof FilterState, string>> = {
       brightness: 'Luminance',
@@ -69,27 +75,28 @@ export class EditStep implements OnInit {
       chromaticAberration: 'Lens Chroma',
     };
 
-    return Object.entries(details.state).map(([key, val]) => {
-      const filterKey = key as keyof FilterState;
-      return {
-        label: dictionary[filterKey] || key,
-        val: val as string | number,
-      };
-    });
+    return Object.entries(details.state).map(([key, val]) => ({
+      label: dictionary[key as keyof FilterState] ?? key,
+      val: val as number,
+    }));
   });
 
-  public readonly standardControls = computed(() =>
-    FILTER_CONTROLS.filter((c: any) => c.group === 'Standard').map((c: any) => ({
-      ...c,
-      currentValue: this.filters()[c.key as keyof FilterState],
-    })),
+  public readonly standardControls = computed<ActiveFilterControl[]>(() =>
+    FILTER_CONTROLS.filter((c: FilterControlConfig) => c.group === 'Standard').map(
+      (c: FilterControlConfig) => ({
+        ...c,
+        currentValue: this.filters()[c.key],
+      }),
+    ),
   );
 
-  public readonly aestheticControls = computed(() =>
-    FILTER_CONTROLS.filter((c: any) => c.group === 'Aesthetic').map((c: any) => ({
-      ...c,
-      currentValue: this.filters()[c.key as keyof FilterState],
-    })),
+  public readonly aestheticControls = computed<ActiveFilterControl[]>(() =>
+    FILTER_CONTROLS.filter((c: FilterControlConfig) => c.group === 'Aesthetic').map(
+      (c: FilterControlConfig) => ({
+        ...c,
+        currentValue: this.filters()[c.key],
+      }),
+    ),
   );
 
   public readonly isCropActive = this.cropSrv.isCropActive;
@@ -106,12 +113,12 @@ export class EditStep implements OnInit {
     return h > 0 ? w / h : 1;
   });
 
-  public readonly appliedCropRect = computed(() => {
+  public readonly appliedCropRect = computed<CropRect | null>(() => {
     if (this.isCropActive()) return null;
     return this.cropRect();
   });
 
-  public ngOnInit() {
+  public ngOnInit(): void {
     if (!this.image()) {
       this.router.navigate(['/']);
     }
@@ -126,7 +133,7 @@ export class EditStep implements OnInit {
     } else {
       this.activePresetId.set(id);
       const selectedPreset = this.presets.find((p) => p.id === id);
-      if (selectedPreset && selectedPreset.state) {
+      if (selectedPreset?.state) {
         this.srv.updateFilter({ ...NEUTRAL_FILTERS, ...selectedPreset.state } as FilterState);
       }
     }
@@ -196,12 +203,10 @@ export class EditStep implements OnInit {
 
     const normalizedW = Math.min(res.width / sw, 1);
     const normalizedH = Math.min(res.height / sh, 1);
-
     const x = Math.max(0, (1 - normalizedW) / 2);
     const y = Math.max(0, (1 - normalizedH) / 2);
 
     this.cropSrv.setCropRect({ x, y, width: normalizedW, height: normalizedH });
-
     this.cropSrv.setAspectRatio(res.width / res.height);
   }
 

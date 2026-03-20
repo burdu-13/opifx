@@ -149,19 +149,16 @@ export class CropOverlay {
     }
 
     if (ratio !== null && ratio > 0) {
-      const targetH = (w * imgAspect) / ratio;
-
       if (h.includes('n') || h.includes('s')) {
         const targetW = (hh * ratio) / imgAspect;
         w = Math.max(minSize, Math.min(targetW, 1));
         hh = (w * imgAspect) / ratio;
-
         const centerX = sc.x + sc.width / 2;
         x = Math.max(0, Math.min(centerX - w / 2, 1 - w));
       } else {
+        const targetH = (w * imgAspect) / ratio;
         hh = Math.max(minSize, Math.min(targetH, 1));
         w = (hh * ratio) / imgAspect;
-
         const centerY = sc.y + sc.height / 2;
         y = Math.max(0, Math.min(centerY - hh / 2, 1 - hh));
       }

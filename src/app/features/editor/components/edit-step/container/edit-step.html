@@ -3,7 +3,7 @@
     <div class="toolbar-left">
       <div class="zoom-controls">
         <button class="icon-btn" (click)="updateZoom(-0.1)" title="Zoom Out">−</button>
-        <span class="zoom-level">{{ (zoom() * 100).toFixed(0) }}%</span>
+        <span class="zoom-level">{{ zoomLabel() }}</span>
         <button class="icon-btn" (click)="updateZoom(0.1)" title="Zoom In">+</button>
         <button class="icon-btn" (click)="resetView()" title="Fit to Screen">
         <img src="images/svgs/fit-screen-icon.svg" width="14" height="14" alt="Fit to Screen" />

@@ -1,8 +1,7 @@
 import { ChangeDetectionStrategy, Component, effect, signal, inject, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
-import { ExportFormat } from '../interfaces/export.interface';
 import { CanvasRendererUtil } from '../../../utils/canvas-renderer.utils';
-import { CropRect, FilterState } from '../../../../../shared/interfaces/editor.interface';
+import { CropRect, ExportFormat, ExportFormatOption, FilterState } from '../../../../../shared/interfaces/editor.interface';
 import { ExportPreview } from '../components/export-preview/export-preview';
 import { ExportControls } from '../components/export-controls/export-controls';
 import { Editor } from '../../../../../core/services/editor';
@@ -26,7 +25,7 @@ export class ExportStepContainer implements OnInit {
 
   public readonly format = signal<ExportFormat>('image/png');
 
-  public readonly formats: { label: string; value: ExportFormat }[] = [
+  public readonly formats: ExportFormatOption[] = [
     { label: 'PNG (Lossless)', value: 'image/png' },
     { label: 'JPEG (High)', value: 'image/jpeg' },
     { label: 'WEBP (Optimized)', value: 'image/webp' },
@@ -52,7 +51,7 @@ export class ExportStepContainer implements OnInit {
     });
   }
 
-  public ngOnInit() {
+  public ngOnInit(): void {
     if (!this.image()) {
       this.router.navigate(['/']);
     }
@@ -68,7 +67,7 @@ export class ExportStepContainer implements OnInit {
     format: ExportFormat,
     quality: number,
     scale: number,
-    crop?: CropRect | null,
+    crop: CropRect | null,
   ): void {
     const img = new Image();
     img.crossOrigin = 'anonymous';

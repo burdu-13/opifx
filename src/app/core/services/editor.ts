@@ -20,15 +20,7 @@ export class Editor {
 
   public readonly filterString = computed(() => {
     const f = this.filtersSignal();
-    return `
-    brightness(${f.brightness}%) 
-    contrast(${f.contrast}%) 
-    saturate(${f.saturation}%) 
-    sepia(${f.sepia ?? 0}%) 
-    hue-rotate(${f.hueRotate ?? 0}deg) 
-    blur(${f.blur ?? 0}px)
-    grayscale(${f.grayscale ?? 0}%)
-  `.trim();
+    return `brightness(${f.brightness}%) contrast(${f.contrast}%) saturate(${f.saturation}%) sepia(${f.sepia}%) hue-rotate(${f.hueRotate}deg) blur(${f.blur}px) grayscale(${f.grayscale}%)`.trim();
   });
 
   public setStep(newStep: EditorStep): void {
@@ -36,10 +28,7 @@ export class Editor {
   }
 
   public applyPreset(preset: Preset): void {
-    this.filtersSignal.set({
-      ...NEUTRAL_FILTERS,
-      ...preset.state,
-    });
+    this.filtersSignal.set({ ...NEUTRAL_FILTERS, ...preset.state });
   }
 
   public setImage(base64: string): void {

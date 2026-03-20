@@ -2,7 +2,7 @@
   <div class="crop-header">
     <p class="group-label">Crop</p>
     <button class="btn-toggle" [class.active]="isCropActive()" (click)="onToggle()">
-      {{ isCropActive() ? 'Exit Crop' : 'Crop Image' }}
+      {{ toggleLabel() }}
     </button>
   </div>
 
@@ -20,9 +20,9 @@
         }
       </div>
 
-      @if (cropRect(); as rect) {
+      @if (cropRect()) {
         <div class="crop-dimensions">
-          <span class="dim">{{ getCropPixelWidth() }} × {{ getCropPixelHeight() }} px</span>
+          <span class="dim">{{ dimensionLabel() }}</span>
         </div>
       }
 
@@ -33,7 +33,8 @@
             type="number"
             class="res-input"
             placeholder="W"
-            [(ngModel)]="customW"
+            [value]="customW()"
+            (input)="customW.set($any($event.target).value)"
             [max]="sourceWidth()"
             min="1"
           />
@@ -42,7 +43,8 @@
             type="number"
             class="res-input"
             placeholder="H"
-            [(ngModel)]="customH"
+            [value]="customH()"
+            (input)="customH.set($any($event.target).value)"
             [max]="sourceHeight()"
             min="1"
           />
