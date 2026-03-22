@@ -23,9 +23,9 @@ import { CropOverlay } from '../components/crop-overlay/crop-overlay';
 import { PRESETS } from '../../../../../shared/config/presets.config';
 import { LibButton } from '../../../../../shared/components/lib-button/lib-button';
 import { PresetBar } from '../../preset-bar/preset-bar';
-import { Editor } from '../../../../../core/services/editor';
-import { CropService } from '../../../../../core/services/crop.service';
+import { Editor } from '../../../../../core/services/editor/editor';
 import { FILTER_CONTROLS } from '../../../config/filter.config';
+import { CropService } from '../../../../../core/services/crop/crop.service';
 
 @Component({
   selector: 'app-edit-step',

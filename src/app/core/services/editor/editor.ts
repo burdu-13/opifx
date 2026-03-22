@@ -4,7 +4,7 @@ import {
   FilterState,
   NEUTRAL_FILTERS,
   Preset,
-} from '../../shared/interfaces/editor.interface';
+} from '../../../shared/interfaces/editor.interface';
 
 @Injectable({
   providedIn: 'root',

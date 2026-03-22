@@ -4,8 +4,8 @@ import { CanvasRendererUtil } from '../../../utils/canvas-renderer.utils';
 import { CropRect, ExportFormat, ExportFormatOption, FilterState } from '../../../../../shared/interfaces/editor.interface';
 import { ExportPreview } from '../components/export-preview/export-preview';
 import { ExportControls } from '../components/export-controls/export-controls';
-import { Editor } from '../../../../../core/services/editor';
-import { CropService } from '../../../../../core/services/crop.service';
+import { Editor } from '../../../../../core/services/editor/editor';
+import { CropService } from '../../../../../core/services/crop/crop.service';
 
 @Component({
   selector: 'app-export-step',

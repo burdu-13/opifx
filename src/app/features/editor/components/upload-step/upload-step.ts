@@ -1,7 +1,7 @@
 import { ChangeDetectionStrategy, Component, signal, inject } from '@angular/core';
 import { Router } from '@angular/router';
 import { LibButton } from '../../../../shared/components/lib-button/lib-button';
-import { Editor } from '../../../../core/services/editor';
+import { Editor } from '../../../../core/services/editor/editor';
 
 @Component({
   selector: 'app-upload-step',

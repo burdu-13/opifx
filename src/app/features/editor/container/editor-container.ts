@@ -1,6 +1,6 @@
 import { ChangeDetectionStrategy, Component, inject } from '@angular/core';
 import { Router, RouterOutlet, RouterLink } from '@angular/router';
-import { Editor } from '../../../core/services/editor';
+import { Editor } from '../../../core/services/editor/editor';
 
 @Component({
   selector: 'app-editor-container',
