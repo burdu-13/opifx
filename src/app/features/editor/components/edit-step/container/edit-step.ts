@@ -17,15 +17,15 @@ import {
   PresetSpec,
   Preset,
 } from '../../../../../shared/interfaces/editor.interface';
-import { PreviewImage } from '../components/preview-image/preview-image';
-import { EditControls } from '../components/edit-controls/edit-controls';
-import { CropOverlay } from '../components/crop-overlay/crop-overlay';
+import { PreviewImage } from '../../../../../shared/components/preview-image/preview-image';
+import { EditControls } from '../../../../../shared/components/edit-controls/edit-controls';
+import { CropOverlay } from '../../../../../shared/components/crop-overlay/crop-overlay';
 import { PRESETS } from '../../../../../shared/config/presets.config';
 import { LibButton } from '../../../../../shared/components/lib-button/lib-button';
-import { PresetBar } from '../../preset-bar/preset-bar';
+import { PresetBar } from '../../../../../shared/components/preset-bar/preset-bar';
 import { Editor } from '../../../../../core/services/editor/editor';
 import { FILTER_CONTROLS } from '../../../config/filter.config';
-import { CropService } from '../../../../../core/services/crop/crop.service';
+import { Crop } from '../../../../../core/services/crop/crop';
 
 @Component({
   selector: 'app-edit-step',
@@ -36,14 +36,15 @@ import { CropService } from '../../../../../core/services/crop/crop.service';
 })
 export class EditStep implements OnInit {
   public readonly srv = inject(Editor);
-  public readonly cropSrv = inject(CropService);
+  public readonly cropSrv = inject(Crop);
   private readonly router = inject(Router);
 
   public readonly image = this.srv.sourceImage;
   public readonly filters = this.srv.filters;
+  public readonly isBatchMode = this.srv.isBatchMode;
 
   public readonly presets = PRESETS;
-  public readonly activePresetId = signal<string | null>(null);
+  public readonly activePresetId = this.srv.activePresetId;
 
   public readonly isPresetGalleryOpen = signal<boolean>(false);
 
@@ -127,11 +128,11 @@ export class EditStep implements OnInit {
   public handlePresetSelection(id: string | null): void {
     if (!id) return;
     if (this.activePresetId() === id) {
-      this.activePresetId.set(null);
+      this.srv.updateActivePresetId(null);
       this.isPresetGalleryOpen.set(false);
       this.srv.updateFilter({ ...NEUTRAL_FILTERS });
     } else {
-      this.activePresetId.set(id);
+      this.srv.updateActivePresetId(id);
       const selectedPreset = this.presets.find((p) => p.id === id);
       if (selectedPreset?.state) {
         this.srv.updateFilter({ ...NEUTRAL_FILTERS, ...selectedPreset.state } as FilterState);
@@ -140,12 +141,12 @@ export class EditStep implements OnInit {
   }
 
   public handleReset(): void {
-    this.activePresetId.set(null);
+    this.srv.updateActivePresetId(null);
     this.srv.updateFilter(NEUTRAL_FILTERS);
   }
 
   public handleManualChange(update: Partial<FilterState>): void {
-    this.activePresetId.set(null);
+    this.srv.updateActivePresetId(null);
     this.srv.updateFilter(update);
   }
 
@@ -167,6 +168,16 @@ export class EditStep implements OnInit {
 
   public proceedToExport(): void {
     this.router.navigate(['/export']);
+  }
+
+  public backToBatch(): void {
+    this.srv.setActiveImage(null);
+    this.router.navigate(['/batch']);
+  }
+
+  public applyToAll(): void {
+    this.srv.applyFiltersToAll();
+    this.srv.applyCropToAll();
   }
 
   public handleToggleCrop(): void {
