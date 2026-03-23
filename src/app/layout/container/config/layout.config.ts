@@ -6,13 +6,13 @@ export interface HeroContent {
 
 export const HERO_CONTENT: Record<'STUDIO' | 'BATCH', HeroContent> = {
   STUDIO: {
-    label: 'Aesthetic Ingest',
-    title: 'Industrial Image Engine.',
-    description: 'Curate high-contrast, atmospheric visuals with absolute precision.',
+    label: 'Image Editor',
+    title: 'presets to suit your vibe.',
+    description: 'Upload your image and choose your style.',
   },
   BATCH: {
-    label: 'Batch Studio',
-    title: 'Professional batch processing.',
-    description: 'Consistent atmospheres across your entire library simultaneously.',
+    label: 'Batch Editor',
+    title: 'presets to suit your vibe.',
+    description: 'Upload your images for bulk processing',
   },
 };

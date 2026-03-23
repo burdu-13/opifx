@@ -6,6 +6,7 @@ export const routes: Routes = [
     path: '',
     component: AppLayout,
     children: [
+      { path: '', redirectTo: 'edit', pathMatch: 'full' },
       {
         path: 'edit',
         title: 'Opifx | Studio',
