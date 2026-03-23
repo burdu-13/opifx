@@ -29,6 +29,12 @@ export const routes: Routes = [
             (c) => c.ExportStepContainer,
           ),
       },
+      {
+        path: 'batch',
+        title: 'Opifx | Batch Mode',
+        loadComponent: () =>
+          import('./features/batch/container/batch-step').then((c) => c.BatchStepContainer),
+      },
     ],
   },
   {

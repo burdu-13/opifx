@@ -1,0 +1,39 @@
+<div class="preset-container" [class.expanded]="isExpanded()">
+  @if (activePresetId()) {
+    <header class="active-preset-header">
+      <button class="btn-expand-modern" (click)="toggleExpand()">
+        {{ isExpanded() ? 'Close Details' : 'View Details' }}
+      </button>
+    </header>
+  }
+
+  <div class="preset-track" [class.with-header]="activePresetId()">
+    @for (preset of presets(); track preset.id) {
+      <button
+        class="preset-pill"
+        [class.active]="activePresetId() === preset.id"
+        (click)="handlePresetClick(preset.id)"
+      >
+        {{ preset.name }}
+      </button>
+    }
+  </div>
+
+  @if (isExpanded() && presetDetails()) {
+    <div class="specifications-cloud">
+      <div class="spec-header">
+        <h3>{{ presetDetails()?.name }}</h3>
+        <p>{{ presetDetails()?.description }}</p>
+      </div>
+
+      <div class="spec-grid">
+        @for (spec of presetSpecs(); track spec.label) {
+          <div class="spec-item">
+            <span class="spec-label">{{ spec.label }}</span>
+            <span class="spec-val">{{ spec.val }}</span>
+          </div>
+        }
+      </div>
+    </div>
+  }
+</div>

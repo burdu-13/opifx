@@ -12,6 +12,11 @@
     </div>
     
     <div class="toolbar-right">
+      @if (isBatchMode()) {
+        <app-lib-button variant="secondary" (clicked)="backToBatch()">Back to Grid</app-lib-button>
+        <button class="btn-text" (click)="applyToAll()">Apply to All</button>
+        <div class="toolbar-divider"></div>
+      }
       <button class="btn-text" 
               (mousedown)="showBefore.set(true)"
               (mouseup)="showBefore.set(false)"
@@ -22,7 +27,9 @@
         Hold to Compare
       </button>
       <div class="toolbar-divider"></div>
-      <app-lib-button (clicked)="proceedToExport()">Export Image</app-lib-button>
+      <app-lib-button (clicked)="proceedToExport()">
+        Export
+      </app-lib-button>
     </div>
   </header>
 

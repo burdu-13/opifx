@@ -1,6 +1,10 @@
 <div class="fx-shell">
   <header class="global-navbar">
     <div class="brand" (click)="goHome()" role="button" tabindex="0">OPIFX</div>
+    <nav class="mode-tabs">
+      <a routerLink="/" routerLinkActive="active" [routerLinkActiveOptions]="{exact: true}" class="tab-link" (click)="goHome()">Single Image</a>
+      <a routerLink="/batch" routerLinkActive="active" class="tab-link" (click)="goToBatch()">Batch Mode</a>
+    </nav>
   </header>
 
   <main class="router-content">

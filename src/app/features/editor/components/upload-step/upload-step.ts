@@ -1,4 +1,5 @@
 import { ChangeDetectionStrategy, Component, signal, inject } from '@angular/core';
+import { Observable } from 'rxjs';
 import { Router } from '@angular/router';
 import { LibButton } from '../../../../shared/components/lib-button/lib-button';
 import { Editor } from '../../../../core/services/editor/editor';
@@ -44,12 +45,21 @@ export class UploadStep {
   private processFile(file: File): void {
     if (!file.type.startsWith('image/')) return;
 
-    const reader = new FileReader();
-    reader.onload = (e) => {
-      const base64 = e.target?.result as string;
+    this.readFileAsDataURL(file).subscribe((base64) => {
       this.srv.setImage(base64);
       this.router.navigate(['/edit']);
-    };
-    reader.readAsDataURL(file);
+    });
+  }
+
+  private readFileAsDataURL(file: File): Observable<string> {
+    return new Observable<string>((observer) => {
+      const reader = new FileReader();
+      reader.onload = (e) => {
+        observer.next(e.target?.result as string);
+        observer.complete();
+      };
+      reader.onerror = (e) => observer.error(e);
+      reader.readAsDataURL(file);
+    });
   }
 }

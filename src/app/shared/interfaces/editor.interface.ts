@@ -90,3 +90,14 @@ export interface ExportFormatOption {
 }
 
 export type ExportFormat = 'image/png' | 'image/jpeg' | 'image/webp';
+
+export interface ImageState {
+  id: string;
+  name: string;
+  url: string;
+  filters: FilterState;
+  cropRect: CropRect | null;
+  aspectRatio: number | null;
+  isCropActive: boolean;
+  activePresetId: string | null;
+}
