@@ -1,0 +1,84 @@
+@use '../../shared/styles/mixins' as *;
+@use '../../shared/styles/home-layout' as *;
+
+.opi-shell {
+  @include fullscreen-shell;
+  @include flex-column;
+  background-color: var(--opi-bg);
+  overflow: hidden;
+  position: relative;
+
+  &.is-dragging {
+    background-color: var(--opi-surface);
+    .upload-frame {
+      border-color: var(--opi-text);
+      transform: scale(1.01);
+      background: var(--opi-surface-raised);
+    }
+  }
+}
+
+.global-navbar {
+  @include flex-between(0);
+  height: 6.4rem;
+  padding: 0 3.2rem;
+  background: var(--opi-bg);
+  border-bottom: 1px solid var(--opi-border);
+  z-index: 100;
+  flex-shrink: 0;
+
+  .brand {
+    @include typography-sans(1.6rem, 500, var(--opi-text), -0.02em);
+    cursor: pointer;
+    text-transform: uppercase;
+  }
+
+  .mode-tabs {
+    @include flex-center(0.8rem);
+
+    .tab-link {
+      @include typography-sans(1.3rem, 500, var(--opi-text-muted));
+      text-decoration: none;
+      padding: 0.6rem 1.6rem;
+      border-radius: var(--opi-radius);
+      transition: all var(--opi-transition);
+
+      &:hover {
+        color: var(--opi-text);
+        background: var(--opi-surface-raised);
+      }
+
+      &.active {
+        color: var(--opi-text);
+        background: var(--opi-surface-raised);
+        border: 1px solid var(--opi-border-light);
+      }
+    }
+  }
+}
+
+.workspace-root {
+  flex: 1;
+  width: 100%;
+  display: flex;
+  overflow: hidden;
+  position: relative;
+}
+
+.drag-icon {
+  width: 6.4rem;
+  height: 6.4rem;
+  @include flex-center;
+  background: var(--opi-bg);
+  border: 1px solid var(--opi-border);
+  border-radius: 50%;
+
+  &::before {
+    content: '';
+    display: block;
+    width: 3.2rem;
+    height: 3.2rem;
+    background: url('/images/svgs/upload-icon.svg') no-repeat center;
+    background-size: contain;
+  }
+}

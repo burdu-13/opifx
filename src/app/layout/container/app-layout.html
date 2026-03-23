@@ -1,0 +1,50 @@
+<div class="opi-shell" [class.is-dragging]="isDragging()">
+  <header class="global-navbar">
+    <div class="brand" routerLink="/">OPIFX</div>
+
+    <nav class="mode-tabs">
+      <a
+        routerLink="/edit"
+        routerLinkActive="active"
+        [routerLinkActiveOptions]="{ exact: true }"
+        class="tab-link"
+        >Studio</a
+      >
+      <a routerLink="/batch" routerLinkActive="active" class="tab-link">Batch Mode</a>
+    </nav>
+  </header>
+
+  <main class="workspace-root">
+    @if (!hasImages()) {
+      <section
+        class="home-layout"
+        (drop)="onDrop($event)"
+        (dragover)="onDragOver($event)"
+        (dragleave)="onDragLeave()"
+      >
+        <div class="home-hero">
+          <div class="hero-content">
+            <span class="eyebrow">{{ heroContent().label }}</span>
+            <h1 class="headline">{{ heroContent().title }}</h1>
+            <p class="subtitle">{{ heroContent().description }}</p>
+          </div>
+
+          <div class="hero-visual">
+            <div class="upload-frame">
+              <div class="content">
+                <div class="drag-icon"></div>
+                <p class="primary-text">Drag & drop source</p>
+                <app-lib-button class="mt-4" (clicked)="fileInput.click()">
+                  Select Files
+                </app-lib-button>
+                <input #fileInput type="file" multiple (change)="handleFileUpload($event)" hidden />
+              </div>
+            </div>
+          </div>
+        </div>
+      </section>
+    } @else {
+      <router-outlet />
+    }
+  </main>
+</div>

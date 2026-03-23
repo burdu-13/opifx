@@ -1,32 +1,17 @@
 import { Routes } from '@angular/router';
+import { AppLayout } from './layout/container/app-layout';
 
 export const routes: Routes = [
   {
     path: '',
-    title: 'Opifx | Image Editor',
-    loadComponent: () =>
-      import('./features/editor/container/editor-container').then((c) => c.EditorContainer),
+    component: AppLayout,
     children: [
       {
-        path: '',
-        title: 'Opifx | Homepage',
-        loadComponent: () =>
-          import('./features/editor/components/upload-step/upload-step').then((c) => c.UploadStep),
-      },
-      {
         path: 'edit',
-        title: 'Opifx | Atmosphere & Adjustments',
+        title: 'Opifx | Studio',
         loadComponent: () =>
           import('./features/editor/components/edit-step/container/edit-step').then(
             (c) => c.EditStep,
-          ),
-      },
-      {
-        path: 'export',
-        title: 'Opifx | Render & Finalize',
-        loadComponent: () =>
-          import('./features/editor/components/export-step/container/export-step-container').then(
-            (c) => c.ExportStepContainer,
           ),
       },
       {
@@ -35,10 +20,15 @@ export const routes: Routes = [
         loadComponent: () =>
           import('./features/batch/container/batch-step').then((c) => c.BatchStepContainer),
       },
+      {
+        path: 'export',
+        title: 'Opifx | Render',
+        loadComponent: () =>
+          import('./features/editor/components/export-step/container/export-step-container').then(
+            (c) => c.ExportStepContainer,
+          ),
+      },
     ],
   },
-  {
-    path: '**',
-    redirectTo: '',
-  },
+  { path: '**', redirectTo: '' },
 ];

@@ -1,67 +1,25 @@
-@if (editorSrv.imagesList().length === 0) {
-  <div 
-    class="home-layout" 
-    [class.is-dragging]="isDragging()"
-    (drop)="onDrop($event)" 
-    (dragover)="onDragOver($event)" 
-    (dragleave)="onDragLeave()"
-  >
-    <main class="home-hero">
-      <div class="hero-content">
-        <span class="eyebrow">Batch Studio</span>
-        <h1 class="headline">Professional batch processing.</h1>
-        <p class="subtitle">Process multiple atmospheres simultaneously with absolute precision and consistent grading.</p>
-
-        <div class="features-list">
-          <div class="feature-item">
-            <span>Parallel rendering</span>
-          </div>
-          <div class="feature-item">
-            <span>Universal grading overrides</span>
-          </div>
-          <div class="feature-item">
-            <span>Zero destruction</span>
-          </div>
-        </div>
-      </div>
-
-      <div class="hero-visual">
-        <div class="upload-frame">
-          <div class="content">
-            <div class="drag-icon"></div>
-            <p class="primary-text">Drag & drop your queue</p>
-            <p class="muted">or click to bulk select files.</p>
-
-            <app-lib-button class="mt-4" (clicked)="fileInput.click()">
-              Select Library
-            </app-lib-button>
-            <input #fileInput type="file" multiple (change)="onFileSelected($event)" accept="image/*" hidden />
-          </div>
-        </div>
-      </div>
-    </main>
-
-    <footer class="home-footer">
-      <div class="footer-content">
-        <span class="muted">© 2026 OpiFX </span>
-      </div>
-    </footer>
-  </div>
-} @else {
-  <section class="batch-workspace">
-    <header class="batch-toolbar">
-      <div class="batch-actions">
-        <app-lib-button variant="secondary" (clicked)="editorSrv.resetAll()">Clear Batch</app-lib-button>
-        <app-lib-button variant="primary" (clicked)="goToExport()">Export All</app-lib-button>
-      </div>
-    </header>
-    <div class="batch-grid">
-      @for (image of editorSrv.imagesList(); track image.id) {
-        <div class="grid-card" (click)="openEditor(image.id)">
-           <img [src]="image.url" class="card-preview" />
-           <p class="card-name">{{ image.name }}</p>
-        </div>
-      }
+<section class="batch-workspace">
+  <header class="batch-toolbar">
+    <div class="batch-info">
+      <span class="count-label">Queue // {{ editorSrv.imagesList().length }} Items</span>
     </div>
-  </section>
-}
+    <div class="batch-actions">
+      <app-lib-button variant="secondary" (clicked)="editorSrv.resetAll()"
+        >Clear Batch</app-lib-button
+      >
+      <app-lib-button variant="primary" (clicked)="goToExport()">Process All</app-lib-button>
+    </div>
+  </header>
+
+  <div class="batch-grid">
+    @for (image of editorSrv.imagesList(); track image.id) {
+      <div class="grid-card" (click)="openEditor(image.id)">
+        <img [src]="image.url" class="card-preview" loading="lazy" />
+        <div class="card-footer">
+          <p class="card-name">{{ image.name }}</p>
+          <span class="card-status">READY</span>
+        </div>
+      </div>
+    }
+  </div>
+</section>

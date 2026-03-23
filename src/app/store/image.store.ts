@@ -18,13 +18,12 @@ export class ImageStore extends SignalStore<ImageStoreState> {
   public readonly step = this.select((s) => s.step);
   public readonly activeId = this.select((s) => s.activeId);
   public readonly imagesList = this.select((s) => Object.values(s.images));
+  public readonly isBatchMode = this.select((s) => Object.keys(s.images).length > 1);
 
   public readonly activeImage = computed(() => {
     const s = this.stateSignal();
     return s.activeId ? s.images[s.activeId] : null;
   });
-
-  public readonly isBatchMode = this.select((s) => Object.keys(s.images).length > 1);
 
   constructor() {
     super({ images: {}, activeId: null, step: 'UPLOAD' });
@@ -76,7 +75,35 @@ export class ImageStore extends SignalStore<ImageStoreState> {
     });
   }
 
-  public applyActiveToAll(): void {
+  public updateActivePresetId(id: string | null): void {
+    this.patch((state) => {
+      if (!state.activeId) return state;
+      const active = state.images[state.activeId];
+      return {
+        images: {
+          ...state.images,
+          [state.activeId]: { ...active, activePresetId: id },
+        },
+      };
+    });
+  }
+
+  public updateActiveCrop(
+    config: Partial<Pick<ImageState, 'cropRect' | 'aspectRatio' | 'isCropActive'>>,
+  ): void {
+    this.patch((state) => {
+      if (!state.activeId) return state;
+      const active = state.images[state.activeId];
+      return {
+        images: {
+          ...state.images,
+          [state.activeId]: { ...active, ...config },
+        },
+      };
+    });
+  }
+
+  public applyFiltersToAll(): void {
     const active = this.activeImage();
     if (!active) return;
 
@@ -93,7 +120,43 @@ export class ImageStore extends SignalStore<ImageStoreState> {
     });
   }
 
-  public reset(): void {
+  public applyCropToAll(): void {
+    const active = this.activeImage();
+    if (!active || !active.cropRect) return;
+
+    this.patch((state) => {
+      const updated = { ...state.images };
+      Object.keys(updated).forEach((id) => {
+        updated[id] = {
+          ...updated[id],
+          cropRect: { ...active.cropRect! },
+          aspectRatio: active.aspectRatio,
+        };
+      });
+      return { images: updated };
+    });
+  }
+
+  public resetActive(): void {
+    this.patch((state) => {
+      if (!state.activeId) return state;
+      return {
+        images: {
+          ...state.images,
+          [state.activeId]: {
+            ...state.images[state.activeId],
+            filters: { ...NEUTRAL_FILTERS },
+            cropRect: null,
+            aspectRatio: null,
+            isCropActive: false,
+            activePresetId: null,
+          },
+        },
+      };
+    });
+  }
+
+  public resetAll(): void {
     this.patch({ images: {}, activeId: null, step: 'UPLOAD' });
   }
 }
