@@ -1,84 +1,96 @@
 @use '../../shared/styles/mixins' as *;
-@use '../../shared/styles/home-layout' as *;
 
 .opi-shell {
   @include fullscreen-shell;
   @include flex-column;
   background-color: var(--opi-bg);
+  color: var(--opi-text);
   overflow: hidden;
-  position: relative;
 
   &.is-dragging {
-    background-color: var(--opi-surface);
-    .upload-frame {
+    .drop-zone {
       border-color: var(--opi-text);
-      transform: scale(1.01);
       background: var(--opi-surface-raised);
+      transform: scale(1.02);
     }
   }
 }
 
 .global-navbar {
+  height: 5.6rem;
+  padding: 0 2.4rem;
   @include flex-between(0);
-  height: 6.4rem;
-  padding: 0 3.2rem;
-  background: var(--opi-bg);
   border-bottom: 1px solid var(--opi-border);
+  background: var(--opi-bg);
   z-index: 100;
-  flex-shrink: 0;
 
   .brand {
-    @include typography-sans(1.6rem, 500, var(--opi-text), -0.02em);
-    cursor: pointer;
+    @include typography-sans(1.3rem, 600, var(--opi-text), 0.05em);
     text-transform: uppercase;
-  }
-
-  .mode-tabs {
-    @include flex-center(0.8rem);
-
-    .tab-link {
-      @include typography-sans(1.3rem, 500, var(--opi-text-muted));
-      text-decoration: none;
-      padding: 0.6rem 1.6rem;
-      border-radius: var(--opi-radius);
-      transition: all var(--opi-transition);
-
-      &:hover {
-        color: var(--opi-text);
-        background: var(--opi-surface-raised);
-      }
-
-      &.active {
-        color: var(--opi-text);
-        background: var(--opi-surface-raised);
-        border: 1px solid var(--opi-border-light);
-      }
-    }
+    cursor: pointer;
   }
 }
 
 .workspace-root {
   flex: 1;
-  width: 100%;
-  display: flex;
-  overflow: hidden;
   position: relative;
 }
 
-.drag-icon {
-  width: 6.4rem;
-  height: 6.4rem;
+.portal-layer {
+  @include abs-fill;
   @include flex-center;
-  background: var(--opi-bg);
-  border: 1px solid var(--opi-border);
-  border-radius: 50%;
+  padding: 4rem;
 
-  &::before {
-    content: '';
-    display: block;
-    width: 3.2rem;
-    height: 3.2rem;
+  .portal-grid {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 12rem;
+    max-width: 100rem;
+    width: 100%;
+  }
+}
+
+.content-block {
+  @include flex-column(2.4rem);
+  justify-content: center;
+
+  .label {
+    @include typography-mono(1rem, 500);
+    color: var(--opi-text-muted);
+    text-transform: uppercase;
+    letter-spacing: 0.1em;
+  }
+
+  .title {
+    @include typography-sans(4.8rem, 500, var(--opi-text), -0.03em);
+    line-height: 1;
+  }
+
+  .description {
+    @include typography-sans(1.5rem, 400, var(--opi-text-muted));
+    line-height: 1.6;
+    max-width: 36rem;
+  }
+}
+
+.drop-zone {
+  @include flex-center(2.4rem, column);
+  aspect-ratio: 1;
+  width: 100%;
+  background: var(--opi-surface);
+  border: 1px solid var(--opi-border);
+  border-radius: var(--opi-radius);
+  transition: all var(--opi-transition);
+
+  .drag-icon {
+    width: 4rem;
+    height: 4rem;
     background: url('/images/svgs/upload-icon.svg') no-repeat center;
     background-size: contain;
+    filter: invert(1);
+  }
+
+  .drop-text {
+    @include typography-sans(1.6rem, 500);
   }
 }

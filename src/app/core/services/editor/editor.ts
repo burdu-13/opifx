@@ -17,6 +17,7 @@ export class Editor {
   public readonly imagesList = this.store.imagesList;
   public readonly isBatchMode = this.store.isBatchMode;
   public readonly activeImage = this.store.activeImage;
+  public readonly activeId = this.store.activeId;
 
   public readonly activeImageObj = this.store.activeImage;
   public readonly sourceImage = computed(() => this.activeImage()?.url ?? null);

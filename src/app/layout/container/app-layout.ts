@@ -1,14 +1,12 @@
 import { ChangeDetectionStrategy, Component, computed, inject, signal } from '@angular/core';
-import { NavigationEnd, Router, RouterOutlet, RouterLink, RouterLinkActive } from '@angular/router';
-import { toSignal } from '@angular/core/rxjs-interop';
-import { filter, map } from 'rxjs';
-import { ImageStore } from '../../store/image.store';
+import { Router, RouterOutlet } from '@angular/router';
 import { LibButton } from '../../shared/components/lib-button/lib-button';
+import { ImageStore } from '../../store/image.store';
 import { HERO_CONTENT } from './config/layout.config';
 
 @Component({
   selector: 'app-app-layout',
-  imports: [LibButton, RouterOutlet, RouterLink, RouterLinkActive],
+  imports: [LibButton, RouterOutlet],
   templateUrl: './app-layout.html',
   styleUrl: './app-layout.scss',
   changeDetection: ChangeDetectionStrategy.OnPush,
@@ -17,21 +15,9 @@ export class AppLayout {
   protected readonly store = inject(ImageStore);
   private readonly router = inject(Router);
 
-  private readonly currentUrl = toSignal(
-    this.router.events.pipe(
-      filter((e) => e instanceof NavigationEnd),
-      map(() => this.router.url),
-    ),
-    { initialValue: this.router.url },
-  );
-
   public readonly hasImages = computed(() => this.store.imagesList().length > 0);
   public readonly isDragging = signal(false);
-
-  public readonly heroContent = computed(() => {
-    const isBatch = this.currentUrl().includes('/batch');
-    return isBatch ? HERO_CONTENT.BATCH : HERO_CONTENT.STUDIO;
-  });
+  public readonly content = HERO_CONTENT;
 
   public handleFileUpload(event: Event): void {
     const input = event.target as HTMLInputElement;

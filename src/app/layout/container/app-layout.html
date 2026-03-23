@@ -1,44 +1,36 @@
 <div class="opi-shell" [class.is-dragging]="isDragging()">
   <header class="global-navbar">
-    <div class="brand" routerLink="/">OPIFX</div>
-
-    <nav class="mode-tabs">
-      <a
-        routerLink="/edit"
-        routerLinkActive="active"
-        [routerLinkActiveOptions]="{ exact: true }"
-        class="tab-link"
-        >Studio</a
-      >
-      <a routerLink="/batch" routerLinkActive="active" class="tab-link">Batch Mode</a>
-    </nav>
+    <div class="brand" (click)="store.resetAll()">OPIFX</div>
   </header>
 
   <main class="workspace-root">
     @if (!hasImages()) {
       <section
-        class="home-layout"
+        class="portal-layer"
         (drop)="onDrop($event)"
         (dragover)="onDragOver($event)"
         (dragleave)="onDragLeave()"
       >
-        <div class="home-hero">
-          <div class="hero-content">
-            <span class="eyebrow">{{ heroContent().label }}</span>
-            <h1 class="headline">{{ heroContent().title }}</h1>
-            <p class="subtitle">{{ heroContent().description }}</p>
+        <div class="portal-grid">
+          <div class="content-block">
+            <span class="label">{{ content.label }}</span>
+            <h1 class="title">{{ content.title }}</h1>
+            <p class="description">{{ content.description }}</p>
           </div>
 
-          <div class="hero-visual">
-            <div class="upload-frame">
-              <div class="content">
-                <div class="drag-icon"></div>
-                <p class="primary-text">Drag & drop source</p>
-                <app-lib-button class="mt-4" (clicked)="fileInput.click()">
-                  Select Files
-                </app-lib-button>
-                <input #fileInput type="file" multiple (change)="handleFileUpload($event)" hidden />
-              </div>
+          <div class="ingest-block">
+            <div class="drop-zone">
+              <div class="drag-icon"></div>
+              <p class="drop-text">Drag & drop source</p>
+              <app-lib-button (clicked)="fileInput.click()">Select Media</app-lib-button>
+              <input
+                #fileInput
+                type="file"
+                multiple
+                (change)="handleFileUpload($event)"
+                accept="image/*"
+                hidden
+              />
             </div>
           </div>
         </div>

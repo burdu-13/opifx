@@ -1,16 +1,18 @@
 import { ComponentFixture, TestBed } from '@angular/core/testing';
-import { BatchStepContainer } from './batch-step';
 
-describe('BatchStep', () => {
-  let component: BatchStepContainer;
-  let fixture: ComponentFixture<BatchStepContainer>;
+import { LibraryGrid } from './library-grid';
+
+describe('LibraryGrid', () => {
+  let component: LibraryGrid;
+  let fixture: ComponentFixture<LibraryGrid>;
 
   beforeEach(async () => {
     await TestBed.configureTestingModule({
-      imports: [BatchStepContainer],
-    }).compileComponents();
+      imports: [LibraryGrid]
+    })
+    .compileComponents();
 
-    fixture = TestBed.createComponent(BatchStepContainer);
+    fixture = TestBed.createComponent(LibraryGrid);
     component = fixture.componentInstance;
     await fixture.whenStable();
   });

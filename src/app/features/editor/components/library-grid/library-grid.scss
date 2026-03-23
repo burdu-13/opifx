@@ -1,0 +1,84 @@
+@use '../../../../shared/styles/mixins' as *;
+
+:host {
+  display: block;
+  height: 100%;
+  width: 100%;
+}
+
+.library-workspace {
+  @include flex-column;
+  height: 100%;
+  background: var(--opi-bg);
+}
+
+.library-toolbar {
+  @include flex-between(0);
+  height: 5.6rem;
+  padding: 0 2.4rem;
+  background: var(--opi-surface);
+  border-bottom: 1px solid var(--opi-border);
+  flex-shrink: 0;
+
+  .count-label {
+    @include typography-mono(1.1rem, 500);
+    color: var(--opi-text-muted);
+    text-transform: uppercase;
+    letter-spacing: 0.05em;
+  }
+}
+
+.grid-container {
+  flex: 1;
+  padding: 3.2rem;
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
+  gap: 3.2rem;
+  overflow-y: auto;
+  align-content: start;
+}
+
+.image-card {
+  @include flex-column;
+  background: var(--opi-surface);
+  border: 1px solid var(--opi-border);
+  border-radius: var(--opi-radius);
+  overflow: hidden;
+  cursor: pointer;
+  transition: var(--opi-transition);
+  aspect-ratio: 4/3;
+
+  &:hover {
+    border-color: var(--opi-text);
+    background: var(--opi-surface-raised);
+    transform: translateY(-2px);
+  }
+
+  .card-preview {
+    width: 100%;
+    height: calc(100% - 4.8rem);
+    object-fit: cover;
+    background: var(--opi-bg);
+    border-bottom: 1px solid var(--opi-border);
+  }
+
+  .card-footer {
+    @include flex-between;
+    height: 4.8rem;
+    padding: 0 1.6rem;
+
+    .card-name {
+      @include typography-sans(1.3rem, 500);
+      color: var(--opi-text);
+      white-space: nowrap;
+      overflow: hidden;
+      text-overflow: ellipsis;
+    }
+
+    .status-tag {
+      @include typography-mono(0.9rem, 600);
+      color: var(--opi-text-muted);
+      text-transform: uppercase;
+    }
+  }
+}
