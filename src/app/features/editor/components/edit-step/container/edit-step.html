@@ -6,7 +6,7 @@
         <span class="zoom-level">{{ zoomLabel() }}</span>
         <button class="icon-btn" (click)="updateZoom(0.1)" title="Zoom In">+</button>
         <button class="icon-btn" (click)="resetView()" title="Fit to Screen">
-        <img src="images/svgs/fit-screen-icon.svg" width="14" height="14" alt="Fit to Screen" />
+          <div class="fit-screen-icon"></div>
         </button>
       </div>
     </div>
@@ -38,6 +38,7 @@
       <div class="cloud-glow"></div>
 
       <app-preset-bar
+        class="preset-bar-layer"
         [presets]="presets"
         [activePresetId]="activePresetId()"
         [presetSpecs]="activeSpecs()"
@@ -47,6 +48,7 @@
       />
 
       <app-preview-image
+        class="preview-image-layer"
         [src]="image()"
         [filters]="activeFilters()"
         [zoom]="zoom()"

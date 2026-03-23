@@ -1,39 +1,52 @@
 @if (editorSrv.imagesList().length === 0) {
-  <section class="upload-viewport">
-    <div class="hero-content">
-      <h1 class="hero-title">Batch Processing</h1>
-      <p class="hero-subtitle">Process multiple atmospheres simultaneously.</p>
-    </div>
+  <div 
+    class="home-layout" 
+    [class.is-dragging]="isDragging()"
+    (drop)="onDrop($event)" 
+    (dragover)="onDragOver($event)" 
+    (dragleave)="onDragLeave()"
+  >
+    <main class="home-hero">
+      <div class="hero-content">
+        <span class="eyebrow">Batch Studio</span>
+        <h1 class="headline">Professional batch processing.</h1>
+        <p class="subtitle">Process multiple atmospheres simultaneously with absolute precision and consistent grading.</p>
 
-    <div
-      class="upload-frame upload-area"
-      [class.drag-over]="isDragging()"
-      (drop)="onDrop($event)"
-      (dragover)="onDragOver($event)"
-      (dragleave)="onDragLeave()"
-    >
-      <div class="upload-content">
-        <h2 class="prompt-text">Drop Images Here</h2>
-        <span class="sub-text">PNG, JPG, WEBP compatible</span>
-        
-        <div class="divider">
-          <span>OR</span>
+        <div class="features-list">
+          <div class="feature-item">
+            <span>Parallel rendering</span>
+          </div>
+          <div class="feature-item">
+            <span>Universal grading overrides</span>
+          </div>
+          <div class="feature-item">
+            <span>Zero destruction</span>
+          </div>
         </div>
-
-        <app-lib-button class="cta-btn" variant="primary" (clicked)="fileInput.click()">
-          Select Files
-        </app-lib-button>
-        <input
-          #fileInput
-          type="file"
-          multiple
-          accept="image/*"
-          (change)="onFileSelected($event)"
-          tabindex="-1"
-        />
       </div>
-    </div>
-  </section>
+
+      <div class="hero-visual">
+        <div class="upload-frame">
+          <div class="content">
+            <div class="drag-icon"></div>
+            <p class="primary-text">Drag & drop your queue</p>
+            <p class="muted">or click to bulk select files.</p>
+
+            <app-lib-button class="mt-4" (clicked)="fileInput.click()">
+              Select Library
+            </app-lib-button>
+            <input #fileInput type="file" multiple (change)="onFileSelected($event)" accept="image/*" hidden />
+          </div>
+        </div>
+      </div>
+    </main>
+
+    <footer class="home-footer">
+      <div class="footer-content">
+        <span class="muted">© 2026 OpiFX </span>
+      </div>
+    </footer>
+  </div>
 } @else {
   <section class="batch-workspace">
     <header class="batch-toolbar">
