@@ -1,0 +1,66 @@
+@use './mixins' as *;
+
+.home-layout {
+  @include abs-fill;
+  @include flex-center(0, column);
+  background: var(--opi-bg);
+}
+
+.home-hero {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 8rem;
+  max-width: 110rem;
+  width: 100%;
+  padding: 4rem;
+}
+
+.hero-content {
+  @include flex-column(2rem);
+  justify-content: center;
+
+  .eyebrow {
+    @include typography-mono(1.1rem, 500);
+    color: var(--opi-text-muted);
+    text-transform: uppercase;
+    letter-spacing: 0.1em;
+  }
+
+  .headline {
+    @include typography-sans(4.2rem, 500, var(--opi-text), -0.03em);
+    line-height: 1.1;
+  }
+
+  .subtitle {
+    @include typography-sans(1.6rem, 400, var(--opi-text-muted));
+    line-height: 1.6;
+    max-width: 40rem;
+  }
+}
+
+.upload-frame {
+  @include flex-center(0, column);
+  width: 100%;
+  aspect-ratio: 1;
+  border: 1px solid var(--opi-border);
+  background: var(--opi-surface);
+  transition: var(--opi-transition);
+
+  &:hover {
+    border-color: var(--opi-text);
+    background: var(--opi-surface-raised);
+  }
+
+  .drag-icon {
+    width: 4.8rem;
+    height: 4.8rem;
+    margin-bottom: 2.4rem;
+    background: url('/images/svgs/upload-icon.svg') no-repeat center;
+    background-size: contain;
+    filter: invert(1);
+  }
+
+  .primary-text {
+    @include typography-sans(1.8rem, 500);
+  }
+}

@@ -1,0 +1,158 @@
+@use '../../styles/mixins' as *;
+
+.preset-container {
+  width: 100%;
+  padding: 1.6rem 2.4rem;
+  background: var(--opi-surface);
+  border-bottom: 1px solid var(--opi-border);
+  z-index: 20;
+
+  &.expanded {
+    background: var(--opi-surface-raised);
+
+    @media (max-width: 1024px) {
+      flex: 1;
+      @include flex-column;
+      overflow-y: auto;
+      padding: 1.6rem 1.6rem;
+    }
+  }
+}
+
+.active-preset-header {
+  @include flex-between(0);
+  justify-content: flex-end;
+  margin-bottom: 2.4rem;
+  animation: slide-down 0.2s ease forwards;
+
+  .btn-expand-modern {
+    @include interactive-scale;
+    background: transparent;
+    border: none;
+    @include typography-sans(1.2rem, 400, var(--opi-text-muted));
+    transition: color 0.2s ease;
+
+    &:hover {
+      color: var(--opi-text);
+    }
+  }
+}
+
+.preset-track {
+  display: flex;
+  gap: 1.2rem;
+  overflow-x: auto;
+  padding-bottom: 1.6rem;
+  scrollbar-width: none;
+  scroll-snap-type: x mandatory;
+  scroll-padding: 2.4rem;
+  -webkit-overflow-scrolling: touch;
+  &::-webkit-scrollbar {
+    height: 4px;
+    display: block;
+  }
+  &::-webkit-scrollbar-track {
+    background: transparent;
+  }
+  &::-webkit-scrollbar-thumb {
+    background: var(--opi-border);
+    border-radius: 4px;
+  }
+  &::-webkit-scrollbar-thumb:hover {
+    background: var(--opi-text-muted);
+  }
+}
+
+.preset-pill {
+  @include pill-base(0.6rem, 1.6rem);
+  background: transparent;
+  border: 1px solid var(--opi-border);
+  @include typography-sans(1.1rem, 400, var(--opi-text-muted));
+  flex-shrink: 0;
+  transition: all 0.2s ease;
+  scroll-snap-align: start;
+
+  &:hover {
+    border-color: var(--opi-border-hover);
+    background: var(--opi-surface-raised);
+    color: var(--opi-text);
+  }
+
+  &.active {
+    background: var(--opi-text);
+    color: var(--opi-bg);
+    border-color: var(--opi-text);
+    font-weight: 500;
+  }
+}
+
+.specifications-cloud {
+  margin-top: 2.4rem;
+  max-width: 80rem;
+  animation: slide-down 0.3s cubic-bezier(0.2, 0, 0, 1) forwards;
+}
+
+.spec-header {
+  margin-bottom: 4rem;
+
+  @media (max-width: 1024px) {
+    margin-bottom: 3.2rem;
+  }
+
+  h3 {
+    @include typography-sans(2.4rem, 300, var(--opi-text));
+    margin-bottom: 0.8rem;
+  }
+
+  p {
+    @include typography-sans(1.6rem, 300, rgba(255, 255, 255, 0.6));
+    line-height: 1.6;
+    max-width: 60rem;
+  }
+}
+
+.spec-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(24rem, 1fr));
+  gap: 3.2rem;
+  border-top: 1px solid rgba(255, 255, 255, 0.08);
+  padding-top: 3.2rem;
+
+  @media (max-width: 1024px) {
+    grid-template-columns: 1fr 1fr;
+    gap: 2.4rem;
+    padding-top: 2.4rem;
+  }
+
+  @media (max-width: 480px) {
+    grid-template-columns: 1fr;
+    gap: 1.6rem;
+  }
+}
+
+.spec-item {
+  @include flex-column(0.8rem);
+
+  .spec-label {
+    @include text-uppercase-label(1rem, 0.4);
+  }
+
+  .spec-val {
+    @include typography-sans(2rem, 300, var(--opi-text));
+
+    @media (max-width: 1024px) {
+      font-size: 1.8rem;
+    }
+  }
+}
+
+@keyframes slide-down {
+  from {
+    opacity: 0;
+    transform: translateY(-1rem);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}

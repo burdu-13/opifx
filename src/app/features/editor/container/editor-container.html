@@ -1,9 +1,17 @@
 <div class="fx-shell">
-  <header class="global-navbar">
-    <div class="brand" (click)="goHome()" role="button" tabindex="0">OPIFX</div>
-  </header>
-
-  <main class="router-content">
-    <router-outlet></router-outlet>
+  <main class="workspace-content">
+    @if (srv.imagesList().length === 0) {
+      <app-upload-step />
+    } @else {
+      @if (srv.isBatchMode() && !srv.activeId()) {
+        <app-library-grid 
+          [images]="srv.imagesList()" 
+          (select)="srv.setActiveImage($event)"
+          (process)="goToExport()"
+        />
+      } @else {
+        <app-edit-step />
+      }
+    }
   </main>
 </div>

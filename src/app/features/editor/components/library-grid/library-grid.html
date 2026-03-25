@@ -1,0 +1,22 @@
+<section class="library-workspace">
+  <header class="library-toolbar">
+    <div class="batch-info">
+      <span class="count-label">Library // {{ images().length }} Items</span>
+    </div>
+    <div class="batch-actions">
+      <app-lib-button variant="primary" (clicked)="process.emit()">Process All</app-lib-button>
+    </div>
+  </header>
+
+  <div class="grid-container">
+    @for (image of images(); track image.id) {
+      <div class="image-card" (click)="select.emit(image.id)">
+        <img [src]="image.url" class="card-preview" loading="lazy" />
+        <div class="card-footer">
+          <p class="card-name">{{ image.name }}</p>
+          <span class="status-tag">Ready</span>
+        </div>
+      </div>
+    }
+  </div>
+</section>

@@ -1,0 +1,42 @@
+<div class="opi-shell" [class.is-dragging]="isDragging()">
+  <header class="global-navbar">
+    <div class="brand" (click)="store.resetAll()">OPIFX</div>
+  </header>
+
+  <main class="workspace-root">
+    @if (!hasImages()) {
+      <section
+        class="portal-layer"
+        (drop)="onDrop($event)"
+        (dragover)="onDragOver($event)"
+        (dragleave)="onDragLeave()"
+      >
+        <div class="portal-grid">
+          <div class="content-block">
+            <span class="label">{{ content.label }}</span>
+            <h1 class="title">{{ content.title }}</h1>
+            <p class="description">{{ content.description }}</p>
+          </div>
+
+          <div class="ingest-block">
+            <div class="drop-zone">
+              <div class="drag-icon"></div>
+              <p class="drop-text">Drag & drop source</p>
+              <app-lib-button (clicked)="fileInput.click()">Select Media</app-lib-button>
+              <input
+                #fileInput
+                type="file"
+                multiple
+                (change)="handleFileUpload($event)"
+                accept="image/*"
+                hidden
+              />
+            </div>
+          </div>
+        </div>
+      </section>
+    } @else {
+      <router-outlet />
+    }
+  </main>
+</div>

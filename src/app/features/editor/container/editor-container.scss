@@ -27,6 +27,31 @@
       color: var(--opi-text-muted);
     }
   }
+
+  .mode-tabs {
+    @include flex-center(0.8rem);
+    
+    .tab-link {
+      @include typography-sans(1.3rem, 500);
+      color: var(--opi-text-muted);
+      text-decoration: none;
+      padding: 0.6rem 1.4rem;
+      border-radius: var(--opi-radius);
+      transition: all var(--opi-transition);
+
+      &:hover {
+        color: var(--opi-text);
+        background: var(--opi-surface-raised);
+      }
+
+      &.active {
+        color: var(--opi-text);
+        background: var(--opi-surface-raised);
+        border: 1px solid var(--opi-border-light);
+        box-shadow: 0 2px 8px rgba(0,0,0,0.05);
+      }
+    }
+  }
 }
 
 .router-content {

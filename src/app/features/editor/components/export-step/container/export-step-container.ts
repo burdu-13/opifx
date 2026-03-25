@@ -1,11 +1,13 @@
-import { ChangeDetectionStrategy, Component, effect, signal, inject, OnInit } from '@angular/core';
+import { ChangeDetectionStrategy, Component, computed, signal, inject, OnInit } from '@angular/core';
+import { toObservable, toSignal } from '@angular/core/rxjs-interop';
+import { Observable, from, concatMap, delay, of, switchMap, catchError } from 'rxjs';
 import { Router } from '@angular/router';
-import { CanvasRendererUtil } from '../../../utils/canvas-renderer.utils';
-import { CropRect, ExportFormat, ExportFormatOption, FilterState } from '../../../../../shared/interfaces/editor.interface';
-import { ExportPreview } from '../components/export-preview/export-preview';
-import { ExportControls } from '../components/export-controls/export-controls';
-import { Editor } from '../../../../../core/services/editor';
-import { CropService } from '../../../../../core/services/crop.service';
+import { CanvasRenderer } from '../../../utils/canvas-renderer';
+import { CropRect, ExportFormat, ExportFormatOption, FilterState, ImageState } from '../../../../../shared/interfaces/editor.interface';
+import { ExportPreview } from '../../../../../shared/components/export-preview/export-preview';
+import { ExportControls } from '../../../../../shared/components/export-controls/export-controls';
+import { Editor } from '../../../../../core/services/editor/editor';
+import { Crop } from '../../../../../core/services/crop/crop';
 
 @Component({
   selector: 'app-export-step',
@@ -16,12 +18,16 @@ import { CropService } from '../../../../../core/services/crop.service';
 })
 export class ExportStepContainer implements OnInit {
   private readonly srv = inject(Editor);
-  private readonly cropSrv = inject(CropService);
+  private readonly cropSrv = inject(Crop);
   private readonly router = inject(Router);
 
-  public readonly image = this.srv.sourceImage;
-  public readonly filters = this.srv.filters;
-  public readonly cropRect = this.cropSrv.cropRect;
+  private readonly previewImageState = computed(() => 
+    this.srv.activeImageObj() || (this.srv.isBatchMode() ? this.srv.imagesList()[0] : null)
+  );
+
+  public readonly image = computed(() => this.previewImageState()?.url || null);
+  public readonly filters = computed(() => this.previewImageState()?.filters || this.srv.filters());
+  public readonly cropRect = computed(() => this.previewImageState()?.cropRect || null);
 
   public readonly format = signal<ExportFormat>('image/png');
 
@@ -33,23 +39,44 @@ export class ExportStepContainer implements OnInit {
 
   public readonly quality = signal<number>(0.9);
   public readonly scale = signal<number>(1);
-  public readonly estimatedSize = signal<string>('Calculating...');
   public readonly isProcessing = signal<boolean>(false);
 
-  constructor() {
-    effect(() => {
-      const src = this.image();
-      const f = this.format();
-      const q = this.quality();
-      const s = this.scale();
-      const flt = this.filters();
-      const crop = this.cropRect();
+  private readonly configChanges$ = toObservable(
+    computed(() => ({
+      src: this.image(),
+      format: this.format(),
+      quality: this.quality(),
+      scale: this.scale(),
+      filters: this.filters(),
+      crop: this.cropRect(),
+    }))
+  );
 
-      if (src) {
-        this.estimateSize(src, flt, f, q, s, crop);
-      }
-    });
-  }
+  public readonly estimatedSize = toSignal(
+    this.configChanges$.pipe(
+      switchMap((config) => {
+        if (!config.src) return of('Unknown');
+        return this.estimateSizeRx(config.src, config.filters, config.format, config.quality, config.scale, config.crop).pipe(
+          catchError(() => of('Error calculating'))
+        );
+      })
+    ),
+    { initialValue: 'Calculating...' }
+  );
+
+  public readonly buttonText = computed(() => {
+    if (this.srv.isBatchMode()) {
+      return `Download All (${this.srv.imagesList().length})`;
+    }
+    return 'Download Image';
+  });
+
+  public readonly batchWarning = computed(() => {
+    if (this.srv.isBatchMode()) {
+      return `Configuration will be applied independently across all ${this.srv.imagesList().length} images globally executing in sequence.`;
+    }
+    return null;
+  });
 
   public ngOnInit(): void {
     if (!this.image()) {
@@ -58,85 +85,115 @@ export class ExportStepContainer implements OnInit {
   }
 
   public goBack(): void {
-    this.router.navigate(['/edit']);
+    if (this.srv.isBatchMode() && !this.srv.activeImageObj()) {
+      this.router.navigate(['/batch']);
+    } else {
+      this.router.navigate(['/edit']);
+    }
   }
 
-  private estimateSize(
+  private estimateSizeRx(
     src: string,
     filters: FilterState,
     format: ExportFormat,
     quality: number,
     scale: number,
     crop: CropRect | null,
-  ): void {
-    const img = new Image();
-    img.crossOrigin = 'anonymous';
-    img.onload = () => {
-      const offscreenCanvas = document.createElement('canvas');
-      CanvasRendererUtil.render(offscreenCanvas, img, filters, undefined, crop);
+  ): Observable<string> {
+    return new Observable<string>((observer) => {
+      const img = new Image();
+      img.crossOrigin = 'anonymous';
+      img.onload = () => {
+        const offscreenCanvas = document.createElement('canvas');
+        CanvasRenderer.render(offscreenCanvas, img, filters, undefined, crop);
 
-      let finalCanvas = offscreenCanvas;
-      if (scale !== 1) {
-        finalCanvas = document.createElement('canvas');
-        finalCanvas.width = Math.max(1, offscreenCanvas.width * scale);
-        finalCanvas.height = Math.max(1, offscreenCanvas.height * scale);
-        const ctx = finalCanvas.getContext('2d');
-        if (ctx) ctx.drawImage(offscreenCanvas, 0, 0, finalCanvas.width, finalCanvas.height);
-      }
+        let finalCanvas = offscreenCanvas;
+        if (scale !== 1) {
+          finalCanvas = document.createElement('canvas');
+          finalCanvas.width = Math.max(1, offscreenCanvas.width * scale);
+          finalCanvas.height = Math.max(1, offscreenCanvas.height * scale);
+          const ctx = finalCanvas.getContext('2d');
+          if (ctx) ctx.drawImage(offscreenCanvas, 0, 0, finalCanvas.width, finalCanvas.height);
+        }
 
-      finalCanvas.toBlob(
-        (blob) => {
-          if (blob) {
-            const mb = blob.size / (1024 * 1024);
-            this.estimatedSize.set(
-              mb < 1 ? `${(blob.size / 1024).toFixed(0)} KB` : `${mb.toFixed(1)} MB`,
-            );
-          } else {
-            this.estimatedSize.set('Unknown');
-          }
-        },
-        format,
-        quality,
-      );
-    };
-    img.src = src;
+        finalCanvas.toBlob(
+          (blob) => {
+            if (blob) {
+              const mb = blob.size / (1024 * 1024);
+              observer.next(mb < 1 ? `${(blob.size / 1024).toFixed(0)} KB` : `${mb.toFixed(1)} MB`);
+            } else {
+              observer.next('Unknown');
+            }
+            observer.complete();
+          },
+          format,
+          quality,
+        );
+      };
+      
+      img.onerror = () => {
+        observer.next('Unknown');
+        observer.complete();
+      };
+      img.src = src;
+    });
   }
 
   public handleDownload(): void {
-    const src = this.image();
-    if (!src) return;
+    const images = this.srv.isBatchMode() ? this.srv.imagesList() : [this.srv.activeImageObj()];
+    if (!images.length || !images[0]) return;
 
     this.isProcessing.set(true);
 
-    const img = new Image();
-    img.crossOrigin = 'anonymous';
-
-    img.onload = () => {
-      const offscreenCanvas = document.createElement('canvas');
-
-      CanvasRendererUtil.render(offscreenCanvas, img, this.filters(), undefined, this.cropRect());
-
-      let finalCanvas = offscreenCanvas;
-      if (this.scale() !== 1) {
-        finalCanvas = document.createElement('canvas');
-        finalCanvas.width = Math.max(1, offscreenCanvas.width * this.scale());
-        finalCanvas.height = Math.max(1, offscreenCanvas.height * this.scale());
-        const ctx = finalCanvas.getContext('2d');
-        if (ctx) ctx.drawImage(offscreenCanvas, 0, 0, finalCanvas.width, finalCanvas.height);
+    from(images).pipe(
+      concatMap((imgState) => {
+        if (!imgState) return of(void 0);
+        return this.processImageRx(imgState).pipe(delay(50));
+      })
+    ).subscribe({
+      complete: () => {
+        this.isProcessing.set(false);
       }
-
-      const dataUrl = finalCanvas.toDataURL(this.format(), this.quality());
-      this.triggerBrowserDownload(dataUrl, this.format());
-
-      this.isProcessing.set(false);
-    };
-
-    img.src = src;
+    });
   }
 
-  private triggerBrowserDownload(dataUrl: string, mimeType: ExportFormat): void {
+  private processImageRx(imgState: ImageState): Observable<void> {
+    return new Observable<void>((observer) => {
+      const img = new Image();
+      img.crossOrigin = 'anonymous';
+
+      img.onload = () => {
+        const offscreenCanvas = document.createElement('canvas');
+
+        CanvasRenderer.render(offscreenCanvas, img, imgState.filters, undefined, imgState.cropRect);
+
+        let finalCanvas = offscreenCanvas;
+        if (this.scale() !== 1) {
+          finalCanvas = document.createElement('canvas');
+          finalCanvas.width = Math.max(1, offscreenCanvas.width * this.scale());
+          finalCanvas.height = Math.max(1, offscreenCanvas.height * this.scale());
+          const ctx = finalCanvas.getContext('2d');
+          if (ctx) ctx.drawImage(offscreenCanvas, 0, 0, finalCanvas.width, finalCanvas.height);
+        }
+
+        const dataUrl = finalCanvas.toDataURL(this.format(), this.quality());
+        this.triggerBrowserDownload(dataUrl, this.format(), imgState.name);
+        observer.next();
+        observer.complete();
+      };
+      
+      img.onerror = () => {
+        observer.next();
+        observer.complete();
+      };
+      img.src = imgState.url;
+    });
+  }
+
+  private triggerBrowserDownload(dataUrl: string, mimeType: ExportFormat, name?: string): void {
     const extension = mimeType.split('/')[1];
-    const filename = `opifx-render-${Date.now()}.${extension}`;
+    const prefix = name ? name.split('.')[0] : `opifx-render-${Date.now()}`;
+    const filename = `${prefix}_edited.${extension}`;
 
     const link = document.createElement('a');
     link.href = dataUrl;

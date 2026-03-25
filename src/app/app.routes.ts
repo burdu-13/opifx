@@ -1,38 +1,22 @@
 import { Routes } from '@angular/router';
+import { AppLayout } from './layout/container/app-layout';
 
 export const routes: Routes = [
   {
     path: '',
-    title: 'Opifx | Image Editor',
-    loadComponent: () =>
-      import('./features/editor/container/editor-container').then((c) => c.EditorContainer),
+    component: AppLayout,
     children: [
       {
         path: '',
-        title: 'Opifx | Homepage',
-        loadComponent: () =>
-          import('./features/editor/components/upload-step/upload-step').then((c) => c.UploadStep),
-      },
-      {
-        path: 'edit',
-        title: 'Opifx | Atmosphere & Adjustments',
-        loadComponent: () =>
-          import('./features/editor/components/edit-step/container/edit-step').then(
-            (c) => c.EditStep,
-          ),
+        title: 'OPIFX - Workspace',
+        loadComponent: () => import('./features/editor/container/editor-container').then(c => c.EditorContainer),
       },
       {
         path: 'export',
-        title: 'Opifx | Render & Finalize',
-        loadComponent: () =>
-          import('./features/editor/components/export-step/container/export-step-container').then(
-            (c) => c.ExportStepContainer,
-          ),
-      },
-    ],
+        title: 'OPIFX - Render',
+        loadComponent: () => import('./features/editor/components/export-step/container/export-step-container').then(c => c.ExportStepContainer),
+      }
+    ]
   },
-  {
-    path: '**',
-    redirectTo: '',
-  },
+  { path: '**', redirectTo: '' }
 ];

@@ -9,8 +9,7 @@
 .edit-shell {
   height: 100%;
   width: 100%;
-  display: flex;
-  flex-direction: column;
+  @include flex-column;
   background: var(--opi-bg);
   overflow: hidden;
 }
@@ -61,6 +60,15 @@
         transform: translateY(1px);
         color: var(--opi-text-muted);
       }
+
+      .fit-screen-icon {
+        width: 1.4rem;
+        height: 1.4rem;
+        background-image: url('/images/svgs/fit-screen-icon.svg');
+        background-size: contain;
+        background-repeat: no-repeat;
+        background-position: center;
+      }
     }
 
     .zoom-level {
@@ -104,8 +112,7 @@
   grid-column: span 9;
   position: relative;
   overflow: hidden;
-  display: flex;
-  flex-direction: column;
+  @include flex-column;
   background: var(--opi-bg);
   transition: grid-column 0.3s ease;
 
@@ -121,12 +128,12 @@
   }
 }
 
-app-preset-bar {
+.preset-bar-layer {
   flex-shrink: 0;
   z-index: 20;
 }
 
-app-preview-image {
+.preview-image-layer {
   flex: 1;
   width: 100%;
   position: relative;
@@ -145,8 +152,7 @@ app-preview-image {
 
 @media (max-width: 1024px) {
   .editor-workspace {
-    display: flex;
-    flex-direction: column;
+    @include flex-column;
   }
   .viewport-area {
     height: 50dvh;
