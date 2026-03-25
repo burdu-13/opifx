@@ -2,10 +2,10 @@
   <header class="editor-toolbar">
     <div class="toolbar-left">
       <div class="zoom-controls">
-        <button class="icon-btn" (click)="updateZoom(-0.1)" title="Zoom Out">−</button>
+        <button class="icon-btn" (click)="zoomUpdate.emit(-0.1)" title="Zoom Out">−</button>
         <span class="zoom-level">{{ zoomLabel() }}</span>
-        <button class="icon-btn" (click)="updateZoom(0.1)" title="Zoom In">+</button>
-        <button class="icon-btn" (click)="resetView()" title="Fit to Screen">
+        <button class="icon-btn" (click)="zoomUpdate.emit(0.1)" title="Zoom In">+</button>
+        <button class="icon-btn" (click)="resetView.emit()" title="Fit to Screen">
           <div class="fit-screen-icon"></div>
         </button>
       </div>
@@ -13,23 +13,25 @@
 
     <div class="toolbar-right">
       @if (isBatchMode()) {
-        <app-lib-button variant="secondary" (clicked)="backToBatch()">Back to Grid</app-lib-button>
-        <button class="btn-text" (click)="applyToAll()">Apply to All</button>
+        <app-lib-button variant="secondary" (clicked)="backToBatch.emit()"
+          >Back to Grid</app-lib-button
+        >
+        <button class="btn-text" (click)="applyToAll.emit()">Apply to All</button>
         <div class="toolbar-divider"></div>
       }
       <button
         class="btn-text"
-        (mousedown)="showBefore.set(true)"
-        (mouseup)="showBefore.set(false)"
-        (mouseleave)="showBefore.set(false)"
-        (touchstart)="showBefore.set(true)"
-        (touchend)="showBefore.set(false)"
+        (mousedown)="showBeforeChange.emit(true)"
+        (mouseup)="showBeforeChange.emit(false)"
+        (mouseleave)="showBeforeChange.emit(false)"
+        (touchstart)="showBeforeChange.emit(true)"
+        (touchend)="showBeforeChange.emit(false)"
         title="Hold to see original"
       >
         Hold to Compare
       </button>
       <div class="toolbar-divider"></div>
-      <app-lib-button (clicked)="proceedToExport()"> Export </app-lib-button>
+      <app-lib-button (clicked)="proceedToExport.emit()"> Export </app-lib-button>
     </div>
   </header>
 
@@ -39,12 +41,12 @@
 
       <app-preset-bar
         class="preset-bar-layer"
-        [presets]="presets"
+        [presets]="presets()"
         [activePresetId]="activePresetId()"
         [presetSpecs]="activeSpecs()"
         [presetDetails]="activePresetDetails()"
-        (presetSelected)="handlePresetSelection($event)"
-        (expandedChange)="isPresetGalleryOpen.set($event)"
+        (presetSelected)="presetSelection.emit($event)"
+        (expandedChange)="presetGalleryOpenChange.emit($event)"
       />
 
       <app-preview-image
@@ -54,16 +56,16 @@
         [zoom]="zoom()"
         [position]="position()"
         [appliedCropRect]="appliedCropRect()"
-        (pan)="handlePan($event)"
-        (zoomDelta)="updateZoom($event)"
-        (canvasDimensions)="handleCanvasDimensions($event)"
+        (pan)="pan.emit($event)"
+        (zoomDelta)="zoomUpdate.emit($event)"
+        (canvasDimensions)="canvasDimensions.emit($event)"
       >
         @if (isCropActive() && cropRect()) {
           <app-crop-overlay
             [cropRect]="cropRect()!"
             [aspectRatio]="aspectRatio()"
             [imageAspect]="imageAspect()"
-            (cropChange)="handleCropChange($event)"
+            (cropChange)="cropChange.emit($event)"
           />
         }
       </app-preview-image>
@@ -77,16 +79,16 @@
         [isCropActive]="isCropActive()"
         [aspectRatio]="aspectRatio()"
         [cropRect]="cropRect()"
-        [aspectRatioOptions]="aspectRatioOptions"
+        [aspectRatioOptions]="aspectRatioOptions()"
         [sourceWidth]="sourceWidth()"
         [sourceHeight]="sourceHeight()"
-        (change)="handleManualChange($event)"
-        (reset)="handleReset()"
-        (toggleCrop)="handleToggleCrop()"
-        (aspectRatioChange)="handleAspectRatioChange($event)"
-        (cropApply)="handleCropApply()"
-        (cropReset)="handleCropReset()"
-        (customResolution)="handleCustomResolution($event)"
+        (change)="manualChange.emit($event)"
+        (reset)="reset.emit()"
+        (toggleCrop)="toggleCrop.emit()"
+        (aspectRatioChange)="aspectRatioChange.emit($event)"
+        (cropApply)="cropApply.emit()"
+        (cropReset)="cropReset.emit()"
+        (customResolution)="customResolution.emit($event)"
       />
     }
   </div>
