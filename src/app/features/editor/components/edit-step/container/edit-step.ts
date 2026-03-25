@@ -225,6 +225,24 @@ export class EditStep implements OnInit {
     if (!this.appliedCropRect()) {
       this.sourceWidth.set(dims.width);
       this.sourceHeight.set(dims.height);
+
+      if (this.zoom() === 1 && this.position().x === 0 && this.position().y === 0) {
+        this.applyFitToViewport();
+      }
     }
+  }
+
+  public applyFitToViewport(): void {
+    const sw = this.sourceWidth();
+    const sh = this.sourceHeight();
+    if (sw <= 0 || sh <= 0) return;
+
+    const viewportW = window.innerWidth * 0.75;
+    const viewportH = window.innerHeight - 64;
+
+    const scale = Math.min((viewportW - 80) / sw, (viewportH - 80) / sh, 1);
+
+    this.zoom.set(scale);
+    this.position.set({ x: 0, y: 0 });
   }
 }

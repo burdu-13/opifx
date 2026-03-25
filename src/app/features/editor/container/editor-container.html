@@ -4,8 +4,8 @@
       <app-upload-step />
     } @else {
       @if (srv.isBatchMode() && !srv.activeId()) {
-        <app-library-grid 
-          [images]="srv.imagesList()" 
+        <app-library-grid
+          [images]="srv.imagesList()"
           (select)="srv.setActiveImage($event)"
           (process)="goToExport()"
         />

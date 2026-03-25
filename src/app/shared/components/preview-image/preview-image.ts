@@ -138,7 +138,7 @@ export class PreviewImage implements AfterViewInit, OnDestroy {
 
   public onWheel(e: WheelEvent): void {
     e.preventDefault();
-    const delta = e.deltaY < 0 ? 0.05 : -0.05;
+    const delta = e.deltaY < 0 ? 0.02 : -0.02;
     this.zoomDelta.emit(delta);
   }
 
