@@ -7,10 +7,9 @@
 }
 
 .edit-shell {
-  height: 100%;
-  width: 100%;
+  @include abs-fill;
   @include flex-column;
-  background: var(--opi-bg);
+  background-color: var(--opi-bg);
   overflow: hidden;
 }
 
@@ -19,30 +18,28 @@
   width: 100%;
   height: 6.4rem;
   padding: 0 2.4rem;
-  background: var(--opi-surface);
+  background-color: var(--opi-surface);
   border-bottom: 1px solid var(--opi-border);
   z-index: 30;
+  flex-shrink: 0;
 
-  .toolbar-left, .toolbar-right {
-    display: flex;
-    align-items: center;
-    gap: 1.6rem;
+  .toolbar-left,
+  .toolbar-right {
+    @include flex-center(1.6rem);
   }
 
   .toolbar-divider {
     width: 1px;
     height: 2.4rem;
-    background: var(--opi-border);
+    background-color: var(--opi-border);
     margin: 0 0.8rem;
   }
 
   .zoom-controls {
-    display: flex;
-    align-items: center;
-    gap: 0.4rem;
+    @include flex-center(0.4rem);
 
     .icon-btn {
-      background: transparent;
+      background-color: transparent;
       border: none;
       color: var(--opi-text);
       width: 3.2rem;
@@ -53,9 +50,9 @@
       transition: all var(--opi-transition);
 
       &:hover {
-        background: var(--opi-surface-raised);
+        background-color: var(--opi-surface-raised);
       }
-      
+
       &:active {
         transform: translateY(1px);
         color: var(--opi-text-muted);
@@ -72,33 +69,27 @@
     }
 
     .zoom-level {
-      font-size: 1.2rem;
-      color: var(--opi-text-muted);
+      @include typography-sans(1.2rem, 500, var(--opi-text-muted));
       min-width: 4.8rem;
       text-align: center;
-      font-weight: 500;
     }
   }
 
   .btn-text {
-    background: transparent;
+    background-color: transparent;
     border: none;
-    color: var(--opi-text);
-    font-family: var(--opi-font-sans);
-    font-size: 1.3rem;
-    font-weight: 500;
+    @include typography-sans(1.3rem, 500);
     cursor: pointer;
     transition: all var(--opi-transition);
     padding: 0.8rem 1.6rem;
     border-radius: var(--opi-radius);
-    
-    &:hover, &:active {
+
+    &:hover,
+    &:active {
       color: var(--opi-text);
-      background: var(--opi-surface-raised);
+      background-color: var(--opi-surface-raised);
     }
   }
-
-
 }
 
 .editor-workspace {
@@ -106,6 +97,7 @@
   @include grid-layout(12, 0);
   height: calc(100dvh - 6.4rem);
   overflow: hidden;
+  position: relative;
 }
 
 .viewport-area {
@@ -113,8 +105,9 @@
   position: relative;
   overflow: hidden;
   @include flex-column;
-  background: var(--opi-bg);
-  transition: grid-column 0.3s ease;
+  background-color: var(--opi-bg);
+  min-height: 0;
+  min-width: 0;
 
   &.full-width {
     grid-column: span 12;
@@ -139,12 +132,13 @@
   position: relative;
   overflow: hidden;
   z-index: 5;
+  min-height: 0;
 }
 
 .sidebar-area {
   grid-column: span 3;
   border-left: 1px solid var(--opi-border);
-  background: var(--opi-surface);
+  background-color: var(--opi-surface);
   z-index: 10;
   height: 100%;
   overflow: hidden;

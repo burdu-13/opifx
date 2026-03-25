@@ -1,19 +1,17 @@
 @use '../../styles/mixins' as *;
 
-.canvas-wrapper {
-  position: relative;
+:host {
+  display: block;
   width: 100%;
   height: 100%;
-  display: flex;
-  align-items: center;
-  justify-content: center;
+  position: relative;
+}
+
+.canvas-wrapper {
+  @include abs-fill;
   overflow: hidden;
   cursor: grab;
-  padding: 2.4rem;
-
-  @media (max-width: 1024px) {
-    padding: 1.6rem;
-  }
+  background-color: transparent;
 
   &:active {
     cursor: grabbing;
@@ -21,14 +19,12 @@
 }
 
 .canvas-container {
-position: relative;
-  flex-shrink: 0;
+  position: absolute;
+  top: 50%;
+  left: 50%;
   transform-origin: center center;
-  transition: transform 0.2s var(--opi-transition); 
+  transition: transform 0.15s cubic-bezier(0.2, 0, 0.2, 1);
   will-change: transform;
-  overflow: hidden;
-  border-radius: var(--opi-radius);
-
 
   &.is-manipulating {
     transition: none !important;
@@ -37,18 +33,12 @@ position: relative;
 
 canvas {
   @include industrial-panel;
-  background-color: var(--opi-bg);
   display: block;
   width: 100%;
   height: 100%;
-
-  box-shadow: 0 8px 32px rgba(0, 0, 0, 0.2);
+  background-color: var(--opi-bg);
 
   &.is-panning {
     cursor: grabbing;
-  }
-
-  &:hover {
-    box-shadow: 0 12px 48px rgba(0, 0, 0, 0.3);
   }
 }

@@ -45,18 +45,23 @@ export class EditStep implements OnInit {
 
   public readonly presets = PRESETS;
   public readonly activePresetId = this.srv.activePresetId;
-
   public readonly isPresetGalleryOpen = signal<boolean>(false);
 
   public readonly zoom = signal<number>(1);
   public readonly position = signal<{ x: number; y: number }>({ x: 0, y: 0 });
 
-  public readonly zoomLabel = computed(() => `${Math.round(this.zoom() * 100)}%`);
+  public readonly zoomLabel = computed(() => {
+    const z = this.zoom();
+    return z === 1 ? 'Fit' : `${Math.round(z * 100)}%`;
+  });
 
   public readonly showBefore = signal<boolean>(false);
   public readonly activeFilters = computed(() =>
     this.showBefore() ? NEUTRAL_FILTERS : this.filters(),
   );
+
+  protected readonly sourceWidth = signal<number>(0);
+  protected readonly sourceHeight = signal<number>(0);
 
   public readonly activePresetDetails = computed<Preset | null>(() => {
     const id = this.activePresetId();
@@ -105,9 +110,6 @@ export class EditStep implements OnInit {
   public readonly aspectRatio = this.cropSrv.aspectRatio;
   public readonly aspectRatioOptions = ASPECT_RATIO_OPTIONS;
 
-  public readonly sourceWidth = signal<number>(0);
-  public readonly sourceHeight = signal<number>(0);
-
   public readonly imageAspect = computed(() => {
     const w = this.sourceWidth();
     const h = this.sourceHeight();
@@ -122,6 +124,13 @@ export class EditStep implements OnInit {
   public ngOnInit(): void {
     if (!this.image()) {
       this.router.navigate(['/']);
+    }
+  }
+
+  public handleCanvasDimensions(dims: { width: number; height: number }): void {
+    if (!this.appliedCropRect()) {
+      this.sourceWidth.set(dims.width);
+      this.sourceHeight.set(dims.height);
     }
   }
 
@@ -151,7 +160,7 @@ export class EditStep implements OnInit {
   }
 
   public updateZoom(delta: number): void {
-    this.zoom.update((z) => Math.min(Math.max(z + delta, 0.5), 3));
+    this.zoom.update((z) => Math.min(Math.max(z + delta, 0.2), 5));
   }
 
   public resetView(): void {
@@ -219,30 +228,5 @@ export class EditStep implements OnInit {
 
     this.cropSrv.setCropRect({ x, y, width: normalizedW, height: normalizedH });
     this.cropSrv.setAspectRatio(res.width / res.height);
-  }
-
-  public handleCanvasDimensions(dims: { width: number; height: number }): void {
-    if (!this.appliedCropRect()) {
-      this.sourceWidth.set(dims.width);
-      this.sourceHeight.set(dims.height);
-
-      if (this.zoom() === 1 && this.position().x === 0 && this.position().y === 0) {
-        this.applyFitToViewport();
-      }
-    }
-  }
-
-  public applyFitToViewport(): void {
-    const sw = this.sourceWidth();
-    const sh = this.sourceHeight();
-    if (sw <= 0 || sh <= 0) return;
-
-    const viewportW = window.innerWidth * 0.75;
-    const viewportH = window.innerHeight - 64;
-
-    const scale = Math.min((viewportW - 80) / sw, (viewportH - 80) / sh, 1);
-
-    this.zoom.set(scale);
-    this.position.set({ x: 0, y: 0 });
   }
 }

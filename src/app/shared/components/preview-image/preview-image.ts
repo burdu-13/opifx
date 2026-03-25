@@ -36,9 +36,9 @@ export class PreviewImage implements AfterViewInit, OnDestroy {
   private readonly wrapper = viewChild<ElementRef<HTMLDivElement>>('wrapperRef');
   private readonly imageElement = new Image();
 
-  public readonly isDragging = signal(false);
-  private startX = 0;
-  private startY = 0;
+  public readonly isDragging = signal<boolean>(false);
+  private startX: number = 0;
+  private startY: number = 0;
 
   public readonly displayWidth = signal<number>(0);
   public readonly displayHeight = signal<number>(0);
@@ -47,7 +47,8 @@ export class PreviewImage implements AfterViewInit, OnDestroy {
   private resizeObserver: ResizeObserver | null = null;
 
   public readonly transformStyle = computed(
-    () => `translate(${this.position().x}px, ${this.position().y}px) scale(${this.zoom()})`,
+    () =>
+      `translate(calc(-50% + ${this.position().x}px), calc(-50% + ${this.position().y}px)) scale(${this.zoom()})`,
   );
 
   public readonly containerStyle = computed(() => ({
@@ -98,23 +99,26 @@ export class PreviewImage implements AfterViewInit, OnDestroy {
   private updateDisplaySize(): void {
     const canvasEl = this.canvas()?.nativeElement;
     const wrapperEl = this.wrapper()?.nativeElement;
+
     if (!canvasEl || !wrapperEl) return;
 
     const bufW = canvasEl.width;
     const bufH = canvasEl.height;
-    if (bufW === 0 || bufH === 0) return;
+    const availW = wrapperEl.clientWidth;
+    const availH = wrapperEl.clientHeight;
 
-    const style = getComputedStyle(wrapperEl);
-    const padH = (parseFloat(style.paddingLeft) || 0) + (parseFloat(style.paddingRight) || 0);
-    const padV = (parseFloat(style.paddingTop) || 0) + (parseFloat(style.paddingBottom) || 0);
-    const availW = wrapperEl.clientWidth - padH;
-    const availH = wrapperEl.clientHeight - padV;
+    if (availW <= 0 || availH <= 0 || bufW === 0 || bufH === 0) return;
 
-    if (availW <= 0 || availH <= 0) return;
+    const padding = 64;
+    const safeW = Math.max(10, availW - padding);
+    const safeH = Math.max(10, availH - padding);
 
-    const scale = Math.min(availW / bufW, availH / bufH, 1);
-    this.displayWidth.set(Math.floor(bufW * scale));
-    this.displayHeight.set(Math.floor(bufH * scale));
+    const fitScale = Math.min(safeW / bufW, safeH / bufH, 1);
+
+    this.displayWidth.set(Math.floor(bufW * fitScale));
+    this.displayHeight.set(Math.floor(bufH * fitScale));
+
+    this.canvasDimensions.emit({ width: bufW, height: bufH });
   }
 
   public onMouseDown(e: MouseEvent): void {
@@ -138,7 +142,7 @@ export class PreviewImage implements AfterViewInit, OnDestroy {
 
   public onWheel(e: WheelEvent): void {
     e.preventDefault();
-    const delta = e.deltaY < 0 ? 0.02 : -0.02;
+    const delta = e.deltaY < 0 ? 0.05 : -0.05;
     this.zoomDelta.emit(delta);
   }
 
@@ -150,10 +154,9 @@ export class PreviewImage implements AfterViewInit, OnDestroy {
       canvasEl,
       this.imageElement,
       this.filters(),
-      1200,
+      1600,
       this.appliedCropRect(),
     );
-    this.canvasDimensions.emit({ width: canvasEl.width, height: canvasEl.height });
     this.updateDisplaySize();
   }
 }
