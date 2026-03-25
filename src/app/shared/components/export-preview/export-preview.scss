@@ -1,18 +1,34 @@
 @use '../../styles/mixins' as *;
 
+:host {
+  display: block;
+  width: 100%;
+  height: 100%;
+  position: relative;
+}
+
 .canvas-wrapper {
   @include abs-fill;
-  @include flex-center;
-  padding: 4.8rem;
+  overflow: hidden;
   pointer-events: none;
+  background-color: transparent;
+}
+
+.canvas-container {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  transform-origin: center center;
+  will-change: width, height;
 }
 
 canvas {
-  max-width: 100%;
-  max-height: 100%;
-  object-fit: contain;
+  display: block;
+  width: 100%;
+  height: 100%;
   box-shadow: 0 4rem 10rem rgba(0, 0, 0, 0.7);
   border: 1px solid var(--opi-border);
   border-radius: var(--opi-radius);
-  transition: transform var(--opi-transition);
+  background-color: var(--opi-bg);
 }

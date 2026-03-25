@@ -1,3 +1,9 @@
-<div class="canvas-wrapper">
-  <canvas #exportCanvas></canvas>
+<div class="canvas-wrapper" #wrapperRef>
+  <div
+    class="canvas-container"
+    [style.width.px]="displayWidth()"
+    [style.height.px]="displayHeight()"
+  >
+    <canvas #exportCanvas></canvas>
+  </div>
 </div>
