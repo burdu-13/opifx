@@ -5,7 +5,7 @@
 
   <app-export-controls
     class="sidebar-area"
-    [formats]="formats"
+    [formats]="formats()"
     [selectedFormat]="format()"
     [quality]="quality()"
     [scale]="scale()"
@@ -13,10 +13,10 @@
     [isProcessing]="isProcessing()"
     [buttonText]="buttonText()"
     [batchWarning]="batchWarning()"
-    (formatChange)="format.set($event)"
-    (qualityChange)="quality.set($event)"
-    (scaleChange)="scale.set($event)"
-    (download)="handleDownload()"
-    (back)="goBack()"
+    (formatChange)="formatChange.emit($event)"
+    (qualityChange)="qualityChange.emit($event)"
+    (scaleChange)="scaleChange.emit($event)"
+    (download)="download.emit()"
+    (back)="back.emit()"
   />
 </div>
