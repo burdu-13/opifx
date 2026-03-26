@@ -1,52 +1,44 @@
-@mixin flex-center($gap: 0, $direction: row) {
+@use 'sass:map';
+
+$breakpoints: (
+  'sm': 48em,
+  'md': 64em,
+  'lg': 90em,
+  'xl': 120em,
+);
+
+@mixin respond-to($breakpoint) {
+  @if map.has-key($breakpoints, $breakpoint) {
+    @media (min-width: map.get($breakpoints, $breakpoint)) {
+      @content;
+    }
+  }
+}
+
+@mixin flex($direction: row, $justify: flex-start, $align: stretch, $gap: 0) {
   display: flex;
-  align-items: center;
-  justify-content: center;
   flex-direction: $direction;
+  justify-content: $justify;
+  align-items: $align;
   gap: $gap;
+}
+
+@mixin flex-center($gap: 0, $direction: row) {
+  @include flex($direction, center, center, $gap);
 }
 
 @mixin flex-between($gap: 0, $direction: row) {
-  display: flex;
-  align-items: center;
-  justify-content: space-between;
-  flex-direction: $direction;
-  gap: $gap;
+  @include flex($direction, space-between, center, $gap);
 }
 
-@mixin grid-layout($cols: 1, $gap: 1rem) {
+@mixin flex-column($gap: 0, $align: flex-start) {
+  @include flex(column, flex-start, $align, $gap);
+}
+
+@mixin grid-layout($cols: 1, $gap: var(--opi-space-16)) {
   display: grid;
   grid-template-columns: repeat($cols, minmax(0, 1fr));
   gap: $gap;
-}
-
-@mixin industrial-panel {
-  background-color: var(--opi-surface);
-  border: 1px solid var(--opi-border);
-  border-radius: var(--opi-radius);
-  transition: var(--opi-transition);
-  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
-
-  &:hover {
-    border-color: var(--opi-border-hover);
-    background-color: var(--opi-surface-raised);
-  }
-}
-
-@mixin typography-mono($size: 1.2rem, $weight: 500) {
-  font-family: var(--opi-font-mono);
-  font-size: $size;
-  font-weight: $weight;
-  letter-spacing: -0.02em;
-}
-
-@mixin interactive-scale {
-  cursor: pointer;
-  transition: var(--opi-transition);
-
-  &:active {
-    transform: scale(0.98);
-  }
 }
 
 @mixin abs-fill {
@@ -57,33 +49,50 @@
   height: 100%;
 }
 
-@mixin flex-column($gap: 0) {
-  display: flex;
-  flex-direction: column;
-  gap: $gap;
-}
-
 @mixin fullscreen-shell {
-  height: 100dvh;
+  min-height: 100dvh;
   width: 100vw;
   background-color: var(--opi-bg);
 }
 
-@mixin glass-panel($bg-alpha: 0.45, $blur: 3rem) {
-  background: rgba(5, 5, 5, $bg-alpha);
+@mixin surface-panel {
+  background-color: var(--opi-surface);
+  border: 1px solid var(--opi-border);
+  border-radius: var(--opi-radius);
+  box-shadow: var(--opi-shadow-sm);
+  transition:
+    box-shadow var(--opi-transition),
+    border-color var(--opi-transition),
+    background-color var(--opi-transition);
+
+  &:hover {
+    border-color: var(--opi-border-hover);
+    background-color: var(--opi-surface-raised);
+    box-shadow: var(--opi-shadow-md);
+  }
+}
+
+@mixin glass-panel($blur: 3rem) {
+  background: var(--opi-glass-bg);
   backdrop-filter: blur($blur);
   -webkit-backdrop-filter: blur($blur);
+  border: 1px solid var(--opi-border);
 }
 
 @mixin cloud-glow-effect {
   background:
-    radial-gradient(circle at 50% 50%, rgba(255, 255, 255, 0.03) 0%, transparent 70%),
-    radial-gradient(circle at 100% 0%, rgba(255, 255, 255, 0.02) 0%, transparent 50%);
+    radial-gradient(circle at 50% 50%, var(--opi-glow) 0%, transparent 70%),
+    radial-gradient(circle at 100% 0%, var(--opi-glow) 0%, transparent 50%);
   filter: blur(80px);
   pointer-events: none;
 }
 
-@mixin typography-sans($size, $weight: 400, $color: var(--opi-text), $letter-spacing: normal) {
+@mixin typography-sans(
+  $size: var(--opi-text-base),
+  $weight: 400,
+  $color: var(--opi-text),
+  $letter-spacing: normal
+) {
   font-family: var(--opi-font-sans);
   font-size: $size;
   font-weight: $weight;
@@ -93,15 +102,35 @@
   }
 }
 
-@mixin text-uppercase-label($size: 0.9rem, $opacity: 0.4) {
-  @include typography-sans($size, 400, rgba(255, 255, 255, $opacity), 0.1em);
-  text-transform: uppercase;
+@mixin typography-mono($size: var(--opi-text-xs), $weight: 500) {
+  font-family: var(--opi-font-mono);
+  font-size: $size;
+  font-weight: $weight;
+  letter-spacing: -0.02em;
 }
 
-@mixin pill-base($py: 0.8rem, $px: 2rem) {
+@mixin text-uppercase-label($size: var(--opi-text-xs), $opacity: 1) {
+  @include typography-sans($size, 500, var(--opi-text-muted), 0.08em);
+  text-transform: uppercase;
+  opacity: $opacity;
+}
+
+@mixin interactive-scale {
+  cursor: pointer;
+  transition: transform var(--opi-transition);
+
+  &:active {
+    transform: scale(0.98);
+  }
+}
+
+@mixin pill-base($py: var(--opi-space-8), $px: var(--opi-space-16)) {
   @include interactive-scale;
   white-space: nowrap;
   padding: $py $px;
-  border-radius: var(--opi-radius);
-  transition: var(--opi-transition);
+  border-radius: 9999px;
+  border: 1px solid var(--opi-border);
+  background: var(--opi-surface);
+  color: var(--opi-text);
+  @include typography-sans(var(--opi-text-sm), 500);
 }

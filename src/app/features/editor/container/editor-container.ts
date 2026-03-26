@@ -24,7 +24,7 @@ import {
 import { PRESETS } from '../../../shared/config/presets.config';
 import { FILTER_CONTROLS } from '../config/filter.config';
 import { PRESET_SPEC_DICTIONARY } from '../config/preset-specs.config';
-import { ExportStep } from '../components/export-step/container/export-step';
+import { ExportStep } from '../components/export-step/export-step';
 
 @Component({
   selector: 'app-editor-container',

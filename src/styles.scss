@@ -20,7 +20,7 @@ body {
 }
 
 ::-webkit-scrollbar {
-  width: 4px;
+  width: var(--opi-space-4);
 }
 
 ::-webkit-scrollbar-track {
@@ -33,5 +33,5 @@ body {
 }
 
 .text-mono {
-  @include typography-mono(1.2rem);
+  @include typography-mono(var(--opi-text-xs));
 }

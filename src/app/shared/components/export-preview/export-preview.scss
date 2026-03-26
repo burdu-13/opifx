@@ -1,12 +1,5 @@
 @use '../../styles/mixins' as *;
 
-:host {
-  display: block;
-  width: 100%;
-  height: 100%;
-  position: relative;
-}
-
 .canvas-wrapper {
   @include abs-fill;
   overflow: hidden;
@@ -24,11 +17,9 @@
 }
 
 canvas {
+  @include surface-panel;
   display: block;
   width: 100%;
   height: 100%;
-  box-shadow: 0 4rem 10rem rgba(0, 0, 0, 0.7);
-  border: 1px solid var(--opi-border);
-  border-radius: var(--opi-radius);
-  background-color: var(--opi-bg);
+  box-shadow: var(--opi-shadow-lg);
 }

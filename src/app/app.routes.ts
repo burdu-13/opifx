@@ -16,7 +16,7 @@ export const routes: Routes = [
         path: 'export',
         title: 'OPIFX - Render',
         loadComponent: () =>
-          import('./features/editor/components/export-step/container/export-step').then(
+          import('./features/editor/components/export-step/export-step').then(
             (c) => c.ExportStep,
           ),
       },

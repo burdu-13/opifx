@@ -1,3 +1,10 @@
+$breakpoints: (
+  'sm': 48em,
+  'md': 64em,
+  'lg': 90em,
+  'xl': 120em,
+);
+
 :root {
   --opi-bg: #0f1115;
   --opi-surface: #16181d;
@@ -5,13 +12,42 @@
   --opi-text: #f3f4f6;
   --opi-text-muted: #9ca3af;
   --opi-accent: #ffffff;
+
   --opi-border: rgba(255, 255, 255, 0.08);
   --opi-border-hover: rgba(255, 255, 255, 0.15);
-  --opi-glow: rgba(255, 255, 255, 0.03);
-  --opi-font-sans: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Helvetica, Arial, sans-serif;
+  --opi-glow: rgba(255, 255, 255, 0.04);
+  --opi-glass-bg: rgba(22, 24, 29, 0.6);
+
+  --opi-font-sans:
+    'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Helvetica, Arial, sans-serif;
   --opi-font-mono: var(--opi-font-sans);
-  --opi-radius: 6px;
-  --opi-transition: 250ms cubic-bezier(0.2, 0, 0, 1);
+
+  --opi-text-xs: 1.2rem;
+  --opi-text-sm: 1.4rem;
+  --opi-text-base: 1.6rem;
+  --opi-text-md: 1.8rem;
+  --opi-text-lg: 2.4rem;
+  --opi-text-xl: 3.2rem;
+  --opi-text-2xl: 4.2rem;
+  --opi-text-3xl: 6.4rem;
+
+  --opi-space-2: 0.2rem;
+  --opi-space-4: 0.4rem;
+  --opi-space-8: 0.8rem;
+  --opi-space-12: 1.2rem;
+  --opi-space-16: 1.6rem;
+  --opi-space-24: 2.4rem;
+  --opi-space-32: 3.2rem;
+  --opi-space-48: 4.8rem;
+  --opi-space-64: 6.4rem;
+  --opi-space-80: 8rem;
+  --opi-space-128: 12.8rem;
+
+  --opi-radius: 8px;
+  --opi-transition: 300ms cubic-bezier(0.2, 0, 0, 1);
+  --opi-shadow-sm: 0 4px 12px rgba(0, 0, 0, 0.2);
+  --opi-shadow-md: 0 8px 24px rgba(0, 0, 0, 0.3);
+  --opi-shadow-lg: 0 16px 48px rgba(0, 0, 0, 0.4);
 }
 
 [data-theme='light'] {
@@ -21,7 +57,12 @@
   --opi-text: #1a1d21;
   --opi-text-muted: #6b7280;
   --opi-accent: #000000;
+
   --opi-border: rgba(0, 0, 0, 0.08);
   --opi-border-hover: rgba(0, 0, 0, 0.15);
   --opi-glow: rgba(0, 0, 0, 0.02);
+  --opi-glass-bg: rgba(255, 255, 255, 0.7);
+  --opi-shadow-sm: 0 2px 8px rgba(0, 0, 0, 0.04);
+  --opi-shadow-md: 0 8px 24px rgba(0, 0, 0, 0.06);
+  --opi-shadow-lg: 0 16px 48px rgba(0, 0, 0, 0.08);
 }

@@ -2,61 +2,15 @@
 
 .fx-shell {
   @include fullscreen-shell;
-  @include flex-column;
+  @include flex-column(0, stretch);
   overflow: hidden;
 }
 
-.global-navbar {
-  @include flex-between(0);
-  height: 6.4rem;
-  padding: 0 2.4rem;
-  background: var(--opi-bg);
-  border-bottom: 1px solid var(--opi-border);
-  z-index: 50;
-  flex-shrink: 0;
-
-  .brand {
-    font-size: 1.6rem;
-    font-weight: 500;
-    letter-spacing: -0.02em;
-    color: var(--opi-text);
-    cursor: pointer;
-    transition: color 0.2s;
-
-    &:hover {
-      color: var(--opi-text-muted);
-    }
-  }
-
-  .mode-tabs {
-    @include flex-center(0.8rem);
-    
-    .tab-link {
-      @include typography-sans(1.3rem, 500);
-      color: var(--opi-text-muted);
-      text-decoration: none;
-      padding: 0.6rem 1.4rem;
-      border-radius: var(--opi-radius);
-      transition: all var(--opi-transition);
-
-      &:hover {
-        color: var(--opi-text);
-        background: var(--opi-surface-raised);
-      }
-
-      &.active {
-        color: var(--opi-text);
-        background: var(--opi-surface-raised);
-        border: 1px solid var(--opi-border-light);
-        box-shadow: 0 2px 8px rgba(0,0,0,0.05);
-      }
-    }
-  }
-}
-
-.router-content {
+.workspace-content {
   flex: 1;
-  @include flex-column;
+  @include flex-column(0, stretch);
   overflow: hidden;
   position: relative;
+  width: 100%;
+  background: var(--opi-bg);
 }

@@ -1,110 +1,110 @@
 @use '../../styles/mixins' as *;
 
-:host {
-  display: block;
+.sidebar {
+  @include flex-column(0, stretch);
   height: 100%;
   width: 100%;
   overflow: hidden;
 }
 
-.sidebar {
-  @include flex-column;
-  height: 100%;
-  width: 100%;
-}
-
 .sidebar-content {
   width: 100%;
-  padding: 3.2rem 2.4rem;
+  padding: var(--opi-space-32) var(--opi-space-24);
   overflow-y: auto;
   flex: 1;
+}
 
-  @media (max-width: 1024px) {
-    padding: 2.4rem 1.6rem;
+@media (max-width: 1024px) {
+  .sidebar-content {
+    padding: var(--opi-space-24) var(--opi-space-16);
   }
+}
 
-  &::-webkit-scrollbar {
-    width: 4px;
-  }
-  &::-webkit-scrollbar-track {
-    background: transparent;
-  }
-  &::-webkit-scrollbar-thumb {
-    background: var(--opi-border-hover);
-    border-radius: 4px;
-  }
+.sidebar-content::-webkit-scrollbar {
+  width: var(--opi-space-4);
+}
+
+.sidebar-content::-webkit-scrollbar-track {
+  background: transparent;
+}
+
+.sidebar-content::-webkit-scrollbar-thumb {
+  background: var(--opi-border-hover);
+  border-radius: var(--opi-space-4);
 }
 
 .sidebar-header {
-  margin-bottom: 4rem;
+  margin-bottom: var(--opi-space-48);
+}
 
-  .brand-eyebrow {
-    @include typography-sans(1.2rem, 500, var(--opi-text-muted), 0.05em);
-    text-transform: uppercase;
-    margin-bottom: 0.8rem;
-  }
+.brand-eyebrow {
+  @include typography-sans(var(--opi-text-xs), 500, var(--opi-text-muted), 0.05em);
+  text-transform: uppercase;
+  margin-bottom: var(--opi-space-8);
+}
 
-  .header-top {
-    @include flex-between(0);
+.header-top {
+  @include flex-between(0);
+}
 
-    h2 {
-      @include typography-sans(2.4rem, 300, var(--opi-text), -0.01em);
-      margin: 0;
-    }
+.header-top h2 {
+  @include typography-sans(var(--opi-text-lg), 300, var(--opi-text), -0.01em);
+  margin: 0;
+}
 
-    .btn-text-reset {
-      background: transparent;
-      border: none;
-      @include typography-sans(1.2rem, 500, var(--opi-text-muted));
-      cursor: pointer;
-      transition: color var(--opi-transition);
+.btn-text-reset {
+  @include interactive-scale;
+  background: transparent;
+  border: none;
+  @include typography-sans(var(--opi-text-xs), 500, var(--opi-text-muted));
+  transition: color var(--opi-transition);
+}
 
-      &:hover {
-        color: var(--opi-text);
-      }
-    }
-  }
+.btn-text-reset:hover {
+  color: var(--opi-text);
 }
 
 .parameter-groups {
-  @include flex-column(4.8rem);
+  @include flex-column(var(--opi-space-48), stretch);
 }
 
 .group {
-  margin-bottom: 4rem;
-  padding-bottom: 2rem;
-  border-bottom: 1px solid rgba(255, 255, 255, 0.05);
+  margin-bottom: var(--opi-space-48);
+  padding-bottom: var(--opi-space-24);
+  border-bottom: 1px solid var(--opi-border);
+}
 
-  &:last-child {
-    border-bottom: none;
-    margin-bottom: 0;
-  }
+.group:last-child {
+  border-bottom: none;
+  margin-bottom: 0;
 }
 
 .group-label {
-  @include text-uppercase-label(0.9rem, 0.4);
-  margin-bottom: 2.4rem;
+  @include text-uppercase-label(var(--opi-text-xs), 0.4);
+  margin-bottom: var(--opi-space-24);
 }
 
 .sidebar-footer {
   width: 100%;
-  padding: 2.4rem;
-  border-top: 1px solid rgba(255, 255, 255, 0.04);
+  padding: var(--opi-space-24);
+  border-top: 1px solid var(--opi-border);
   background: var(--opi-surface);
 }
 
 .btn-proceed {
   @include interactive-scale;
   width: 100%;
-  padding: 1.2rem;
+  padding: var(--opi-space-12);
   background: var(--opi-surface);
   border: 1px solid var(--opi-border);
   border-radius: var(--opi-radius);
-  @include typography-sans(1.1rem, 500, var(--opi-text), 0.05em);
-  transition: all 0.3s ease;
+  @include typography-sans(var(--opi-text-xs), 500, var(--opi-text), 0.05em);
+  transition:
+    background-color var(--opi-transition),
+    border-color var(--opi-transition);
+}
 
-  &:hover {
-    background: var(--opi-surface-raised);
-    border-color: var(--opi-border-hover);
-  }
+.btn-proceed:hover {
+  background: var(--opi-surface-raised);
+  border-color: var(--opi-border-hover);
 }

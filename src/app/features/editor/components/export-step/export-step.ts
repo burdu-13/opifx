@@ -4,9 +4,9 @@ import {
   ExportFormat,
   ExportFormatOption,
   FilterState,
-} from '../../../../../shared/interfaces/editor.interface';
-import { ExportPreview } from '../../../../../shared/components/export-preview/export-preview';
-import { ExportControls } from '../../../../../shared/components/export-controls/export-controls';
+} from '../../../../shared/interfaces/editor.interface';
+import { ExportPreview } from '../../../../shared/components/export-preview/export-preview';
+import { ExportControls } from '../../../../shared/components/export-controls/export-controls';
 
 @Component({
   selector: 'app-export-step',
