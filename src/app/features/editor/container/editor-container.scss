@@ -4,6 +4,7 @@
   @include fullscreen-shell;
   @include flex-column(0, stretch);
   overflow: hidden;
+  width: 100%;
 }
 
 .workspace-content {
@@ -13,4 +14,14 @@
   position: relative;
   width: 100%;
   background: var(--opi-bg);
+
+  > app-edit-step,
+  > app-export-step,
+  > app-upload-step,
+  > app-library-grid {
+    display: block;
+    width: 100%;
+    height: 100%;
+    overflow: hidden;
+  }
 }

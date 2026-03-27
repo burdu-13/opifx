@@ -16,7 +16,7 @@
   justify-content: center;
 }
 
-@media (max-width: 1024px) {
+@media (max-width: 63.99em) {
   .sidebar-content {
     padding: var(--opi-space-16);
     gap: var(--opi-space-12);
@@ -98,7 +98,6 @@
   border-top: 1px solid var(--opi-border);
   background: var(--opi-surface);
   flex-shrink: 0;
-  box-sizing: border-box;
 }
 
 .btn-full {

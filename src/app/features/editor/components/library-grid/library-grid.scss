@@ -1,11 +1,5 @@
 @use '../../../../shared/styles/mixins' as *;
 
-:host {
-  display: block;
-  height: 100%;
-  width: 100%;
-}
-
 .library-workspace {
   @include flex-column;
   height: 100%;
@@ -14,14 +8,14 @@
 
 .library-toolbar {
   @include flex-between(0);
-  height: 5.6rem;
-  padding: 0 2.4rem;
+  height: var(--opi-space-48);
+  padding: 0 var(--opi-space-24);
   background: var(--opi-surface);
   border-bottom: 1px solid var(--opi-border);
   flex-shrink: 0;
 
   .count-label {
-    @include typography-mono(1.1rem, 500);
+    @include typography-mono(var(--opi-text-xs), 500);
     color: var(--opi-text-muted);
     text-transform: uppercase;
     letter-spacing: 0.05em;
@@ -30,12 +24,13 @@
 
 .grid-container {
   flex: 1;
-  padding: 3.2rem;
+  padding: var(--opi-space-32);
   display: grid;
-  grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
-  gap: 3.2rem;
+  grid-template-columns: repeat(auto-fill, minmax(28rem, 1fr));
+  gap: var(--opi-space-32);
   overflow-y: auto;
   align-content: start;
+  max-width: 100%;
 }
 
 .image-card {
@@ -56,7 +51,7 @@
 
   .card-preview {
     width: 100%;
-    height: calc(100% - 4.8rem);
+    height: calc(100% - var(--opi-space-48));
     object-fit: cover;
     background: var(--opi-bg);
     border-bottom: 1px solid var(--opi-border);
@@ -64,11 +59,11 @@
 
   .card-footer {
     @include flex-between;
-    height: 4.8rem;
-    padding: 0 1.6rem;
+    height: var(--opi-space-48);
+    padding: 0 var(--opi-space-16);
 
     .card-name {
-      @include typography-sans(1.3rem, 500);
+      @include typography-sans(var(--opi-text-sm), 500);
       color: var(--opi-text);
       white-space: nowrap;
       overflow: hidden;
@@ -76,7 +71,7 @@
     }
 
     .status-tag {
-      @include typography-mono(0.9rem, 600);
+      @include typography-mono(var(--opi-text-xs), 600);
       color: var(--opi-text-muted);
       text-transform: uppercase;
     }

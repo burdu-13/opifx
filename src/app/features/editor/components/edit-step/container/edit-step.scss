@@ -1,11 +1,5 @@
 @use '../../../../../shared/styles/mixins' as *;
 
-:host {
-  display: block;
-  height: 100%;
-  width: 100%;
-}
-
 .edit-shell {
   @include abs-fill;
   @include flex-column(0, stretch);
@@ -139,6 +133,7 @@
 }
 
 .preview-image-layer {
+  display: block;
   flex: 1;
   width: 100%;
   position: relative;

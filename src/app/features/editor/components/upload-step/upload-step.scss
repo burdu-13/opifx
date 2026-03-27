@@ -1,8 +1,2 @@
 @use '../../../../shared/styles/mixins' as *;
 @use '../../../../shared/styles/home-layout' as *;
-
-:host {
-  display: block;
-  height: 100%;
-  width: 100%;
-}

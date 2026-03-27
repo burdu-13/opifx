@@ -4,6 +4,7 @@
   @include fullscreen-shell;
   @include flex-column(0, stretch);
   overflow: hidden;
+  width: 100%;
 }
 
 .opi-shell.is-dragging .drop-zone {

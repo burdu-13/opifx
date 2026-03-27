@@ -12,7 +12,7 @@
   background: var(--opi-surface-raised);
 }
 
-@media (max-width: 1024px) {
+@media (max-width: 63.99em) {
   .preset-container.expanded {
     flex: 1;
     @include flex-column(0, stretch);
@@ -94,7 +94,7 @@
 
 .specifications-cloud {
   margin-top: var(--opi-space-24);
-  max-width: 80rem;
+  max-width: 100%;
   animation: slide-down 0.3s cubic-bezier(0.2, 0, 0, 1) forwards;
 }
 
