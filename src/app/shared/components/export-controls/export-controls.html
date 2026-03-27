@@ -5,13 +5,13 @@
     </header>
 
     @if (batchWarning()) {
-      <div class="setting-group mt-4" style="background: rgba(100, 100, 255, 0.1); border: 1px solid rgba(100, 100, 255, 0.3); padding: 1.2rem; border-radius: 6px;">
-        <p class="group-label" style="color: #a5b4fc; font-weight: 600; margin-bottom: 0.4rem;">Batch Mapping Active</p>
-        <p style="font-size: 1.3rem; color: #cbd5e1; line-height: 1.4;">{{ batchWarning() }}</p>
+      <div class="setting-group batch-warning">
+        <p class="group-label warning-label">Batch Mapping Active</p>
+        <p class="warning-text">{{ batchWarning() }}</p>
       </div>
     }
 
-    <div class="format-selection mt-4">
+    <div class="setting-group format-selection">
       <p class="group-label">File Format</p>
       <div class="format-list">
         @for (format of formats(); track format.value) {
@@ -26,7 +26,7 @@
     </div>
 
     @if (selectedFormat() !== 'image/png') {
-      <div class="setting-group mt-4">
+      <div class="setting-group">
         <p class="group-label">Compression Quality</p>
         <app-lib-slider
           [label]="'Quality'"
@@ -40,7 +40,7 @@
       </div>
     }
 
-    <div class="setting-group mt-4">
+    <div class="setting-group">
       <p class="group-label">Resolution Scale</p>
       <app-lib-slider
         [label]="'Scale'"
@@ -53,14 +53,19 @@
       />
     </div>
 
-    <div class="summary-card mt-4">
+    <div class="setting-group summary-card">
       <p class="group-label">Estimated Output Size</p>
       <h3 class="size-text">{{ estimatedSize() }}</h3>
     </div>
   </div>
 
   <div class="sidebar-footer">
-    <app-lib-button class="btn-full" variant="secondary" (clicked)="back.emit()" [disabled]="isProcessing()">
+    <app-lib-button
+      class="btn-full"
+      variant="secondary"
+      (clicked)="back.emit()"
+      [disabled]="isProcessing()"
+    >
       Return to Edit
     </app-lib-button>
 

@@ -1,6 +1,6 @@
 import { ComponentFixture, TestBed } from '@angular/core/testing';
 
-import { ExportStepContainer } from './export-step-container';
+import { ExportStepContainer } from './export-step';
 
 describe('ExportStepContainer', () => {
   let component: ExportStepContainer;

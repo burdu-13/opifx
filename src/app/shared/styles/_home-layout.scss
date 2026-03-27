@@ -8,59 +8,66 @@
 
 .home-hero {
   display: grid;
-  grid-template-columns: 1fr 1fr;
-  gap: 8rem;
+  gap: var(--opi-space-48);
   max-width: 110rem;
   width: 100%;
-  padding: 4rem;
+  padding: var(--opi-space-32);
+
+  @include respond-to('md') {
+    grid-template-columns: 1fr 1fr;
+    gap: var(--opi-space-80);
+    padding: var(--opi-space-48);
+  }
 }
 
 .hero-content {
-  @include flex-column(2rem);
+  @include flex-column(var(--opi-space-16));
   justify-content: center;
 
-  .eyebrow {
-    @include typography-mono(1.1rem, 500);
-    color: var(--opi-text-muted);
-    text-transform: uppercase;
-    letter-spacing: 0.1em;
-  }
-
-  .headline {
-    @include typography-sans(4.2rem, 500, var(--opi-text), -0.03em);
-    line-height: 1.1;
-  }
-
-  .subtitle {
-    @include typography-sans(1.6rem, 400, var(--opi-text-muted));
-    line-height: 1.6;
-    max-width: 40rem;
+  @include respond-to('md') {
+    gap: var(--opi-space-24);
   }
 }
 
+.eyebrow {
+  @include typography-mono(var(--opi-text-xs), 500);
+  color: var(--opi-text-muted);
+  text-transform: uppercase;
+  letter-spacing: 0.1em;
+}
+
+.headline {
+  @include typography-sans(var(--opi-text-xl), 500, var(--opi-text), -0.03em);
+  line-height: 1.1;
+
+  @include respond-to('md') {
+    font-size: var(--opi-text-2xl);
+  }
+}
+
+.subtitle {
+  @include typography-sans(var(--opi-text-base), 400, var(--opi-text-muted));
+  line-height: 1.6;
+  max-width: 40rem;
+}
+
 .upload-frame {
+  @include surface-panel;
   @include flex-center(0, column);
   width: 100%;
   aspect-ratio: 1;
-  border: 1px solid var(--opi-border);
-  background: var(--opi-surface);
-  transition: var(--opi-transition);
+}
 
-  &:hover {
-    border-color: var(--opi-text);
-    background: var(--opi-surface-raised);
-  }
+.drag-icon {
+  width: var(--opi-space-48);
+  height: var(--opi-space-48);
+  margin-bottom: var(--opi-space-24);
+  background: url('/images/svgs/upload-icon.svg') no-repeat center;
+  background-size: contain;
+  filter: invert(1);
+  opacity: 0.8;
+}
 
-  .drag-icon {
-    width: 4.8rem;
-    height: 4.8rem;
-    margin-bottom: 2.4rem;
-    background: url('/images/svgs/upload-icon.svg') no-repeat center;
-    background-size: contain;
-    filter: invert(1);
-  }
-
-  .primary-text {
-    @include typography-sans(1.8rem, 500);
-  }
+.primary-text {
+  @include typography-sans(var(--opi-text-md), 500);
 }

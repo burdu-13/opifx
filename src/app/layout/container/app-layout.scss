@@ -2,95 +2,93 @@
 
 .opi-shell {
   @include fullscreen-shell;
-  @include flex-column;
-  background-color: var(--opi-bg);
-  color: var(--opi-text);
+  @include flex-column(0, stretch);
   overflow: hidden;
+  width: 100%;
+}
 
-  &.is-dragging {
-    .drop-zone {
-      border-color: var(--opi-text);
-      background: var(--opi-surface-raised);
-      transform: scale(1.02);
-    }
-  }
+.opi-shell.is-dragging .drop-zone {
+  border-color: var(--opi-accent);
+  background: var(--opi-surface-raised);
+  box-shadow: var(--opi-shadow-md);
+  transform: scale(1.02);
 }
 
 .global-navbar {
-  height: 5.6rem;
-  padding: 0 2.4rem;
+  height: var(--opi-space-64);
+  padding: 0 var(--opi-space-24);
   @include flex-between(0);
   border-bottom: 1px solid var(--opi-border);
   background: var(--opi-bg);
   z-index: 100;
+}
 
-  .brand {
-    @include typography-sans(1.3rem, 600, var(--opi-text), 0.05em);
-    text-transform: uppercase;
-    cursor: pointer;
-  }
+.brand {
+  @include typography-sans(var(--opi-text-sm), 600, var(--opi-text), 0.05em);
+  @include interactive-scale;
+  text-transform: uppercase;
 }
 
 .workspace-root {
   flex: 1;
   position: relative;
+  width: 100%;
 }
 
 .portal-layer {
   @include abs-fill;
   @include flex-center;
-  padding: 4rem;
-
-  .portal-grid {
-    display: grid;
-    grid-template-columns: 1fr 1fr;
-    gap: 12rem;
-    max-width: 100rem;
-    width: 100%;
-  }
+  padding: var(--opi-space-24);
 }
 
-.content-block {
-  @include flex-column(2.4rem);
-  justify-content: center;
+.portal-content {
+  @include flex-column(var(--opi-space-48), center);
+  width: 100%;
+  max-width: 80rem;
+  text-align: center;
+}
 
-  .label {
-    @include typography-mono(1rem, 500);
-    color: var(--opi-text-muted);
-    text-transform: uppercase;
-    letter-spacing: 0.1em;
-  }
+.hero-text {
+  @include flex-column(var(--opi-space-16), center);
+}
 
-  .title {
-    @include typography-sans(4.8rem, 500, var(--opi-text), -0.03em);
-    line-height: 1;
-  }
+.label {
+  @include text-uppercase-label(var(--opi-text-xs));
+}
 
-  .description {
-    @include typography-sans(1.5rem, 400, var(--opi-text-muted));
-    line-height: 1.6;
-    max-width: 36rem;
-  }
+.title {
+  @include typography-sans(var(--opi-text-2xl), 400, var(--opi-text), -0.04em);
+  line-height: 1.1;
+}
+
+.description {
+  @include typography-sans(var(--opi-text-base), 400, var(--opi-text-muted));
+  line-height: 1.6;
+  max-width: 48rem;
+}
+
+.upload-container {
+  width: 100%;
+  max-width: 56rem;
 }
 
 .drop-zone {
-  @include flex-center(2.4rem, column);
-  aspect-ratio: 1;
+  @include surface-panel;
+  @include flex-center(var(--opi-space-24), column);
+  padding: var(--opi-space-64) var(--opi-space-24);
   width: 100%;
-  background: var(--opi-surface);
-  border: 1px solid var(--opi-border);
-  border-radius: var(--opi-radius);
-  transition: all var(--opi-transition);
+  border-style: dashed;
+}
 
-  .drag-icon {
-    width: 4rem;
-    height: 4rem;
-    background: url('/images/svgs/upload-icon.svg') no-repeat center;
-    background-size: contain;
-    filter: invert(1);
-  }
+.drag-icon {
+  width: var(--opi-space-48);
+  height: var(--opi-space-48);
+  background: url('/images/svgs/upload-icon.svg') no-repeat center;
+  background-size: contain;
+  filter: invert(1);
+  opacity: 0.5;
+}
 
-  .drop-text {
-    @include typography-sans(1.6rem, 500);
-  }
+.drop-text {
+  @include typography-sans(var(--opi-text-base), 400, var(--opi-text-muted));
 }

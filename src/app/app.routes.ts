@@ -9,14 +9,18 @@ export const routes: Routes = [
       {
         path: '',
         title: 'OPIFX - Workspace',
-        loadComponent: () => import('./features/editor/container/editor-container').then(c => c.EditorContainer),
+        loadComponent: () =>
+          import('./features/editor/container/editor-container').then((c) => c.EditorContainer),
       },
       {
         path: 'export',
         title: 'OPIFX - Render',
-        loadComponent: () => import('./features/editor/components/export-step/container/export-step-container').then(c => c.ExportStepContainer),
-      }
-    ]
+        loadComponent: () =>
+          import('./features/editor/components/export-step/export-step').then(
+            (c) => c.ExportStep,
+          ),
+      },
+    ],
   },
-  { path: '**', redirectTo: '' }
+  { path: '**', redirectTo: '' },
 ];

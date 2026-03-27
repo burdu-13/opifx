@@ -1,21 +1,25 @@
 @use '../../styles/mixins' as *;
 
 .pill {
-  @include pill-base(0.6rem, 1.6rem);
-  @include typography-sans(1.1rem, 400, var(--opi-text-muted));
+  @include pill-base(var(--opi-space-8), var(--opi-space-16));
+  @include typography-sans(var(--opi-text-sm), 400, var(--opi-text-muted));
   background: transparent;
   border: 1px solid var(--opi-border);
+  transition:
+    background-color var(--opi-transition),
+    border-color var(--opi-transition),
+    color var(--opi-transition);
+}
 
-  &:hover {
-    border-color: var(--opi-border-hover);
-    color: var(--opi-text);
-    background: var(--opi-surface-raised);
-  }
+.pill:hover {
+  border-color: var(--opi-border-hover);
+  color: var(--opi-text);
+  background: var(--opi-surface-raised);
+}
 
-  &.active {
-    background: var(--opi-text);
-    color: var(--opi-bg);
-    border-color: var(--opi-text);
-    font-weight: 500;
-  }
+.pill.active {
+  background: var(--opi-text);
+  color: var(--opi-bg);
+  border-color: var(--opi-text);
+  font-weight: 500;
 }

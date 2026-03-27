@@ -1,91 +1,86 @@
 @use '../../styles/mixins' as *;
 
 .crop-section {
-  padding-bottom: 2.4rem;
-  margin-bottom: 2.4rem;
-  border-bottom: 1px solid rgba(255, 255, 255, 0.05);
+  padding-bottom: var(--opi-space-24);
+  margin-bottom: var(--opi-space-24);
+  border-bottom: 1px solid var(--opi-border);
 }
 
 .crop-header {
   @include flex-between(0);
-  margin-bottom: 1.6rem;
+  margin-bottom: var(--opi-space-16);
 }
 
 .group-label {
-  @include text-uppercase-label(0.9rem, 0.4);
+  @include text-uppercase-label(var(--opi-text-xs), 0.4);
   margin: 0;
 }
 
 .btn-toggle {
-  @include pill-base(0.6rem, 1.4rem);
+  @include pill-base(var(--opi-space-4), var(--opi-space-12));
   background: transparent;
   border: 1px solid var(--opi-border);
-  @include typography-sans(1.1rem, 500, var(--opi-text-muted));
-  cursor: pointer;
+  @include typography-sans(var(--opi-text-xs), 500, var(--opi-text-muted));
+}
 
-  &:hover {
-    border-color: var(--opi-border-hover);
-    color: var(--opi-text);
-    background: var(--opi-surface-raised);
-  }
+.btn-toggle:hover {
+  border-color: var(--opi-border-hover);
+  color: var(--opi-text);
+  background: var(--opi-surface-raised);
+}
 
-  &.active {
-    background: rgba(255, 255, 255, 0.08);
-    border-color: var(--opi-border-hover);
-    color: var(--opi-text);
-  }
+.btn-toggle.active {
+  background: var(--opi-surface-raised);
+  border-color: var(--opi-border-hover);
+  color: var(--opi-text);
 }
 
 .crop-options {
-  @include flex-column(1.6rem);
+  @include flex-column(var(--opi-space-16), stretch);
 }
 
 .aspect-ratios {
   display: flex;
   flex-wrap: wrap;
-  gap: 0.6rem;
+  gap: var(--opi-space-8);
 }
 
 .ratio-pill {
-  @include pill-base(0.5rem, 1.2rem);
+  @include pill-base(var(--opi-space-4), var(--opi-space-12));
   background: transparent;
   border: 1px solid var(--opi-border);
-  @include typography-sans(1.1rem, 400, var(--opi-text-muted));
-  cursor: pointer;
+  @include typography-sans(var(--opi-text-xs), 400, var(--opi-text-muted));
+}
 
-  &:hover {
-    border-color: var(--opi-border-hover);
-    color: var(--opi-text);
-  }
+.ratio-pill:hover {
+  border-color: var(--opi-border-hover);
+  color: var(--opi-text);
+}
 
-  &.active {
-    background: rgba(255, 255, 255, 0.1);
-    border-color: rgba(255, 255, 255, 0.25);
-    color: var(--opi-text);
-    font-weight: 500;
-  }
+.ratio-pill.active {
+  background: var(--opi-surface-raised);
+  border-color: var(--opi-text-muted);
+  color: var(--opi-text);
+  font-weight: 500;
 }
 
 .crop-dimensions {
   text-align: center;
+}
 
-  .dim {
-    @include typography-sans(1.2rem, 400, var(--opi-text-muted));
-    letter-spacing: 0.03em;
-  }
+.dim {
+  @include typography-sans(var(--opi-text-xs), 400, var(--opi-text-muted), 0.03em);
 }
 
 .sub-label {
-  @include typography-sans(1.1rem, 400, var(--opi-text-muted));
-  margin: 0 0 0.8rem 0;
+  @include typography-sans(var(--opi-text-xs), 400, var(--opi-text-muted));
+  margin: 0 0 var(--opi-space-8) 0;
 }
 
-.custom-resolution {
-  .resolution-inputs {
-    display: flex;
-    align-items: center;
-    gap: 0.6rem;
-  }
+.resolution-inputs {
+  display: flex;
+  align-items: center;
+  gap: var(--opi-space-8);
 }
 
 .res-input {
@@ -93,75 +88,79 @@
   background: var(--opi-bg);
   border: 1px solid var(--opi-border);
   border-radius: var(--opi-radius);
-  padding: 0.6rem 0.8rem;
-  @include typography-sans(1.1rem, 400, var(--opi-text));
+  padding: var(--opi-space-4) var(--opi-space-8);
+  @include typography-sans(var(--opi-text-xs), 400, var(--opi-text));
   outline: none;
   transition: border-color var(--opi-transition);
   min-width: 0;
+}
 
-  &::placeholder {
-    color: var(--opi-text-muted);
-    opacity: 0.5;
-  }
+.res-input::placeholder {
+  color: var(--opi-text-muted);
+  opacity: 0.5;
+}
 
-  &:focus {
-    border-color: var(--opi-border-hover);
-  }
+.res-input:focus {
+  border-color: var(--opi-border-hover);
+}
 
-  &::-webkit-inner-spin-button,
-  &::-webkit-outer-spin-button {
-    -webkit-appearance: none;
-    margin: 0;
-  }
+.res-input::-webkit-inner-spin-button,
+.res-input::-webkit-outer-spin-button {
+  -webkit-appearance: none;
+  margin: 0;
+}
+
+.res-input {
   -moz-appearance: textfield;
 }
 
 .res-sep {
-  @include typography-sans(1.2rem, 300, var(--opi-text-muted));
+  @include typography-sans(var(--opi-text-xs), 300, var(--opi-text-muted));
   flex-shrink: 0;
 }
 
 .btn-apply-res {
-  @include pill-base(0.6rem, 1.2rem);
+  @include pill-base(var(--opi-space-4), var(--opi-space-12));
   background: transparent;
   border: 1px solid var(--opi-border);
-  @include typography-sans(1.1rem, 500, var(--opi-text-muted));
-  cursor: pointer;
+  @include typography-sans(var(--opi-text-xs), 500, var(--opi-text-muted));
   flex-shrink: 0;
+}
 
-  &:hover {
-    border-color: var(--opi-border-hover);
-    color: var(--opi-text);
-    background: var(--opi-surface-raised);
-  }
+.btn-apply-res:hover {
+  border-color: var(--opi-border-hover);
+  color: var(--opi-text);
+  background: var(--opi-surface-raised);
 }
 
 .crop-actions {
   display: flex;
-  gap: 0.8rem;
+  gap: var(--opi-space-8);
 }
 
 .btn-crop-action {
   @include interactive-scale;
   flex: 1;
-  padding: 0.8rem 1.2rem;
+  padding: var(--opi-space-8) var(--opi-space-12);
   border-radius: var(--opi-radius);
-  @include typography-sans(1.1rem, 500, var(--opi-text));
+  @include typography-sans(var(--opi-text-xs), 500, var(--opi-text));
   border: 1px solid var(--opi-border);
   background: transparent;
-  transition: all var(--opi-transition);
+  transition:
+    background-color var(--opi-transition),
+    border-color var(--opi-transition);
+}
 
-  &:hover {
-    background: var(--opi-surface-raised);
-    border-color: var(--opi-border-hover);
-  }
+.btn-crop-action:hover {
+  background: var(--opi-surface-raised);
+  border-color: var(--opi-border-hover);
+}
 
-  &.apply {
-    background: rgba(255, 255, 255, 0.06);
-    border-color: rgba(255, 255, 255, 0.15);
+.btn-crop-action.apply {
+  background: var(--opi-surface-raised);
+  border-color: var(--opi-border-hover);
+}
 
-    &:hover {
-      background: rgba(255, 255, 255, 0.12);
-    }
-  }
+.btn-crop-action.apply:hover {
+  background: var(--opi-border);
 }

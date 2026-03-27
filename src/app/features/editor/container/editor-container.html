@@ -1,16 +1,78 @@
 <div class="fx-shell">
   <main class="workspace-content">
-    @if (srv.imagesList().length === 0) {
-      <app-upload-step />
+    @if (currentView() === 'export') {
+      <app-export-step
+        [image]="exportPreviewImage()"
+        [filters]="exportPreviewFilters()"
+        [cropRect]="exportPreviewCrop()"
+        [formats]="exportFormats"
+        [format]="exportFormat()"
+        [quality]="exportQuality()"
+        [scale]="exportScale()"
+        [estimatedSize]="estimatedExportSize() || 'Unknown'"
+        [isProcessing]="isExportProcessing()"
+        [buttonText]="exportButtonText()"
+        [batchWarning]="batchWarning()"
+        (formatChange)="exportFormat.set($event)"
+        (qualityChange)="exportQuality.set($event)"
+        (scaleChange)="exportScale.set($event)"
+        (download)="handleDownload()"
+        (back)="cancelExport()"
+      />
     } @else {
-      @if (srv.isBatchMode() && !srv.activeId()) {
-        <app-library-grid 
-          [images]="srv.imagesList()" 
-          (select)="srv.setActiveImage($event)"
-          (process)="goToExport()"
-        />
+      @if (srv.imagesList().length === 0) {
+        <app-upload-step (filesSelected)="handleFiles($event)" />
       } @else {
-        <app-edit-step />
+        @if (srv.isBatchMode() && !srv.activeId()) {
+          <app-library-grid
+            [images]="srv.imagesList()"
+            (select)="srv.setActiveImage($event)"
+            (process)="proceedToExport()"
+          />
+        } @else {
+          <app-edit-step
+            [image]="srv.sourceImage()"
+            [filters]="srv.filters()"
+            [isBatchMode]="srv.isBatchMode()"
+            [presets]="presets"
+            [activePresetId]="srv.activePresetId()"
+            [isPresetGalleryOpen]="isPresetGalleryOpen()"
+            [zoom]="zoom()"
+            [position]="position()"
+            [zoomLabel]="zoomLabel()"
+            [activeFilters]="activeFilters()"
+            [sourceWidth]="sourceWidth()"
+            [sourceHeight]="sourceHeight()"
+            [activePresetDetails]="activePresetDetails()"
+            [activeSpecs]="activeSpecs()"
+            [standardControls]="standardControls()"
+            [aestheticControls]="aestheticControls()"
+            [isCropActive]="cropSrv.isCropActive()"
+            [cropRect]="cropSrv.cropRect()"
+            [aspectRatio]="cropSrv.aspectRatio()"
+            [aspectRatioOptions]="aspectRatioOptions"
+            [imageAspect]="imageAspect()"
+            [appliedCropRect]="appliedCropRect()"
+            (canvasDimensions)="handleCanvasDimensions($event)"
+            (presetSelection)="handlePresetSelection($event)"
+            (presetGalleryOpenChange)="isPresetGalleryOpen.set($event)"
+            (reset)="handleReset()"
+            (manualChange)="handleManualChange($event)"
+            (zoomUpdate)="updateZoom($event)"
+            (resetView)="resetView()"
+            (pan)="handlePan($event)"
+            (proceedToExport)="proceedToExport()"
+            (backToBatch)="backToBatch()"
+            (applyToAll)="applyToAll()"
+            (showBeforeChange)="showBefore.set($event)"
+            (toggleCrop)="handleToggleCrop()"
+            (cropChange)="handleCropChange($event)"
+            (aspectRatioChange)="handleAspectRatioChange($event)"
+            (cropApply)="handleCropApply()"
+            (cropReset)="handleCropReset()"
+            (customResolution)="handleCustomResolution($event)"
+          />
+        }
       }
     }
   </main>

@@ -12,6 +12,7 @@
     [style.width]="containerStyle().width"
     [style.height]="containerStyle().height"
     [style.transform]="transformStyle()"
+    [class.is-manipulating]="isDragging()"
   >
     <canvas
       #mainCanvas

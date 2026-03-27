@@ -1,14 +1,9 @@
-@use '../../../../../shared/styles/mixins' as *;
-
-:host {
-  display: block;
-  height: 100%;
-  width: 100%;
-}
+@use '../../../../shared/styles/mixins' as *;
 
 .export-shell {
   height: 100%;
   width: 100%;
+  max-width: 100%;
   @include grid-layout(12, 0);
   overflow: hidden;
   background: var(--opi-bg);
@@ -32,7 +27,7 @@
   overflow: hidden;
 }
 
-@media (max-width: 1024px) {
+@media (max-width: 63.99em) {
   .export-shell {
     @include flex-column;
   }

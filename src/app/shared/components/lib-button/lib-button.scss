@@ -1,45 +1,53 @@
 @use '../../styles/mixins' as *;
 
 button {
-  @include pill-base(1.4rem, 2.4rem);
+  @include pill-base(var(--opi-space-12), var(--opi-space-24));
   @include flex-center;
-  @include typography-sans(1.2rem, 500);
+  @include typography-sans(var(--opi-text-sm), 500);
   width: 100%;
   letter-spacing: 0.05em;
+  border-radius: var(--opi-radius);
+}
 
-  &:disabled {
-    opacity: 0.4;
-    cursor: not-allowed;
-  }
+button:disabled {
+  opacity: 0.4;
+  cursor: not-allowed;
+  transform: none;
+}
 
-  &.primary {
-    background: var(--opi-text);
-    color: var(--opi-bg);
-    border: 1px solid var(--opi-text);
-    transition: all var(--opi-transition);
+button.primary {
+  background: var(--opi-text);
+  color: var(--opi-bg);
+  border: 1px solid var(--opi-text);
+  transition:
+    transform var(--opi-transition),
+    box-shadow var(--opi-transition),
+    opacity var(--opi-transition);
+}
 
-    &:hover:not(:disabled) {
-      opacity: 0.9;
-      transform: translateY(-1px);
-      box-shadow: 0 4px 12px rgba(0, 0, 0, 0.15);
-    }
-  }
+button.primary:hover:not(:disabled) {
+  opacity: 0.9;
+  transform: translateY(-1px);
+  box-shadow: var(--opi-shadow-md);
+}
 
-  &.secondary {
-    background: transparent;
-    color: var(--opi-text);
-    border: 1px solid var(--opi-border);
+button.secondary {
+  background: transparent;
+  color: var(--opi-text);
+  border: 1px solid var(--opi-border);
+  transition:
+    background-color var(--opi-transition),
+    border-color var(--opi-transition);
+}
 
-    &:hover:not(:disabled) {
-      border-color: var(--opi-border-hover);
-      background: var(--opi-surface-raised);
-    }
-  }
+button.secondary:hover:not(:disabled) {
+  border-color: var(--opi-border-hover);
+  background: var(--opi-surface-raised);
 }
 
 .loader {
-  width: 1.8rem;
-  height: 1.8rem;
+  width: var(--opi-space-16);
+  height: var(--opi-space-16);
   border: 2px solid currentColor;
   border-bottom-color: transparent;
   border-radius: 50%;

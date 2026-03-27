@@ -5,8 +5,8 @@ export interface HeroContent {
 }
 
 export const HERO_CONTENT: HeroContent = {
-  label: 'Cloud Studio',
-  title: 'Atmospheric Image Processing.',
+  label: 'OPIFX',
+  title: 'Image Editor.',
   description:
-    'Drop your source files to begin. Single images open the Studio; multiple files trigger the Batch Engine.',
+    'Drop your source files to begin. Single images open the Studio; multiple files open batch editor.',
 };
